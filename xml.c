@@ -23,17 +23,17 @@ void getVersion() {
 
 	xmlrpc_value *res, *tmp = NULL;
 
-	res = xmlrpc_client_call_params(&xenv, server, "aria2.getVersion",
-					xmlrpc_array_new(&xenv));
+	res = xmlrpc_client_call_params(x, server, "aria2.getVersion",
+					xmlrpc_array_new(x));
 	if (xenv.fault_occurred) {
 		printf("Aria2 doesn't seem to be running: %s", xenv.fault_string);
 		offline = 1;
 		return;
 	}
 
-	xmlrpc_struct_find_value(&xenv, res, "version", &tmp);
+	xmlrpc_struct_find_value(x, res, "version", &tmp);
 	if (tmp) {
-		xmlrpc_read_string(&xenv, tmp, &version);
+		xmlrpc_read_string(x, tmp, &version);
 		checkxml();
 		printf("Version %s<p>", version);
 	}

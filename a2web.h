@@ -66,5 +66,6 @@ extern const char *version;
 extern const char *server;
 extern char offline;
 extern xmlrpc_env xenv;
+extern xmlrpc_env *x;
 
 #endif

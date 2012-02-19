@@ -25,6 +25,7 @@ const char *server = "http://localhost:6800/rpc";
 
 char offline = 0;
 xmlrpc_env xenv;
+xmlrpc_env *x = &xenv;
 
 void handle() {
 
@@ -35,7 +36,7 @@ void handle() {
 //	char *ck = getenv("HTTP_COOKIE");
 	char *qs = getenv("QUERY_STRING");
 
-	xmlrpc_env_init(&xenv);
+	xmlrpc_env_init(x);
 
 	if (!gw || strcmp(gw, "CGI/1.1") != 0) {
 		error(503);
@@ -47,14 +48,14 @@ void handle() {
 	printf("<html><body>moi %s<p>", qs);
 
 
-	xmlrpc_client_init2(&xenv, XMLRPC_CLIENT_NO_FLAGS, NAME, VERSION, NULL, 0);
+	xmlrpc_client_init2(x, XMLRPC_CLIENT_NO_FLAGS, NAME, VERSION, NULL, 0);
 	checkxml();
 
 	getVersion();
 
 	printf("</body></html>\n");
 
-	xmlrpc_env_clean(&xenv);
+	xmlrpc_env_clean(x);
 	xmlrpc_client_cleanup();
 }
 
