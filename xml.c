@@ -22,9 +22,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 void getVersion() {
 
 	xmlrpc_value *res, *tmp = NULL;
+	xmlrpc_value *a = xmlrpc_array_new(x);
 
 	res = xmlrpc_client_call_params(x, server, "aria2.getVersion",
-					xmlrpc_array_new(x));
+					a);
+
+	xmlrpc_DECREF(a);
+
 	if (xenv.fault_occurred) {
 		printf("Aria2 doesn't seem to be running: %s", xenv.fault_string);
 		offline = 1;
@@ -36,11 +40,21 @@ void getVersion() {
 		xmlrpc_read_string(x, tmp, &version);
 		checkxml();
 		printf("Version %s<p>", version);
+		xmlrpc_DECREF(tmp);
 	}
 
+	xmlrpc_DECREF(res);
 }
 
 void getStats() {
+
+	xmlrpc_value *res, *tmp;
+	xmlrpc_value *a = xmlrpc_array_new(x);
+
+	res = xmlrpc_client_call_params(x, server, "aria2.getGlobalStat",
+					a);
+	xmlrpc_DECREF(a);
+	xmlrpc_DECREF(res);
 
 }
 

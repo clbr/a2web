@@ -39,12 +39,12 @@ void handle() {
 //	char *ck = getenv("HTTP_COOKIE");
 	char *qs = getenv("QUERY_STRING");
 
-	xmlrpc_env_init(x);
-
 	if (!gw || strcmp(gw, "CGI/1.1") != 0) {
 		error(503);
 		return;
 	}
+
+	xmlrpc_env_init(x);
 
 	puts("Content-type: text/html\n");
 
