@@ -27,6 +27,9 @@ char offline = 0;
 xmlrpc_env xenv;
 xmlrpc_env *x = &xenv;
 
+struct stats stats;
+struct download *downloads;
+
 void handle() {
 
 	char *gw = getenv("GATEWAY_INTERFACE");
@@ -52,6 +55,16 @@ void handle() {
 	checkxml();
 
 	getVersion();
+
+	if (!offline) {
+		getStats();
+
+		if (stats.total > 0) {
+			downloads = calloc(stats.total, sizeof(struct download));
+
+			getDownloads();
+		}
+	}
 
 	printf("</body></html>\n");
 

@@ -39,3 +39,11 @@ void getVersion() {
 	}
 
 }
+
+void getStats() {
+
+}
+
+void getDownloads() {
+
+}

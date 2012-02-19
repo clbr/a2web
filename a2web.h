@@ -37,6 +37,8 @@ int checkxml();
 void handle();
 
 void getVersion();
+void getStats();
+void getDownloads();
 
 struct stats {
 	unsigned long long down;
@@ -44,6 +46,8 @@ struct stats {
 	unsigned active;
 	unsigned waiting;
 	unsigned stopped;
+
+	unsigned total;
 };
 
 struct download {
@@ -67,5 +71,8 @@ extern const char *server;
 extern char offline;
 extern xmlrpc_env xenv;
 extern xmlrpc_env *x;
+
+extern struct stats stats;
+extern struct download *downloads;
 
 #endif
