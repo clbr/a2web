@@ -71,7 +71,7 @@ void handle() {
 	xmlrpc_env_clean(x);
 	xmlrpc_client_cleanup();
 
-	free(version);
+	free((char *) version);
 	free(downloads);
 }
 

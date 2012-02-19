@@ -46,54 +46,62 @@ void getVersion() {
 	xmlrpc_DECREF(res);
 }
 
+unsigned long long xmltoull(xmlrpc_value *tmp) {
+
+	if (!tmp)
+		return 0;
+
+	const char *str;
+	unsigned long long val;
+
+	xmlrpc_read_string(x, tmp, &str);
+	val = strtoull(str, NULL, 10);
+
+	free((char *) str);
+	xmlrpc_DECREF(tmp);
+
+	return val;
+}
+
+unsigned long xmltoul(xmlrpc_value *tmp) {
+
+	if (!tmp)
+		return 0;
+
+	const char *str;
+	unsigned long val;
+
+	xmlrpc_read_string(x, tmp, &str);
+	val = strtoul(str, NULL, 10);
+
+	free((char *) str);
+	xmlrpc_DECREF(tmp);
+
+	return val;
+}
+
 void getStats() {
 
 	xmlrpc_value *res, *tmp;
 	xmlrpc_value *a = xmlrpc_array_new(x);
-	const char *str;
 
 	res = xmlrpc_client_call_params(x, server, "aria2.getGlobalStat",
 					a);
 
 	xmlrpc_struct_find_value(x, res, "downloadSpeed", &tmp);
-	if (tmp) {
-		xmlrpc_read_string(x, tmp, &str);
-		stats.down = strtoull(str, NULL, 10);
-		free(str);
-		xmlrpc_DECREF(tmp);
-	}
+	stats.down = xmltoull(tmp);
 
 	xmlrpc_struct_find_value(x, res, "uploadSpeed", &tmp);
-	if (tmp) {
-		xmlrpc_read_string(x, tmp, &str);
-		stats.up = strtoull(str, NULL, 10);
-		free(str);
-		xmlrpc_DECREF(tmp);
-	}
+	stats.up = xmltoull(tmp);
 
 	xmlrpc_struct_find_value(x, res, "numActive", &tmp);
-	if (tmp) {
-		xmlrpc_read_string(x, tmp, &str);
-		stats.active = strtoul(str, NULL, 10);
-		free(str);
-		xmlrpc_DECREF(tmp);
-	}
+	stats.active = xmltoul(tmp);
 
 	xmlrpc_struct_find_value(x, res, "numWaiting", &tmp);
-	if (tmp) {
-		xmlrpc_read_string(x, tmp, &str);
-		stats.waiting = strtoul(str, NULL, 10);
-		free(str);
-		xmlrpc_DECREF(tmp);
-	}
+	stats.waiting = xmltoul(tmp);
 
 	xmlrpc_struct_find_value(x, res, "numStopped", &tmp);
-	if (tmp) {
-		xmlrpc_read_string(x, tmp, &str);
-		stats.stopped = strtoul(str, NULL, 10);
-		free(str);
-		xmlrpc_DECREF(tmp);
-	}
+	stats.stopped = xmltoul(tmp);
 
 	stats.total = stats.stopped + stats.waiting + stats.active;
 

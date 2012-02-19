@@ -40,6 +40,9 @@ void getVersion();
 void getStats();
 void getDownloads();
 
+unsigned long long xmltoull(xmlrpc_value *tmp);
+unsigned long xmltoul(xmlrpc_value *tmp);
+
 struct stats {
 	unsigned long long down;
 	unsigned long long up;
