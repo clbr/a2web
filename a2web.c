@@ -17,37 +17,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <fcgi_stdio.h>
+#include "a2web.h"
 
-#include <xmlrpc.h>
-#include <xmlrpc_client.h>
-
-#define NAME "a2web.cgi"
-#define VERSION "0.0"
-
-static void error(int num) {
-
-	printf("Status: %d\r\n", num);
-	printf("Content-type: text/html\r\n\r\n");
-
-	printf("<h1>Error %d</h1>", num);
-}
-
-static int checkxml(const xmlrpc_env *e) {
-
-	if (e->fault_occurred) {
-		printf("%s\n", e->fault_string);
-
-		return 1;
-	}
-
-	return 0;
-}
-
-static void handle() {
+void handle() {
 
 	char *gw = getenv("GATEWAY_INTERFACE");
 	char *ct = getenv("CONTENT_TYPE");
@@ -60,7 +32,7 @@ static void handle() {
 
 	xmlrpc_env xenv;
 	xmlrpc_env_init(&xenv);
-	xmlrpc_value *res, *tmp;
+	xmlrpc_value *res, *tmp = NULL;
 
 	if (!gw || strcmp(gw, "CGI/1.1") != 0) {
 		error(503);

@@ -1,0 +1,40 @@
+/*
+a2web.cgi
+Copyright (C) 2012 Lauri Kasanen
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; version 3
+of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
+#ifndef A2WEB_H
+#define A2WEB_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcgi_stdio.h>
+
+#include <xmlrpc.h>
+#include <xmlrpc_client.h>
+
+#define NAME "a2web.cgi"
+#define VERSION "0.0"
+
+void error(int num);
+
+int checkxml(const xmlrpc_env *e);
+
+void handle();
+
+#endif
