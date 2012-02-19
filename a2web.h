@@ -37,4 +37,29 @@ int checkxml(const xmlrpc_env *e);
 
 void handle();
 
+struct stats {
+	unsigned long long down;
+	unsigned long long up;
+	unsigned active;
+	unsigned waiting;
+	unsigned stopped;
+};
+
+struct download {
+	unsigned long long length;
+	unsigned long long completed;
+	unsigned long long uploaded;
+
+	unsigned long long down;
+	unsigned long long up;
+
+	const char *gid;
+	const char *status;
+
+	unsigned seeders;
+	unsigned connections;
+};
+
+extern const char *cwd;
+
 #endif

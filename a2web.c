@@ -19,6 +19,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "a2web.h"
 
+const char *cwd;
+
 void handle() {
 
 	char *gw = getenv("GATEWAY_INTERFACE");
@@ -49,7 +51,9 @@ void handle() {
 
 	res = xmlrpc_client_call_params(&xenv, server, "aria2.getVersion",
 					xmlrpc_array_new(&xenv));
-	checkxml(&xenv);
+	if (xenv.fault_occurred) {
+		printf("Aria2 doesn't seem to be running: %s", xenv.fault_string);
+	}
 
 	xmlrpc_struct_find_value(&xenv, res, "version", &tmp);
 	if (tmp) {
