@@ -28,7 +28,7 @@ xmlrpc_env xenv;
 xmlrpc_env *x = &xenv;
 
 struct stats stats;
-struct download *downloads;
+struct download *downloads = NULL;
 
 void handle() {
 
@@ -70,6 +70,9 @@ void handle() {
 
 	xmlrpc_env_clean(x);
 	xmlrpc_client_cleanup();
+
+	free(version);
+	free(downloads);
 }
 
 int main() {
