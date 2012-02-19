@@ -33,7 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 void error(int num);
 
-int checkxml(const xmlrpc_env *e);
+int checkxml();
 
 void handle();
 
@@ -61,5 +61,6 @@ struct download {
 };
 
 extern const char *cwd;
+extern xmlrpc_env xenv;
 
 #endif
