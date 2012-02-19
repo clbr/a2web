@@ -32,10 +32,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define VERSION "0.0"
 
 void error(int num);
-
 int checkxml();
 
 void handle();
+
+void getVersion();
 
 struct stats {
 	unsigned long long down;
@@ -61,6 +62,9 @@ struct download {
 };
 
 extern const char *cwd;
+extern const char *version;
+extern const char *server;
+extern char offline;
 extern xmlrpc_env xenv;
 
 #endif

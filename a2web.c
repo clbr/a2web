@@ -20,6 +20,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "a2web.h"
 
 const char *cwd;
+const char *version;
+const char *server = "http://localhost:6800/rpc";
+
+char offline = 0;
 xmlrpc_env xenv;
 
 void handle() {
@@ -31,10 +35,7 @@ void handle() {
 //	char *ck = getenv("HTTP_COOKIE");
 	char *qs = getenv("QUERY_STRING");
 
-	const char *server = "http://localhost:6800/rpc";
-
 	xmlrpc_env_init(&xenv);
-	xmlrpc_value *res, *tmp = NULL;
 
 	if (!gw || strcmp(gw, "CGI/1.1") != 0) {
 		error(503);
@@ -49,20 +50,7 @@ void handle() {
 	xmlrpc_client_init2(&xenv, XMLRPC_CLIENT_NO_FLAGS, NAME, VERSION, NULL, 0);
 	checkxml();
 
-	res = xmlrpc_client_call_params(&xenv, server, "aria2.getVersion",
-					xmlrpc_array_new(&xenv));
-	if (xenv.fault_occurred) {
-		printf("Aria2 doesn't seem to be running: %s", xenv.fault_string);
-	}
-
-	xmlrpc_struct_find_value(&xenv, res, "version", &tmp);
-	if (tmp) {
-		const char *c;
-		xmlrpc_read_string(&xenv, tmp, &c);
-		checkxml();
-		printf("%s yay<p>", c);
-	}
-
+	getVersion();
 
 	printf("</body></html>\n");
 
