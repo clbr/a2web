@@ -48,7 +48,14 @@ void handle() {
 
 	puts("Content-type: text/html\n");
 
-	printf("<html><body>moi %s<p>", qs);
+	printf("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n"
+		"<html><head>\n"
+		"\t<title>%s v%s</title>\n"
+		"\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">"
+		"</head>\n"
+		"<body>\n\n", NAME, VERSION);
+
+	printf("moi %s<p>\n", qs);
 
 
 	xmlrpc_client_init2(x, XMLRPC_CLIENT_NO_FLAGS, NAME, VERSION, NULL, 0);

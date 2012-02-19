@@ -39,7 +39,7 @@ void getVersion() {
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &version);
 		checkxml();
-		printf("Version %s<p>", version);
+		printf("\n<h3>Version %s</h3><p>", version);
 		xmlrpc_DECREF(tmp);
 	}
 
@@ -80,6 +80,20 @@ unsigned long xmltoul(xmlrpc_value *tmp) {
 	return val;
 }
 
+static void printStats() {
+
+	printf(
+		"\n\n<div id=stats>\n"
+		"\t<h3>Total download speed: <span class=number>%llu</span> kB/s</h3>\n"
+		"\t<h3>Total upload speed: <span class=number>%llu</span> kB/s</h3>\n"
+
+		"\t<h3>Total downloads, active/waiting/stopped: "
+		"<span class=number>%lu/%lu/%lu</span></h3>\n"
+		"</div>\n\n",
+
+		stats.down, stats.up, stats.active, stats.waiting, stats.stopped);
+}
+
 void getStats() {
 
 	xmlrpc_value *res, *tmp;
@@ -89,10 +103,10 @@ void getStats() {
 					a);
 
 	xmlrpc_struct_find_value(x, res, "downloadSpeed", &tmp);
-	stats.down = xmltoull(tmp);
+	stats.down = xmltoull(tmp) / 1024;
 
 	xmlrpc_struct_find_value(x, res, "uploadSpeed", &tmp);
-	stats.up = xmltoull(tmp);
+	stats.up = xmltoull(tmp) / 1024;
 
 	xmlrpc_struct_find_value(x, res, "numActive", &tmp);
 	stats.active = xmltoul(tmp);
@@ -107,6 +121,8 @@ void getStats() {
 
 	xmlrpc_DECREF(a);
 	xmlrpc_DECREF(res);
+
+	printStats();
 }
 
 void getDownloads() {
