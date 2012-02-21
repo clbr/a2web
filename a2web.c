@@ -44,8 +44,6 @@ void handle() {
 		return;
 	}
 
-	xmlrpc_env_init(x);
-
 	puts("Content-type: text/html\n");
 
 	printf("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n"
@@ -57,9 +55,7 @@ void handle() {
 
 	printf("moi %s<p>\n", qs);
 
-
-	xmlrpc_client_init2(x, XMLRPC_CLIENT_NO_FLAGS, NAME, VERSION, NULL, 0);
-	checkxml();
+	initxml();
 
 	getVersion();
 
@@ -75,8 +71,7 @@ void handle() {
 
 	printf("</body></html>\n");
 
-	xmlrpc_env_clean(x);
-	xmlrpc_client_cleanup();
+	deinitxml();
 
 	free((char *) version);
 	free(downloads);

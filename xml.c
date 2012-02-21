@@ -128,3 +128,19 @@ void getStats() {
 void getDownloads() {
 
 }
+
+void initxml() {
+
+	xmlrpc_env_init(x);
+
+	xmlrpc_client_init2(x, XMLRPC_CLIENT_NO_FLAGS, NAME, VERSION, NULL, 0);
+	checkxml();
+
+}
+
+void deinitxml() {
+
+	xmlrpc_env_clean(x);
+	xmlrpc_client_cleanup();
+
+}

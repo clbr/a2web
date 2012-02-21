@@ -41,6 +41,9 @@ void getVersion();
 void getStats();
 void getDownloads();
 
+void initxml();
+void deinitxml();
+
 unsigned long long xmltoull(xmlrpc_value *tmp);
 unsigned long xmltoul(xmlrpc_value *tmp);
 
