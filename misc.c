@@ -19,7 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "a2web.h"
 
-void error(int num) {
+void error(const int num) {
 
 	printf("Status: %d\r\n", num);
 	printf("Content-type: text/html\r\n\r\n");

@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define NAME "a2web.cgi"
 #define VERSION "0.0"
 
-void error(int num);
+void error(const int num);
 int checkxml();
 void *xcalloc(size_t nmemb, size_t size);
 
