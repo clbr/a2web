@@ -1,4 +1,4 @@
-.PHONY: all clean
+.PHONY: all clean copy
 
 LIBS = -lxmlrpc_client -lfcgi
 
@@ -18,3 +18,6 @@ $(NAME): $(OBJS)
 
 clean:
 	rm -f $(NAME) *.o
+
+copy: all
+	cp $(NAME) /tmp/cgi-bin
