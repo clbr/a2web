@@ -25,7 +25,7 @@ static xmlrpc_env *x = &xenv;
 void getVersion() {
 
 	xmlrpc_value *res, *tmp = NULL;
-	xmlrpc_value *a = xmlrpc_array_new(x);
+	xmlrpc_value *a = xmlrpc_array_new(x); // empty array, because xmlrpc-c sucks
 
 	res = xmlrpc_client_call_params(x, server, "aria2.getVersion",
 					a);
@@ -42,7 +42,7 @@ void getVersion() {
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &version);
 		checkxml();
-		printf("\n<h3>Version %s</h3><p>", version);
+		printf("\n<h3 id=version>Version %s</h3><p>", version);
 		xmlrpc_DECREF(tmp);
 	}
 
