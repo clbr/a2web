@@ -45,6 +45,8 @@ void deinitxml();
 unsigned long long xmltoull(xmlrpc_value *tmp);
 unsigned long xmltoul(xmlrpc_value *tmp);
 
+void readConfig();
+
 struct stats {
 	unsigned long long down;
 	unsigned long long up;
@@ -72,7 +74,7 @@ struct download {
 
 extern const char *cwd;
 extern const char *version;
-extern const char *server;
+extern char *server, *user, *pw, *themedir;
 extern char offline;
 
 extern struct stats stats;

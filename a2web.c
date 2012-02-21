@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 const char *cwd;
 const char *version;
-const char *server = "http://localhost:6800/rpc";
+char *server = NULL, *user = NULL, *pw = NULL, *themedir = NULL;
 
 char offline = 0;
 
@@ -77,8 +77,18 @@ static void handle() {
 
 int main() {
 
+	server = strdup("http://localhost:6800/rpc");
+	themedir = strdup("a2web");
+
+	readConfig();
+
 	while (FCGI_Accept() >= 0)
 		handle();
+
+	free(server);
+	free(user);
+	free(pw);
+	free(themedir);
 
 	return 0;
 }
