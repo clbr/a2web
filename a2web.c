@@ -67,7 +67,7 @@ void handle() {
 		getStats();
 
 		if (stats.total > 0) {
-			downloads = calloc(stats.total, sizeof(struct download));
+			downloads = xcalloc(stats.total, sizeof(struct download));
 
 			getDownloads();
 		}
