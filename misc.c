@@ -39,3 +39,12 @@ int checkxml() {
 
 	return 0;
 }
+
+void *xcalloc(size_t nmemb, size_t size) {
+
+	void *out = calloc(nmemb, size);
+	if (!out)
+		exit(2);
+
+	return out;
+}
