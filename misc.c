@@ -27,19 +27,6 @@ void error(int num) {
 	printf("<h1>Error %d</h1>", num);
 }
 
-int checkxml() {
-
-	const xmlrpc_env *e = &xenv;
-
-	if (e->fault_occurred) {
-		printf("%s\n", e->fault_string);
-
-		return 1;
-	}
-
-	return 0;
-}
-
 void *xcalloc(size_t nmemb, size_t size) {
 
 	void *out = calloc(nmemb, size);

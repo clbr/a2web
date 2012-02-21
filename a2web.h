@@ -76,8 +76,6 @@ extern const char *cwd;
 extern const char *version;
 extern const char *server;
 extern char offline;
-extern xmlrpc_env xenv;
-extern xmlrpc_env *x;
 
 extern struct stats stats;
 extern struct download *downloads;

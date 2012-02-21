@@ -24,8 +24,6 @@ const char *version;
 const char *server = "http://localhost:6800/rpc";
 
 char offline = 0;
-xmlrpc_env xenv;
-xmlrpc_env *x = &xenv;
 
 struct stats stats;
 struct download *downloads = NULL;
