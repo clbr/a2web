@@ -35,8 +35,6 @@ void error(const int num);
 int checkxml();
 void *xcalloc(size_t nmemb, size_t size);
 
-void handle();
-
 void getVersion();
 void getStats();
 void getDownloads();

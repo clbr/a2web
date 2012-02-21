@@ -28,7 +28,7 @@ char offline = 0;
 struct stats stats;
 struct download *downloads = NULL;
 
-void handle() {
+static void handle() {
 
 	char *gw = getenv("GATEWAY_INTERFACE");
 //	char *ct = getenv("CONTENT_TYPE");
