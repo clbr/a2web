@@ -33,7 +33,8 @@ void getVersion() {
 	xmlrpc_DECREF(a);
 
 	if (xenv.fault_occurred) {
-		printf("Aria2 doesn't seem to be running: %s", xenv.fault_string);
+		printf("<div id=error>Aria2 doesn't seem to be running: %s</div>",
+			xenv.fault_string);
 		offline = 1;
 		return;
 	}
