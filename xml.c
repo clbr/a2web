@@ -140,42 +140,55 @@ void getStats() {
 
 static void printDownloads() {
 
-	printf("<div id=downloads>\n");
+	printf("<div id=downloads>\n"
+		"<table border=1>\n"
+		"\t<tr>"
+		"<th>Status</th>"
+		"<th>Progress</th>"
+		"<th>Uploaded</th>"
+		"<th>Speed down/up kB/s</th>"
+		"<th>Seeds/peers</th>"
+		"<th>URL</th>"
+		"</tr>\n");
 
 	unsigned i;
 	for (i = 0; i < stats.total; i++) {
+
+		printf("\t<tr>");
 
 		struct download *cur = &downloads[i];
 
 		char upped[bufsize] = "", seeded[bufsize] = "";
 
 		if (cur->uploaded)
-			snprintf(upped, bufsize, "uploaded %llu kB, ", cur->uploaded);
+			snprintf(upped, bufsize, "%llu", cur->uploaded);
 
 		if (cur->seeders)
-			snprintf(seeded, bufsize, ", seeds/peers %u/%u", cur->seeders,
+			snprintf(seeded, bufsize, "%u/%u", cur->seeders,
 				 cur->connections);
 
 		upped[bufsize - 1] = '\0';
 		seeded[bufsize - 1] = '\0';
 
 
-		printf("\t ..progress bar... ");
-		printf("%llu/%llu kB, "
-			"%s"
-			"speed %llu/%llu"
-			"%s "
-			"%s "
-			"%s "
-			"<br>\n",
+		printf("\t<td>%s</td>"
+			"<td>..progress bar... "
+			"%llu/%llu kB</td>"
+			"<td>%s</td>"
+			"<td>%llu/%llu</td>"
+			"<td>%s</td>"
+			"<td>%s</td>",
 
+			cur->status,
 			cur->completed, cur->length,
 			upped,
 			cur->down, cur->up,
-			seeded, cur->uris ? cur->uris : "", cur->status);
+			seeded, cur->uris ? cur->uris : "");
+
+		printf("</tr>\n");
 	}
 
-	printf("</div>\n\n");
+	printf("</table>\n</div>\n\n");
 }
 
 static void parseDownload(xmlrpc_value *in) {
