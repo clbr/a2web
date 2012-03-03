@@ -93,11 +93,12 @@ static void printStats() {
 		"\tTotal download speed: <span class=number>%llu</span> kB/s<p>\n"
 		"\tTotal upload speed: <span class=number>%llu</span> kB/s<p>\n"
 
-		"\tTotal downloads, active/waiting/stopped: "
-		"<span class=number>%lu/%lu/%lu</span>\n"
+		"\tTotal %u downloads, active/waiting/stopped: "
+		"<span class=number>%u/%u/%u</span>\n"
 		"</div>\n\n",
 
-		stats.down, stats.up, stats.active, stats.waiting, stats.stopped);
+		stats.down, stats.up, stats.total,
+		stats.active, stats.waiting, stats.stopped);
 }
 
 void getStats() {
@@ -134,7 +135,7 @@ void getStats() {
 
 static void printDownloads() {
 
-	printf("\n\n<div id=downloads>");
+	printf("<div id=downloads>\n");
 
 	unsigned i;
 	for (i = 0; i < stats.total; i++) {
@@ -167,14 +168,15 @@ static void printDownloads() {
 			seeded);
 	}
 
-	printf("</div>\n");
+	printf("</div>\n\n");
 }
 
 static void parseDownload(xmlrpc_value *in) {
 
 	// Find the first empty slot
 	struct download *cur = downloads;
-	while (!cur->gid) cur++;
+	while (cur->gid)
+		cur++;
 
 	// Start parsing
 	xmlrpc_value *val;
