@@ -88,7 +88,7 @@ static void handle() {
 int main() {
 
 	server = strdup("http://localhost:6800/rpc");
-	themedir = strdup("a2web");
+	themedir = strdup("a2web/crystal");
 
 	readConfig();
 
