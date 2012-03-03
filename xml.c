@@ -134,16 +134,72 @@ static void printDownloads() {
 
 }
 
+static void parseDownload(xmlrpc_value *in) {
+
+	// Find the first empty slot
+	struct download *cur = downloads;
+	while (!cur->gid) cur++;
+
+	// Start parsing
+	xmlrpc_value *val;
+
+	xmlrpc_struct_find_value(x, in, "totalLength", &val);
+	cur->length = xmltoull(val) / 1024;
+
+	xmlrpc_struct_find_value(x, in, "completedLength", &val);
+	cur->completed = xmltoull(val) / 1024;
+
+	xmlrpc_struct_find_value(x, in, "uploadedLength", &val);
+	cur->uploaded = xmltoull(val) / 1024;
+
+	xmlrpc_struct_find_value(x, in, "uploadSpeed", &val);
+	cur->up = xmltoull(val) / 1024;
+
+	xmlrpc_struct_find_value(x, in, "downloadSpeed", &val);
+	cur->down = xmltoull(val) / 1024;
+
+	xmlrpc_struct_find_value(x, in, "gid", &val);
+	if (val)
+		xmlrpc_read_string(x, val, &cur->gid);
+	else
+		cur->gid = strdup("unknown");
+
+	xmlrpc_struct_find_value(x, in, "status", &val);
+	if (val)
+		xmlrpc_read_string(x, val, &cur->status);
+	else
+		cur->status = strdup("unknown");
+
+	xmlrpc_struct_find_value(x, in, "numSeeders", &val);
+	cur->seeders = xmltoul(val);
+
+	xmlrpc_struct_find_value(x, in, "connections", &val);
+	cur->connections = xmltoul(val);
+}
+
 void getDownloads() {
 
 	xmlrpc_value *res, *tmp;
 	xmlrpc_value *a = xmlrpc_array_new(x);
 
+	unsigned size = 0, i;
+
 	// Active
 
-	res = xmlrpc_client_call_params(x, server, "aria2.tellActive",
-					a);
+	res = xmlrpc_client_call_params(x, server, "aria2.tellActive", a);
 	checkxml();
+
+	if (res) {
+		size = xmlrpc_array_size(x, res);
+
+		for (i = 0; i < size; i++) {
+
+			xmlrpc_array_read_item(x, res, i, &tmp);
+
+			if (tmp)
+				parseDownload(tmp);
+		}
+	}
 
 	xmlrpc_DECREF(res);
 
@@ -156,9 +212,20 @@ void getDownloads() {
 	xmlrpc_array_append_item(x, a, offset);
 	xmlrpc_array_append_item(x, a, num);
 
-	res = xmlrpc_client_call_params(x, server, "aria2.tellWaiting",
-					a);
+	res = xmlrpc_client_call_params(x, server, "aria2.tellWaiting", a);
 	checkxml();
+
+	if (res) {
+		size = xmlrpc_array_size(x, res);
+
+		for (i = 0; i < size; i++) {
+
+			xmlrpc_array_read_item(x, res, i, &tmp);
+
+			if (tmp)
+				parseDownload(tmp);
+		}
+	}
 
 	xmlrpc_DECREF(res);
 	xmlrpc_DECREF(a);
@@ -172,9 +239,20 @@ void getDownloads() {
 	xmlrpc_array_append_item(x, a, offset);
 	xmlrpc_array_append_item(x, a, num);
 
-	res = xmlrpc_client_call_params(x, server, "aria2.tellStopped",
-					a);
+	res = xmlrpc_client_call_params(x, server, "aria2.tellStopped", a);
 	checkxml();
+
+	if (res) {
+		size = xmlrpc_array_size(x, res);
+
+		for (i = 0; i < size; i++) {
+
+			xmlrpc_array_read_item(x, res, i, &tmp);
+
+			if (tmp)
+				parseDownload(tmp);
+		}
+	}
 
 	xmlrpc_DECREF(res);
 	xmlrpc_DECREF(a);

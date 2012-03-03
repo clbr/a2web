@@ -74,6 +74,12 @@ static void handle() {
 	deinitxml();
 
 	free((char *) version);
+
+	unsigned i;
+	for (i = 0; i < stats.total; i++) {
+		free((char *) downloads[i].gid);
+		free((char *) downloads[i].status);
+	}
 	free(downloads);
 }
 
