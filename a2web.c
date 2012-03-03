@@ -42,6 +42,35 @@ static void handle() {
 		return;
 	}
 
+	initxml();
+
+	if (qs) {
+		if (!strcmp(qs, "downloads")) { // Send just the downloads via ajax
+
+			puts("Content-type: text/html\n");
+
+			getStats();
+
+			if (stats.total > 0) {
+				downloads = xcalloc(stats.total, sizeof(struct download));
+
+				getDownloads();
+			}
+
+			goto outdownloads;
+
+		} else if (!strcmp(qs, "stats")) { // Send just the stats via ajax
+
+			puts("Content-type: text/html\n");
+
+			getStats();
+
+			printStats();
+
+			goto out;
+		}
+	}
+
 	puts("Content-type: text/html\n");
 
 	printf("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n"
@@ -51,19 +80,24 @@ static void handle() {
 		"</head>\n"
 		"<body>\n\n", NAME, VERSION);
 
-	printf("moi %s<p>\n", qs);
-
-	initxml();
+	printf("<div id=logo>Running " NAME " v" VERSION "</div>\n\n");
 
 	getVersion();
 
 	if (!offline) {
 		getStats();
 
+
+		printf("<div id=stats>\n");
+		printStats();
+		printf("</div>\n\n");
+
 		if (stats.total > 0) {
 			downloads = xcalloc(stats.total, sizeof(struct download));
 
+			printf("<div id=downloads>\n");
 			getDownloads();
+			printf("</div>\n\n");
 		}
 
 		printOptions();
@@ -71,17 +105,22 @@ static void handle() {
 
 	printf("</body></html>\n");
 
-	deinitxml();
-
-	free((char *) version);
 
 	unsigned i;
+
+	outdownloads:
 	for (i = 0; i < stats.total; i++) {
 		free((char *) downloads[i].gid);
 		free((char *) downloads[i].parent);
 		free((char *) downloads[i].status);
 		free((char *) downloads[i].uris);
 	}
+
+	out:
+	deinitxml();
+
+	free((char *) version);
+
 	free(downloads);
 }
 

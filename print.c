@@ -24,13 +24,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 void printStats() {
 
 	printf(
-		"\n\n<div id=stats>\n"
 		"\tTotal download speed: <span class=number>%llu</span> kB/s<p>\n"
 		"\tTotal upload speed: <span class=number>%llu</span> kB/s<p>\n"
 
 		"\tTotal %u downloads, active/waiting/stopped: "
-		"<span class=number>%u/%u/%u</span>\n"
-		"</div>\n\n",
+		"<span class=number>%u/%u/%u</span>\n",
 
 		stats.down, stats.up, stats.total,
 		stats.active, stats.waiting, stats.stopped);
@@ -38,8 +36,7 @@ void printStats() {
 
 void printDownloads() {
 
-	printf("<div id=downloads>\n"
-		"<table border=1>\n"
+	printf("<table border=1>\n"
 		"\t<thead><tr>"
 		"<th>Status</th>"
 		"<th>Progress</th>"
@@ -112,6 +109,6 @@ void printDownloads() {
 		printf("</tr>\n");
 	}
 
-	printf("\t</tbody>\n</table>\n</div>\n\n");
+	printf("\t</tbody>\n</table>\n");
 }
 

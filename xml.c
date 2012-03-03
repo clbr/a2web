@@ -117,8 +117,6 @@ void getStats() {
 
 	xmlrpc_DECREF(a);
 	xmlrpc_DECREF(res);
-
-	printStats();
 }
 
 static void parseDownload(xmlrpc_value *in) {
