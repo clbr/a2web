@@ -88,11 +88,11 @@ static void printStats() {
 
 	printf(
 		"\n\n<div id=stats>\n"
-		"\t<h3>Total download speed: <span class=number>%llu</span> kB/s</h3>\n"
-		"\t<h3>Total upload speed: <span class=number>%llu</span> kB/s</h3>\n"
+		"\tTotal download speed: <span class=number>%llu</span> kB/s<p>\n"
+		"\tTotal upload speed: <span class=number>%llu</span> kB/s<p>\n"
 
-		"\t<h3>Total downloads, active/waiting/stopped: "
-		"<span class=number>%lu/%lu/%lu</span></h3>\n"
+		"\tTotal downloads, active/waiting/stopped: "
+		"<span class=number>%lu/%lu/%lu</span>\n"
 		"</div>\n\n",
 
 		stats.down, stats.up, stats.active, stats.waiting, stats.stopped);
