@@ -105,6 +105,7 @@ void getStats() {
 
 	res = xmlrpc_client_call_params(x, server, "aria2.getGlobalStat",
 					a);
+	checkxml();
 
 	xmlrpc_struct_find_value(x, res, "downloadSpeed", &tmp);
 	stats.down = xmltoull(tmp) / 1024;
@@ -129,8 +130,58 @@ void getStats() {
 	printStats();
 }
 
+static void printDownloads() {
+
+}
+
 void getDownloads() {
 
+	xmlrpc_value *res, *tmp;
+	xmlrpc_value *a = xmlrpc_array_new(x);
+
+	// Active
+
+	res = xmlrpc_client_call_params(x, server, "aria2.tellActive",
+					a);
+	checkxml();
+
+	xmlrpc_DECREF(res);
+
+
+	// Waiting
+
+	xmlrpc_value *offset, *num;
+	offset = xmlrpc_int_new(x, 0);
+	num = xmlrpc_int_new(x, stats.waiting);
+	xmlrpc_array_append_item(x, a, offset);
+	xmlrpc_array_append_item(x, a, num);
+
+	res = xmlrpc_client_call_params(x, server, "aria2.tellWaiting",
+					a);
+	checkxml();
+
+	xmlrpc_DECREF(res);
+	xmlrpc_DECREF(a);
+	xmlrpc_DECREF(num);
+
+
+	// Stopped
+
+	num = xmlrpc_int_new(x, stats.stopped);
+	a = xmlrpc_array_new(x);
+	xmlrpc_array_append_item(x, a, offset);
+	xmlrpc_array_append_item(x, a, num);
+
+	res = xmlrpc_client_call_params(x, server, "aria2.tellStopped",
+					a);
+	checkxml();
+
+	xmlrpc_DECREF(res);
+	xmlrpc_DECREF(a);
+	xmlrpc_DECREF(num);
+	xmlrpc_DECREF(offset);
+
+	printDownloads();
 }
 
 void initxml() {
