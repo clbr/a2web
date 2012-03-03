@@ -197,15 +197,17 @@ static void parseDownload(xmlrpc_value *in) {
 	cur->down = xmltoull(val) / 1024;
 
 	xmlrpc_struct_find_value(x, in, "gid", &val);
-	if (val)
+	if (val) {
 		xmlrpc_read_string(x, val, &cur->gid);
-	else
+		xmlrpc_DECREF(val);
+	} else
 		cur->gid = strdup("unknown");
 
 	xmlrpc_struct_find_value(x, in, "status", &val);
-	if (val)
+	if (val) {
 		xmlrpc_read_string(x, val, &cur->status);
-	else
+		xmlrpc_DECREF(val);
+	} else
 		cur->status = strdup("unknown");
 
 	xmlrpc_struct_find_value(x, in, "numSeeders", &val);
@@ -236,10 +238,12 @@ void getDownloads() {
 
 			if (tmp)
 				parseDownload(tmp);
-		}
-	}
 
-	xmlrpc_DECREF(res);
+			xmlrpc_DECREF(tmp);
+		}
+
+		xmlrpc_DECREF(res);
+	}
 
 
 	// Waiting
@@ -262,10 +266,13 @@ void getDownloads() {
 
 			if (tmp)
 				parseDownload(tmp);
+
+			xmlrpc_DECREF(tmp);
 		}
+
+		xmlrpc_DECREF(res);
 	}
 
-	xmlrpc_DECREF(res);
 	xmlrpc_DECREF(a);
 	xmlrpc_DECREF(num);
 
@@ -289,10 +296,13 @@ void getDownloads() {
 
 			if (tmp)
 				parseDownload(tmp);
+
+			xmlrpc_DECREF(tmp);
 		}
+
+		xmlrpc_DECREF(res);
 	}
 
-	xmlrpc_DECREF(res);
 	xmlrpc_DECREF(a);
 	xmlrpc_DECREF(num);
 	xmlrpc_DECREF(offset);
