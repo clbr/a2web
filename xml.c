@@ -159,7 +159,7 @@ static void printDownloads() {
 		struct download *cur = &downloads[i];
 
 		char upped[bufsize] = "", seeded[bufsize] = "";
-		char progress[bufsize] = "";
+		char progress[2*bufsize] = "";
 
 		if (cur->uploaded)
 			snprintf(upped, bufsize, "%llu", cur->uploaded);
@@ -179,15 +179,15 @@ static void printDownloads() {
 
 		// Pretty printing.
 		if (percent < 5)
-			snprintf(progress, bufsize, "..progress %.2f%% bar... "
+			snprintf(progress, 2*bufsize, "..progress %.2f%% bar... "
 				"%llu/%llu kB", percent, cur->completed,
 				cur->length);
 		else if (last)
-			snprintf(progress, bufsize, "..progress %.1f%% bar... "
+			snprintf(progress, 2*bufsize, "..progress %.1f%% bar... "
 				"%llu/%llu kB", percent, cur->completed,
 				cur->length);
 		else
-			snprintf(progress, bufsize, "..progress %.0f%% bar... "
+			snprintf(progress, 2*bufsize, "..progress %.0f%% bar... "
 				"%llu/%llu kB", percent, cur->completed,
 				cur->length);
 
