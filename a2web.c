@@ -51,7 +51,7 @@ static void handle() {
 
 			getStats();
 
-			if (stats.total > 0) {
+			if (stats.total > 0 && !offline) {
 				downloads = xcalloc(stats.total, sizeof(struct download));
 
 				getDownloads();
@@ -65,7 +65,8 @@ static void handle() {
 
 			getStats();
 
-			printStats();
+			if (!offline)
+				printStats();
 
 			goto out;
 		}

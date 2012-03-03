@@ -34,7 +34,7 @@ void getVersion() {
 
 	if (xenv.fault_occurred) {
 
-		printf("<div id=error>Aria2 doesn't seem to be running: %s</div>",
+		printf("<div id=error>Aria2 doesn't seem to be running: %s</div>\n",
 			xenv.fault_string);
 
 		offline = 1;
@@ -47,7 +47,7 @@ void getVersion() {
 		xmlrpc_read_string(x, tmp, &version);
 		checkxml();
 
-		printf("\n<div id=version>Connected to aria2 %s.</div>", version);
+		printf("\n<div id=version>Connected to aria2 %s.</div>\n", version);
 
 		xmlrpc_DECREF(tmp);
 	}
@@ -96,7 +96,16 @@ void getStats() {
 
 	res = xmlrpc_client_call_params(x, server, "aria2.getGlobalStat",
 					a);
-	checkxml();
+	xmlrpc_DECREF(a);
+
+	if (xenv.fault_occurred) {
+
+		printf("<div id=error>Aria2 doesn't seem to be running: %s</div>\n",
+			xenv.fault_string);
+
+		offline = 1;
+		return;
+	}
 
 	xmlrpc_struct_find_value(x, res, "downloadSpeed", &tmp);
 	stats.down = xmltoull(tmp) / 1024;
@@ -115,7 +124,6 @@ void getStats() {
 
 	stats.total = stats.stopped + stats.waiting + stats.active;
 
-	xmlrpc_DECREF(a);
 	xmlrpc_DECREF(res);
 }
 
@@ -256,7 +264,15 @@ void getDownloads() {
 	// Active
 
 	res = xmlrpc_client_call_params(x, server, "aria2.tellActive", a);
-	checkxml();
+
+	if (xenv.fault_occurred) {
+
+		printf("<div id=error>Aria2 doesn't seem to be running: %s</div>\n",
+			xenv.fault_string);
+
+		offline = 1;
+		return;
+	}
 
 	if (res) {
 		size = xmlrpc_array_size(x, res);
