@@ -186,9 +186,15 @@ static void printDownloads() {
 		else
 			len = 0;
 
-		snprintf(progress, 2*bufsize, "..progress %.*f%% bar... "
-			"%llu/%llu kB", len, percent, cur->completed,
-			cur->length);
+		snprintf(progress, 2*bufsize,
+			"<div class=meter-outer>"
+			"<div class=meter-value>"
+			"<div class=meter-text>"
+			"%.*f%% - %llu/%llu kB"
+			"</div>"
+			"</div>"
+			"</div>",
+			len, percent, cur->completed, cur->length);
 
 		progress[2*bufsize - 1] = '\0';
 
