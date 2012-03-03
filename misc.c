@@ -35,3 +35,12 @@ void *xcalloc(size_t nmemb, size_t size) {
 
 	return out;
 }
+
+void *xrealloc(void *ptr, size_t size) {
+
+	void *out = realloc(ptr, size);
+	if (!out)
+		exit(2);
+
+	return out;
+}
