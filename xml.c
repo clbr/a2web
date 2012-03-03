@@ -258,7 +258,9 @@ static void parseDownload(xmlrpc_value *in) {
 			if (!cur->uris)
 				cur->uris = thisuri;
 			else {
-				xrealloc(cur->uris, strlen(cur->uris) + 5 + strlen(thisuri));
+				const size_t len = strlen(cur->uris) + 5 + strlen(thisuri);
+
+				cur->uris = xrealloc((char *) cur->uris, len);
 				strcat((char *) cur->uris, ", ");
 				strcat((char *) cur->uris, thisuri);
 				free((char *) thisuri);
