@@ -70,6 +70,7 @@ struct download {
 	const char *gid;
 	const char *status;
 	const char *uris;
+	const char *parent;
 
 	unsigned seeders;
 	unsigned connections;

@@ -249,6 +249,12 @@ static void parseDownload(xmlrpc_value *in) {
 	} else
 		cur->gid = strdup("unknown");
 
+	xmlrpc_struct_find_value(x, in, "belongsTo", &val);
+	if (val) {
+		xmlrpc_read_string(x, val, &cur->parent);
+		xmlrpc_DECREF(val);
+	}
+
 	xmlrpc_struct_find_value(x, in, "status", &val);
 	if (val) {
 		xmlrpc_read_string(x, val, &cur->status);
