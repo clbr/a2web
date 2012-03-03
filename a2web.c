@@ -65,6 +65,8 @@ static void handle() {
 
 			getDownloads();
 		}
+
+		printOptions();
 	}
 
 	printf("</body></html>\n");

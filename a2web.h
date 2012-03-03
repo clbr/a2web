@@ -38,6 +38,7 @@ void *xcalloc(size_t nmemb, size_t size);
 void getVersion();
 void getStats();
 void getDownloads();
+void printOptions();
 
 void initxml();
 void deinitxml();
