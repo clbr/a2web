@@ -222,6 +222,7 @@ static void parseDownload(xmlrpc_value *in) {
 	xmlrpc_struct_find_value(x, in, "connections", &val);
 	cur->connections = xmltoul(val);
 
+	// I shiver in horror when I look at this.
 	xmlrpc_struct_find_value(x, in, "files", &val);
 	if (val) {
 		xmlrpc_value *arr;
@@ -265,7 +266,14 @@ static void parseDownload(xmlrpc_value *in) {
 				strcat((char *) cur->uris, thisuri);
 				free((char *) thisuri);
 			}
+
+			xmlrpc_DECREF(uri);
+			xmlrpc_DECREF(string);
 		}
+
+		xmlrpc_DECREF(uris);
+		xmlrpc_DECREF(arr);
+		xmlrpc_DECREF(val);
 	}
 }
 

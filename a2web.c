@@ -79,6 +79,7 @@ static void handle() {
 	for (i = 0; i < stats.total; i++) {
 		free((char *) downloads[i].gid);
 		free((char *) downloads[i].status);
+		free((char *) downloads[i].uris);
 	}
 	free(downloads);
 }
