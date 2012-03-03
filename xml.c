@@ -164,14 +164,15 @@ static void printDownloads() {
 		printf("%llu/%llu kB, "
 			"%s"
 			"speed %llu/%llu"
-			"%s"
-			" %s"
+			"%s "
+			"%s "
+			"%s "
 			"<br>\n",
 
 			cur->completed, cur->length,
 			upped,
 			cur->down, cur->up,
-			seeded, cur->status);
+			seeded, cur->uris ? cur->uris : "", cur->status);
 	}
 
 	printf("</div>\n\n");
