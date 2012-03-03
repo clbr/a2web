@@ -191,6 +191,8 @@ static void printDownloads() {
 				"%llu/%llu kB", percent, cur->completed,
 				cur->length);
 
+		progress[2*bufsize - 1] = '\0';
+
 
 		printf("\t<td>%s</td>"
 			"<td>%s</td>"
