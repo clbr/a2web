@@ -19,8 +19,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "a2web.h"
 
-#define bufsize 80
-
 static xmlrpc_env xenv;
 static xmlrpc_env *x = &xenv;
 
@@ -91,21 +89,6 @@ unsigned long xmltoul(xmlrpc_value *tmp) {
 	return val;
 }
 
-static void printStats() {
-
-	printf(
-		"\n\n<div id=stats>\n"
-		"\tTotal download speed: <span class=number>%llu</span> kB/s<p>\n"
-		"\tTotal upload speed: <span class=number>%llu</span> kB/s<p>\n"
-
-		"\tTotal %u downloads, active/waiting/stopped: "
-		"<span class=number>%u/%u/%u</span>\n"
-		"</div>\n\n",
-
-		stats.down, stats.up, stats.total,
-		stats.active, stats.waiting, stats.stopped);
-}
-
 void getStats() {
 
 	xmlrpc_value *res, *tmp;
@@ -136,85 +119,6 @@ void getStats() {
 	xmlrpc_DECREF(res);
 
 	printStats();
-}
-
-static void printDownloads() {
-
-	printf("<div id=downloads>\n"
-		"<table border=1>\n"
-		"\t<thead><tr>"
-		"<th>Status</th>"
-		"<th>Progress</th>"
-		"<th>Uploaded</th>"
-		"<th>Speed down/up kB/s</th>"
-		"<th>Seeds/peers</th>"
-		"<th>URL</th>"
-		"</tr></thead>\n\t<tbody>\n");
-
-	unsigned i;
-	for (i = 0; i < stats.total; i++) {
-
-		printf("\t<tr>");
-
-		struct download *cur = &downloads[i];
-
-		char upped[bufsize] = "", seeded[bufsize] = "";
-		char progress[2*bufsize] = "";
-
-		if (cur->uploaded)
-			snprintf(upped, bufsize, "%llu", cur->uploaded);
-
-		if (cur->seeders)
-			snprintf(seeded, bufsize, "%u/%u", cur->seeders,
-				 cur->connections);
-
-		upped[bufsize - 1] = '\0';
-		seeded[bufsize - 1] = '\0';
-
-		float percent = (float) cur->completed / cur->length;
-		percent *= 100;
-
-		int last = percent*10;
-		last %= 10;
-		int len;
-
-		// Pretty printing.
-		if (percent < 5)
-			len = 2;
-		else if (last)
-			len = 1;
-		else
-			len = 0;
-
-		snprintf(progress, 2*bufsize,
-			"<div class=meter-outer>"
-			"<div class=meter-value>"
-			"<div class=meter-text>"
-			"%.*f%% - %llu/%llu kB"
-			"</div>"
-			"</div>"
-			"</div>",
-			len, percent, cur->completed, cur->length);
-
-		progress[2*bufsize - 1] = '\0';
-
-
-		printf("\t<td>%s</td>"
-			"<td>%s</td>"
-			"<td>%s</td>"
-			"<td>%llu/%llu</td>"
-			"<td>%s</td>"
-			"<td>%s</td>",
-
-			cur->status, progress,
-			upped,
-			cur->down, cur->up,
-			seeded, cur->uris ? cur->uris : "");
-
-		printf("</tr>\n");
-	}
-
-	printf("\t</tbody>\n</table>\n</div>\n\n");
 }
 
 static void parseDownload(xmlrpc_value *in) {
