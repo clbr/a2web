@@ -153,7 +153,7 @@ static void printDownloads() {
 			snprintf(upped, bufsize, "uploaded %llu kB, ", cur->uploaded);
 
 		if (cur->seeders)
-			snprintf(seeded, bufsize, "seeds/peers %u/%u", cur->seeders,
+			snprintf(seeded, bufsize, ", seeds/peers %u/%u", cur->seeders,
 				 cur->connections);
 
 		upped[bufsize - 1] = '\0';
@@ -163,14 +163,15 @@ static void printDownloads() {
 		printf("\t ..progress bar... ");
 		printf("%llu/%llu kB, "
 			"%s"
-			"speed %llu/%llu, "
+			"speed %llu/%llu"
 			"%s"
+			" %s"
 			"<br>\n",
 
 			cur->completed, cur->length,
 			upped,
 			cur->down, cur->up,
-			seeded);
+			seeded, cur->status);
 	}
 
 	printf("</div>\n\n");
