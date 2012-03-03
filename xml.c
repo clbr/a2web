@@ -19,6 +19,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "a2web.h"
 
+#define bufsize 80
+
 static xmlrpc_env xenv;
 static xmlrpc_env *x = &xenv;
 
@@ -132,6 +134,40 @@ void getStats() {
 
 static void printDownloads() {
 
+	printf("\n\n<div id=downloads>");
+
+	unsigned i;
+	for (i = 0; i < stats.total; i++) {
+
+		struct download *cur = &downloads[i];
+
+		char upped[bufsize] = "", seeded[bufsize] = "";
+
+		if (cur->uploaded)
+			snprintf(upped, bufsize, "uploaded %llu kB, ", cur->uploaded);
+
+		if (cur->seeders)
+			snprintf(seeded, bufsize, "seeds/peers %u/%u", cur->seeders,
+				 cur->connections);
+
+		upped[bufsize - 1] = '\0';
+		seeded[bufsize - 1] = '\0';
+
+
+		printf("\t ..progress bar... ");
+		printf("%llu/%llu kB, "
+			"%s"
+			"speed %llu/%llu, "
+			"%s"
+			"<br>\n",
+
+			cur->completed, cur->length,
+			upped,
+			cur->down, cur->up,
+			seeded);
+	}
+
+	printf("</div>\n");
 }
 
 static void parseDownload(xmlrpc_value *in) {
