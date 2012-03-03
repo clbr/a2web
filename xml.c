@@ -221,6 +221,50 @@ static void parseDownload(xmlrpc_value *in) {
 
 	xmlrpc_struct_find_value(x, in, "connections", &val);
 	cur->connections = xmltoul(val);
+
+	xmlrpc_struct_find_value(x, in, "files", &val);
+	if (val) {
+		xmlrpc_value *arr;
+		xmlrpc_array_read_item(x, val, 0, &arr);
+
+		if (!arr)
+			return;
+
+		xmlrpc_value *uris;
+		xmlrpc_struct_find_value(x, arr, "uris", &uris);
+
+		if (!uris)
+			return;
+
+		unsigned size = 0, i;
+		size = xmlrpc_array_size(x, uris);
+
+		for (i = 0; i < size; i++) {
+
+			xmlrpc_value *uri, *string;
+			xmlrpc_array_read_item(x, uris, i, &uri);
+
+			if (!uri)
+				continue;
+
+			xmlrpc_struct_find_value(x, uri, "uri", &string);
+
+			if (!string)
+				continue;
+
+			const char *thisuri;
+			xmlrpc_read_string(x, string, &thisuri);
+
+			if (!cur->uris)
+				cur->uris = thisuri;
+			else {
+				xrealloc(cur->uris, strlen(cur->uris) + 5 + strlen(thisuri));
+				strcat((char *) cur->uris, ", ");
+				strcat((char *) cur->uris, thisuri);
+				free((char *) thisuri);
+			}
+		}
+	}
 }
 
 void getDownloads() {

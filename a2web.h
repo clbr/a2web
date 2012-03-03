@@ -69,6 +69,7 @@ struct download {
 
 	const char *gid;
 	const char *status;
+	const char *uris;
 
 	unsigned seeders;
 	unsigned connections;
