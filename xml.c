@@ -142,14 +142,14 @@ static void printDownloads() {
 
 	printf("<div id=downloads>\n"
 		"<table border=1>\n"
-		"\t<tr>"
+		"\t<thead><tr>"
 		"<th>Status</th>"
 		"<th>Progress</th>"
 		"<th>Uploaded</th>"
 		"<th>Speed down/up kB/s</th>"
 		"<th>Seeds/peers</th>"
 		"<th>URL</th>"
-		"</tr>\n");
+		"</tr></thead>\n\t<tbody>\n");
 
 	unsigned i;
 	for (i = 0; i < stats.total; i++) {
@@ -159,6 +159,7 @@ static void printDownloads() {
 		struct download *cur = &downloads[i];
 
 		char upped[bufsize] = "", seeded[bufsize] = "";
+		char progress[bufsize] = "";
 
 		if (cur->uploaded)
 			snprintf(upped, bufsize, "%llu", cur->uploaded);
@@ -170,17 +171,35 @@ static void printDownloads() {
 		upped[bufsize - 1] = '\0';
 		seeded[bufsize - 1] = '\0';
 
+		float percent = (float) cur->completed / cur->length;
+		percent *= 100;
+
+		int last = percent*10;
+		last %= 10;
+
+		// Pretty printing.
+		if (percent < 5)
+			snprintf(progress, bufsize, "..progress %.2f%% bar... "
+				"%llu/%llu kB", percent, cur->completed,
+				cur->length);
+		else if (last)
+			snprintf(progress, bufsize, "..progress %.1f%% bar... "
+				"%llu/%llu kB", percent, cur->completed,
+				cur->length);
+		else
+			snprintf(progress, bufsize, "..progress %.0f%% bar... "
+				"%llu/%llu kB", percent, cur->completed,
+				cur->length);
+
 
 		printf("\t<td>%s</td>"
-			"<td>..progress bar... "
-			"%llu/%llu kB</td>"
+			"<td>%s</td>"
 			"<td>%s</td>"
 			"<td>%llu/%llu</td>"
 			"<td>%s</td>"
 			"<td>%s</td>",
 
-			cur->status,
-			cur->completed, cur->length,
+			cur->status, progress,
 			upped,
 			cur->down, cur->up,
 			seeded, cur->uris ? cur->uris : "");
@@ -188,7 +207,7 @@ static void printDownloads() {
 		printf("</tr>\n");
 	}
 
-	printf("</table>\n</div>\n\n");
+	printf("\t</tbody>\n</table>\n</div>\n\n");
 }
 
 static void parseDownload(xmlrpc_value *in) {
