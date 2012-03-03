@@ -277,6 +277,16 @@ static void parseDownload(xmlrpc_value *in) {
 		if (!arr)
 			return;
 
+		xmlrpc_value *xpath;
+		xmlrpc_struct_find_value(x, arr, "path", &xpath);
+
+		if (!xpath)
+			return;
+
+		const char *path;
+		xmlrpc_read_string(x, xpath, &path);
+		xmlrpc_DECREF(xpath);
+
 		xmlrpc_value *uris;
 		xmlrpc_struct_find_value(x, arr, "uris", &uris);
 
@@ -322,6 +332,11 @@ static void parseDownload(xmlrpc_value *in) {
 			xmlrpc_DECREF(uri);
 			xmlrpc_DECREF(string);
 		}
+
+		if (!cur->uris)
+			asprintf((char **) &cur->uris, "Torrent: %s...", path);
+
+		free((char *) path);
 
 		xmlrpc_DECREF(uris);
 		xmlrpc_DECREF(arr);
