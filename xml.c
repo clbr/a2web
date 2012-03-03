@@ -176,20 +176,19 @@ static void printDownloads() {
 
 		int last = percent*10;
 		last %= 10;
+		int len;
 
 		// Pretty printing.
 		if (percent < 5)
-			snprintf(progress, 2*bufsize, "..progress %.2f%% bar... "
-				"%llu/%llu kB", percent, cur->completed,
-				cur->length);
+			len = 2;
 		else if (last)
-			snprintf(progress, 2*bufsize, "..progress %.1f%% bar... "
-				"%llu/%llu kB", percent, cur->completed,
-				cur->length);
+			len = 1;
 		else
-			snprintf(progress, 2*bufsize, "..progress %.0f%% bar... "
-				"%llu/%llu kB", percent, cur->completed,
-				cur->length);
+			len = 0;
+
+		snprintf(progress, 2*bufsize, "..progress %.*f%% bar... "
+			"%llu/%llu kB", len, percent, cur->completed,
+			cur->length);
 
 		progress[2*bufsize - 1] = '\0';
 
