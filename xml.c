@@ -45,7 +45,7 @@ void getVersion() {
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &version);
 		checkxml();
-		printf("\n<h3 id=version>Version %s</h3><p>", version);
+		printf("\n<div id=version>Connected to aria2 %s.</div>", version);
 		xmlrpc_DECREF(tmp);
 	}
 
