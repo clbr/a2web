@@ -112,3 +112,7 @@ void printDownloads() {
 	printf("\t</tbody>\n</table>\n");
 }
 
+
+void printAdditions() {
+
+}

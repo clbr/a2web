@@ -41,6 +41,7 @@ void getVersion();
 void getStats();
 void getDownloads();
 void printOptions();
+void printAdditions();
 
 void initxml();
 void deinitxml();

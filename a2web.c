@@ -88,6 +88,7 @@ static void handle() {
 	getVersion();
 
 	if (!offline) {
+
 		getStats();
 
 
@@ -104,6 +105,8 @@ static void handle() {
 		}
 
 		printOptions();
+
+		printAdditions();
 	}
 
 	printf("</body></html>\n");
