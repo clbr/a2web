@@ -30,6 +30,8 @@ struct download *downloads = NULL;
 
 static void handle() {
 
+	offline = 0;
+
 	char *gw = getenv("GATEWAY_INTERFACE");
 //	char *ct = getenv("CONTENT_TYPE");
 //	char *cl = getenv("CONTENT_LENGTH");
