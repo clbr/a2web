@@ -115,4 +115,7 @@ void printDownloads() {
 
 void printAdditions() {
 
+	printf("<form id=additions method>\n"
+		"\t<input type=text name=add1 size=80> <input type=button value=Start onclick=\"startdl()\">\n"
+		"</div>\n\n");
 }
