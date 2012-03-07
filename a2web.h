@@ -42,6 +42,7 @@ void getStats();
 void getDownloads();
 void printOptions();
 void printAdditions();
+void addDownload(const char *);
 
 void initxml();
 void deinitxml();

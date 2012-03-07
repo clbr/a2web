@@ -381,3 +381,7 @@ int checkxml() {
 
 	return 0;
 }
+
+void addDownload(const char *url) {
+
+}

@@ -73,6 +73,12 @@ static void handle() {
 				printStats();
 
 			goto out;
+
+		} else if (!strncmp(qs, "add=", 4)) { // Add this url to download
+
+			addDownload(qs + 4);
+
+			goto out;
 		}
 	}
 
