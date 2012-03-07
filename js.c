@@ -67,6 +67,20 @@ void printJS() {
 		"	urlbox.value = '';\n"
 		"}\n"
 
+		"function doenter(e) {\n"
+		"	var key;\n"
+
+		"	if (window.event)\n"
+		"		key = window.event.keyCode;\n"
+		"	else\n"
+		"		key = e.which;\n"
+
+		"	if (key == 13)\n"
+		"		startdl();\n"
+
+		"	return true;\n"
+		"}\n"
+
 		"\n</script>\n",
 		mypath, mypath, mypath);
 }
