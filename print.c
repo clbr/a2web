@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+#include <math.h>
 #include "a2web.h"
 
 #define bufsize 80
@@ -68,6 +69,9 @@ void printDownloads() {
 
 		float percent = (float) cur->completed / cur->length;
 		percent *= 100;
+
+		if (isnan(percent))
+			percent = 0;
 
 		int last = percent*10;
 		last %= 10;
