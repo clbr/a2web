@@ -384,4 +384,20 @@ int checkxml() {
 
 void addDownload(const char *url) {
 
+	xmlrpc_value *xml_url, *res;
+	xmlrpc_value *a = xmlrpc_array_new(x);
+
+	xml_url = xmlrpc_string_new(x, url);
+	xmlrpc_array_append_item(x, a, xml_url);
+
+	res = xmlrpc_client_call(x, server, "aria2.addUri", "(s)", a);
+	checkxml();
+
+	xmlrpc_DECREF(xml_url);
+	xmlrpc_DECREF(a);
+
+	if (x->fault_occurred)
+		return;
+
+	xmlrpc_DECREF(res);
 }
