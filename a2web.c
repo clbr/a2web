@@ -104,13 +104,13 @@ static void handle() {
 		printStats();
 		printf("</div>\n\n");
 
+		printf("<div id=downloads>\n");
 		if (stats.total > 0) {
 			downloads = xcalloc(stats.total, sizeof(struct download));
 
-			printf("<div id=downloads>\n");
 			getDownloads();
-			printf("</div>\n\n");
 		}
+		printf("</div>\n\n");
 
 		printOptions();
 
