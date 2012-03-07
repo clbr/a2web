@@ -56,6 +56,11 @@ void printJS() {
 		"	x.send(null);\n"
 		"}\n"
 
+		"function startdl() {\n"
+		"	var url = document.getElementById('add1').value;\n"
+		"	alert(url);"
+		"}\n"
+
 		"\n</script>\n",
 		mypath, mypath);
 }

@@ -117,7 +117,7 @@ void printAdditions() {
 
 	printf("<div id=additions>\n"
 		"\tAdd new download:<br>\n"
-		"\t<input type=text name=add1 size=80> "
+		"\t<input type=text id=add1 size=80> "
 		"<input type=button value=Start onclick=\"startdl()\">\n"
 		"</div>\n\n");
 }
