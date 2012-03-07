@@ -57,12 +57,14 @@ void printJS() {
 		"}\n"
 
 		"function startdl() {\n"
-		"	var url = document.getElementById('add1').value;\n"
+		"	var urlbox = document.getElementById('add1');\n"
+		"	var url = urlbox.value;\n"
 
 		"	var x = new XMLHttpRequest();\n"
 
 		"	x.open('GET', '%s?add=' + url, true);\n"
 		"	x.send(null);\n"
+		"	urlbox.value = '';\n"
 		"}\n"
 
 		"\n</script>\n",
