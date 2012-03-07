@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #define bufsize 80
 
+static char eta[bufsize]; // We use this static space for the eta
+
 void printStats() {
 
 	printf(
@@ -35,11 +37,32 @@ void printStats() {
 		stats.active, stats.waiting, stats.stopped);
 }
 
+static void calcEta(unsigned long long speed, unsigned long long size) {
+
+	if (!speed) {
+		snprintf(eta, bufsize, "unknown");
+		return;
+	}
+
+	unsigned secs = size/speed;
+
+	if (secs < 120)
+		snprintf(eta, bufsize, "%u second%s", secs, secs==1 ? "" : "s");
+	else if (secs < 60*60)
+		snprintf(eta, bufsize, "%u minutes, %u second%s", secs/60, secs%60,
+			secs==1 ? "" : "s");
+	else
+		snprintf(eta, bufsize, "%f hours", (float) secs / (60.0f*60));
+
+	eta[bufsize-1] = '\0';
+}
+
 void printDownloads() {
 
 	printf("<table border=1>\n"
 		"\t<thead><tr>"
 		"<th>Status</th>"
+		"<th>ETA</th>"
 		"<th>Progress</th>"
 		"<th>Uploaded</th>"
 		"<th>Speed down/up kB/s</th>"
@@ -97,15 +120,22 @@ void printDownloads() {
 
 		progress[2*bufsize - 1] = '\0';
 
+		if (strcmp(cur->status, "complete"))
+			calcEta(cur->down, cur->length - cur->completed);
+		else {
+			eta[0] = '-';
+			eta[1] = '\0';
+		}
 
 		printf("\t<td>%s</td>"
+			"<td>%s</td>"
 			"<td>%s</td>"
 			"<td>%s</td>"
 			"<td>%llu/%llu</td>"
 			"<td>%s</td>"
 			"<td>%s</td>",
 
-			cur->status, progress,
+			cur->status, eta, progress,
 			upped,
 			cur->down, cur->up,
 			seeded, cur->uris ? cur->uris : "");
