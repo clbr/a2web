@@ -17,6 +17,41 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+#include "a2web.h"
+
 void printJS() {
 
+	printf("<script type=\"text/javascript\">\n"
+
+		"setInterval('upd_downloads()', 1800);\n"
+		"setInterval('upd_stats()', 5000);\n"
+
+		"function upd_downloads() {\n"
+		"	var downloads = document.getElementById('downloads');\n"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%s?downloads', true);\n"
+		"	x.onreadystatechange = function() {\n"
+		"		if (x.readyState == 4) {\n"
+		"			downloads.innerHTML = x.responseText;\n"
+		"		}\n"
+		"	}\n"
+		"	x.send(null);\n"
+		"}\n"
+
+		"function upd_stats() {\n"
+		"	var stats = document.getElementById('stats');\n"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%s?stats', true);\n"
+		"	x.onreadystatechange = function() {\n"
+		"		if (x.readyState == 4) {\n"
+		"			stats.innerHTML = x.responseText;\n"
+		"		}\n"
+		"	}\n"
+		"	x.send(null);\n"
+		"}\n"
+
+		"\n</script>\n",
+		mypath, mypath);
 }
