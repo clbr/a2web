@@ -107,6 +107,8 @@ static void handle() {
 		printOptions();
 
 		printAdditions();
+
+		printJS();
 	}
 
 	printf("</body></html>\n");

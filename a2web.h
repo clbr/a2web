@@ -49,6 +49,8 @@ void deinitxml();
 void printDownloads();
 void printStats();
 
+void printJS();
+
 unsigned long long xmltoull(xmlrpc_value *tmp);
 unsigned long xmltoul(xmlrpc_value *tmp);
 
