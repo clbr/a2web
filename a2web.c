@@ -77,6 +77,7 @@ static void handle() {
 		} else if (!strncmp(qs, "add=", 4)) { // Add this url to download
 
 			addDownload(qs + 4);
+			puts("Content-type: text/plain\n");
 
 			goto out;
 		}
