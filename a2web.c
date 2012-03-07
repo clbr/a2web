@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 const char *cwd;
 const char *version;
 char *server = NULL, *user = NULL, *pw = NULL, *themedir = NULL;
+char *mypath = NULL;
 
 char offline = 0;
 
@@ -38,6 +39,7 @@ static void handle() {
 //	char *ua = getenv("HTTP_USER_AGENT");
 //	char *ck = getenv("HTTP_COOKIE");
 	char *qs = getenv("QUERY_STRING");
+	mypath = getenv("SCRIPT_NAME");
 
 	if (!gw || strcmp(gw, "CGI/1.1") != 0) {
 		error(503);

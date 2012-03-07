@@ -85,7 +85,7 @@ struct download {
 
 extern const char *cwd;
 extern const char *version;
-extern char *server, *user, *pw, *themedir;
+extern char *server, *user, *pw, *themedir, *mypath;
 extern char offline;
 
 extern struct stats stats;
