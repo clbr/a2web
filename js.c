@@ -28,6 +28,8 @@ void printJS() {
 
 		"function upd_downloads() {\n"
 		"	var downloads = document.getElementById('downloads');\n"
+		"	if (!downloads) return;"
+
 		"	var x = new XMLHttpRequest();\n"
 
 		"	x.open('GET', '%s?downloads', true);\n"
@@ -41,6 +43,8 @@ void printJS() {
 
 		"function upd_stats() {\n"
 		"	var stats = document.getElementById('stats');\n"
+		"	if (!stats) return;"
+
 		"	var x = new XMLHttpRequest();\n"
 
 		"	x.open('GET', '%s?stats', true);\n"
