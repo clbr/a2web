@@ -58,9 +58,13 @@ void printJS() {
 
 		"function startdl() {\n"
 		"	var url = document.getElementById('add1').value;\n"
-		"	alert(url);"
+
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%s?add=' + url, true);\n"
+		"	x.send(null);\n"
 		"}\n"
 
 		"\n</script>\n",
-		mypath, mypath);
+		mypath, mypath, mypath);
 }
