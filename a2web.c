@@ -46,8 +46,6 @@ static void handle() {
 		return;
 	}
 
-	initxml();
-
 	if (qs) {
 		if (!strcmp(qs, "downloads")) { // Send just the downloads via ajax
 
@@ -134,7 +132,6 @@ static void handle() {
 	}
 
 	out:
-	deinitxml();
 
 	free((char *) version);
 
@@ -148,8 +145,12 @@ int main() {
 
 	readConfig();
 
+	initxml();
+
 	while (FCGI_Accept() >= 0)
 		handle();
+
+	deinitxml();
 
 	free(server);
 	free(user);
