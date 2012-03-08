@@ -19,6 +19,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "a2web.h"
 
+#include <xmlrpc.h>
+#include <xmlrpc_client.h>
+
 static xmlrpc_env xenv;
 static xmlrpc_env *x = &xenv;
 
@@ -55,7 +58,7 @@ void getVersion() {
 	xmlrpc_DECREF(res);
 }
 
-unsigned long long xmltoull(xmlrpc_value *tmp) {
+static unsigned long long xmltoull(xmlrpc_value *tmp) {
 
 	if (!tmp)
 		return 0;
@@ -72,7 +75,7 @@ unsigned long long xmltoull(xmlrpc_value *tmp) {
 	return val;
 }
 
-unsigned long xmltoul(xmlrpc_value *tmp) {
+static unsigned long xmltoul(xmlrpc_value *tmp) {
 
 	if (!tmp)
 		return 0;

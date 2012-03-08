@@ -26,9 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <string.h>
 #include <fcgi_stdio.h>
 
-#include <xmlrpc.h>
-#include <xmlrpc_client.h>
-
 #define NAME "a2web.cgi"
 #define VERSION "0.0"
 
@@ -51,9 +48,6 @@ void printDownloads();
 void printStats();
 
 void printJS();
-
-unsigned long long xmltoull(xmlrpc_value *tmp);
-unsigned long xmltoul(xmlrpc_value *tmp);
 
 void readConfig();
 
