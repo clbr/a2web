@@ -134,8 +134,10 @@ static void handle() {
 	out:
 
 	free((char *) version);
+	version = NULL;
 
 	free(downloads);
+	downloads = NULL;
 }
 
 int main() {
