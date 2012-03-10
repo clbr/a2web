@@ -73,9 +73,9 @@ void printDownloads() {
 	unsigned i;
 	for (i = 0; i < stats.total; i++) {
 
-		printf("\t<tr>");
-
 		struct download *cur = &downloads[i];
+
+		printf("\t<tr id='gid-%s'>", cur->gid);
 
 		char upped[bufsize] = "", seeded[bufsize] = "";
 		char progress[2*bufsize] = "";

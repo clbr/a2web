@@ -36,9 +36,11 @@ void printJS() {
 		"	x.onreadystatechange = function() {\n"
 		"		if (x.readyState == 4) {\n"
 		"			downloads.innerHTML = x.responseText;\n"
+		"			setDownloadChoices();\n"
 		"		}\n"
 		"	}\n"
 		"	x.send(null);\n"
+
 		"}\n"
 
 		"function upd_stats() {\n"
@@ -79,6 +81,32 @@ void printJS() {
 		"		startdl();\n"
 
 		"	return true;\n"
+		"}\n"
+
+		"function setDownloadChoices() {\n"
+		"	var dl = document.getElementById('downloads');\n"
+		"	var tbody = dl.getElementsByTagName('tbody')[0];\n"
+
+		"	var tr = tbody.getElementsByTagName('tr');\n"
+		"	if (!tr) return;\n"
+
+		"	var len = tr.length;\n"
+		"	for (var i = 0; i < len; i++) {\n"
+		"		tr[i].onclick = pickDownload;\n"
+
+		"		if (window.picked == tr[i].id)\n"
+		"			tr[i].style.background = 'pink';"
+		"	}\n"
+		"}\n"
+
+		"function pickDownload() {\n"
+		"	if (window.picked == this.id) {\n"
+		"		this.style.background = 'white';\n"
+		"		window.picked = null;\n"
+		"	} else {\n"
+		"		this.style.background = 'pink';\n"
+		"		window.picked = this.id;\n"
+		"	}\n"
 		"}\n"
 
 		"\n</script>\n",
