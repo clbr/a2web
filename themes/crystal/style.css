@@ -53,7 +53,7 @@ body, html {
 }
 
 #downloads tr.picked {
-	background-color: skyblue;
+	background-color: skyblue !important;
 }
 
 #downloads table {
