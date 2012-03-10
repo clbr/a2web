@@ -24,6 +24,6 @@ clean:
 	rm -f $(NAME) *.o
 
 copy: all
-	mkdir -p $(COPYDIR)/cgi-bin $(COPYDIR)/a2web/themes
+	mkdir -p $(COPYDIR)/cgi-bin $(COPYDIR)/a2web
 	cp $(NAME) $(COPYDIR)/cgi-bin
-	cp -a themes/* $(COPYDIR)/a2web/themes
+	cp -a themes/* $(COPYDIR)/a2web
