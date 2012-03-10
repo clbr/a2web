@@ -168,7 +168,7 @@ void printAdditions() {
 		"\tAdd new download:<br>\n"
 		"\t<input type=text id=add1 size=80 "
 			"onkeypress='return doenter(event)'> \n"
-		"<input type=button value=Start onclick=\"startdl()\">\n"
+		"\t<input type=button value=Start onclick=\"startdl()\">\n"
 
 		"</div>\n\n");
 }
