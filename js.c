@@ -96,7 +96,7 @@ void printJS() {
 		"		tr[i].onclick = pickDownload;\n"
 
 		"		if (window.picked == tr[i].id)\n"
-		"			tr[i].style.background = 'pink';"
+		"			tr[i].classname = 'picked';"
 		"	}\n"
 		"}\n"
 
@@ -109,7 +109,7 @@ void printJS() {
 
 		"	var len = tr.length;\n"
 		"	for (var i = 0; i < len; i++) {\n"
-		"		tr[i].style.background = 'white';"
+		"		tr[i].classname = null;"
 		"	}\n"
 		"}\n"
 
@@ -117,10 +117,10 @@ void printJS() {
 		"	clearDownloadChoices();\n"
 
 		"	if (window.picked == this.id) {\n"
-		"		this.style.background = 'white';\n"
+		"		this.classname = null;\n"
 		"		window.picked = null;\n"
 		"	} else {\n"
-		"		this.style.background = 'pink';\n"
+		"		this.classname = 'picked';\n"
 		"		window.picked = this.id;\n"
 		"	}\n"
 		"}\n"
