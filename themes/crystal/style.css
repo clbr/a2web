@@ -8,6 +8,10 @@ td {
 	text-align: center;
 }
 
+thead tr {
+	background-color: #00db00;
+}
+
 /* The progress bar */
 .meter-outer, .meter-value {
 	background: url(progress.png) repeat-x;
@@ -28,4 +32,32 @@ td {
 	color: white;
 	position: absolute;
 	width: 100%;
+}
+
+/* Downloads table */
+#downloads tbody tr:nth-child(even) {
+	background-color: #d4ff66;
+}
+
+/*#downloads tbody tr:nth-child(odd) {
+	background-color: #66ffed;
+}*/
+
+#downloads {
+	height: 50%;
+}
+
+/* Stats table */
+#stats {
+	display: inline-block;
+}
+
+/* Logo */
+#logo {
+	display: inline-block;
+}
+
+/* Version */
+#version {
+	display: inline-block;
 }
