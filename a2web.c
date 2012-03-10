@@ -100,9 +100,9 @@ static void handle() {
 		getStats();
 
 
-		printf("<div id=stats>\n");
+		printf("<br><br><div id=stats>\n");
 		printStats();
-		printf("</div>\n\n");
+		printf("</div><p>\n\n");
 
 		printf("<div id=downloads>\n");
 		if (stats.total > 0) {
