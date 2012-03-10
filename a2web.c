@@ -91,7 +91,11 @@ static void handle() {
 		"</head>\n"
 		"<body>\n\n", NAME, VERSION, themedir);
 
-	printf("<div id=logo>Running %s v%s</div>\n\n", NAME, VERSION);
+	printf("<div id=logo>"
+		"<img src=\"%s/logo_small.png\" alt=logo width=250 height=218><br>"
+		"Running %s v%s."
+		"</div>\n\n",
+		themedir, NAME, VERSION);
 
 	getVersion();
 
@@ -100,9 +104,9 @@ static void handle() {
 		getStats();
 
 
-		printf("<br><br><div id=stats>\n");
+		printf("<div id=stats>\n");
 		printStats();
-		printf("</div><p>\n\n");
+		printf("</div>\n\n");
 
 		printf("<div id=downloads>\n");
 		if (stats.total > 0) {
