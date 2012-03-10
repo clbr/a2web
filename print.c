@@ -108,15 +108,29 @@ void printDownloads() {
 		else
 			len = 0;
 
+		// Pretty units for the download size
+		char progr_unit[] = "kB";
+		if (cur->length > 1024) {
+			cur->length /= 1024;
+			cur->completed /= 1024;
+			progr_unit[0] = 'M';
+		}
+		if (cur->length > 1024) {
+			cur->length /= 1024;
+			cur->completed /= 1024;
+			progr_unit[0] = 'G';
+		}
+
 		snprintf(progress, 2*bufsize,
 			"<div class=meter-outer>"
 			"<div class=meter-value style=\"width: %.0f%%;\">"
 			"<div class=meter-text>"
-			"%.*f%% - %llu/%llu kB"
+			"%.*f%% - %llu/%llu %s"
 			"</div>"
 			"</div>"
 			"</div>",
-			percent, len, percent, cur->completed, cur->length);
+			percent, len, percent, cur->completed, cur->length,
+			progr_unit);
 
 		progress[2*bufsize - 1] = '\0';
 
