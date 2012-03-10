@@ -25,6 +25,7 @@ void printJS() {
 
 		"setInterval('upd_downloads()', 1800);\n"
 		"setInterval('upd_stats()', 5000);\n"
+		"setDownloadChoices();\n"
 
 		"function upd_downloads() {\n"
 		"	var downloads = document.getElementById('downloads');\n"
