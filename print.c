@@ -52,7 +52,7 @@ static void calcEta(unsigned long long speed, unsigned long long size) {
 		snprintf(eta, bufsize, "%u minutes, %u second%s", secs/60, secs%60,
 			secs==1 ? "" : "s");
 	else
-		snprintf(eta, bufsize, "%f hours", (float) secs / (60.0f*60));
+		snprintf(eta, bufsize, "%.2f hours", (float) secs / (60.0f*60));
 
 	eta[bufsize-1] = '\0';
 }
