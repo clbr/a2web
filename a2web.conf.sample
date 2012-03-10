@@ -1,0 +1,7 @@
+# a2web.conf
+# This config file must be in the same dir as a2web.cgi, readable by it
+
+# The defaults are:
+# server = http://localhost:6800/rpc
+# themedir = a2web/crystal
+# user and password are unset by default
