@@ -10,6 +10,10 @@ LDFLAGS += -Wl,-O1
 
 NAME = a2web.cgi
 
+# Dir for testing
+COPYDIR ?= /tmp
+
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
@@ -20,4 +24,6 @@ clean:
 	rm -f $(NAME) *.o
 
 copy: all
-	cp $(NAME) /tmp/cgi-bin
+	mkdir -p $(COPYDIR)/cgi-bin/a2web/themes
+	cp $(NAME) $(COPYDIR)/cgi-bin
+	cp -a themes/* $(COPYDIR)/cgi-bin/a2web/themes
