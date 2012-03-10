@@ -1,3 +1,26 @@
+/* For debugging */
 div {
 	border: 1px solid;
+}
+
+/* Generics */
+td {
+	text-align: center;
+}
+
+/* The progress bar */
+.meter-outer, .meter-value {
+	background: url(progress.png) repeat-x;
+}
+
+.meter-outer {
+	background-color: #0a0;
+}
+
+.meter-value {
+	background-color: #00a;
+}
+
+.meter-text {
+	color: white;
 }
