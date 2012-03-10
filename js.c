@@ -99,7 +99,22 @@ void printJS() {
 		"	}\n"
 		"}\n"
 
+		"function clearDownloadChoices() {\n"
+		"	var dl = document.getElementById('downloads');\n"
+		"	var tbody = dl.getElementsByTagName('tbody')[0];\n"
+
+		"	var tr = tbody.getElementsByTagName('tr');\n"
+		"	if (!tr) return;\n"
+
+		"	var len = tr.length;\n"
+		"	for (var i = 0; i < len; i++) {\n"
+		"		tr[i].style.background = 'white';"
+		"	}\n"
+		"}\n"
+
 		"function pickDownload() {\n"
+		"	clearDownloadChoices();\n"
+
 		"	if (window.picked == this.id) {\n"
 		"		this.style.background = 'white';\n"
 		"		window.picked = null;\n"
