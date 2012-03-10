@@ -11,10 +11,13 @@ td {
 /* The progress bar */
 .meter-outer, .meter-value {
 	background: url(progress.png) repeat-x;
+	height: 1.2em;
+	width: 180px;
 }
 
 .meter-outer {
 	background-color: #0a0;
+	position: relative;
 }
 
 .meter-value {
@@ -23,4 +26,6 @@ td {
 
 .meter-text {
 	color: white;
+	position: absolute;
+	width: 100%;
 }
