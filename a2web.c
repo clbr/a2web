@@ -86,9 +86,10 @@ static void handle() {
 	printf("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n"
 		"<html><head>\n"
 		"\t<title>%s v%s</title>\n"
-		"\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">"
+		"\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n"
+		"\t<link rel=stylesheet href=\"%s/style.css\" type=\"text/css\">\n"
 		"</head>\n"
-		"<body>\n\n", NAME, VERSION);
+		"<body>\n\n", NAME, VERSION, themedir);
 
 	printf("<div id=logo>Running " NAME " v" VERSION "</div>\n\n");
 
