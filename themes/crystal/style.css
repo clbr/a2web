@@ -12,6 +12,11 @@ thead tr {
 	background-color: #00db00;
 }
 
+body, html {
+	height: 100%;
+	text-align: center;
+}
+
 /* The progress bar */
 .meter-outer, .meter-value {
 	background: url(progress.png) repeat-x;
@@ -45,19 +50,23 @@ thead tr {
 
 #downloads {
 	height: 50%;
+	overflow: auto;
 }
 
 /* Stats table */
 #stats {
 	display: inline-block;
+	clear: both;
 }
 
 /* Logo */
 #logo {
 	display: inline-block;
+	float: left;
 }
 
 /* Version */
 #version {
 	display: inline-block;
+	float: right;
 }
