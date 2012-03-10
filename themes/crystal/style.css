@@ -48,6 +48,14 @@ body, html {
 	background-color: #66ffed;
 }*/
 
+#downloads tbody tr:hover {
+	background-color: #ccc;
+}
+
+#downloads tr.picked {
+	background-color: skyblue;
+}
+
 #downloads table {
 	margin-left: auto;
 	margin-right: auto;
