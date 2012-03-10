@@ -91,7 +91,7 @@ static void handle() {
 		"</head>\n"
 		"<body>\n\n", NAME, VERSION, themedir);
 
-	printf("<div id=logo>Running " NAME " v" VERSION "</div>\n\n");
+	printf("<div id=logo>Running %s v%s</div>\n\n", NAME, VERSION);
 
 	getVersion();
 
