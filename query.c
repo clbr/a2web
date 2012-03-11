@@ -50,6 +50,12 @@ int handle_query(const char *qs) {
 
 		addDownload(qs + 4);
 
+	} else if (!strncmp(qs, "remove=", 7)) { // Remove this gid
+
+		plainpage();
+
+		removedl(qs + 7);
+
 	} else if (!strncmp(qs, "pause=", 6)) { // Pause this gid
 
 		plainpage();

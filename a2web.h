@@ -44,6 +44,7 @@ void printAdditions();
 void addDownload(const char *);
 void cleandl();
 void pausedl(const char *, const int);
+void removedl(const char *);
 
 void initxml();
 void deinitxml();

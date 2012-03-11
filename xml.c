@@ -445,3 +445,27 @@ void pausedl(const char *gid, const int unpause) {
 
 	xmlrpc_DECREF(res);
 }
+
+void removedl(const char *gid) {
+
+	xmlrpc_value *xml_gid, *res, *res2;
+	xmlrpc_value *a = xmlrpc_array_new(x);
+
+	xml_gid = xmlrpc_string_new(x, gid);
+	xmlrpc_array_append_item(x, a, xml_gid);
+
+	res = xmlrpc_client_call_params(x, server, "aria2.remove", a);
+	checkxml();
+
+	res2 = xmlrpc_client_call_params(x, server, "aria2.removeDownloadResult", a);
+	checkxml();
+
+	xmlrpc_DECREF(xml_gid);
+	xmlrpc_DECREF(a);
+
+	if (x->fault_occurred)
+		return;
+
+	xmlrpc_DECREF(res);
+	xmlrpc_DECREF(res2);
+}
