@@ -50,6 +50,12 @@ int handle_query(const char *qs) {
 
 		addDownload(qs + 4);
 
+	} else if (!strcmp(qs, "cleanup")) { // Add this url to download
+
+		plainpage();
+
+		cleandl();
+
 	} else {
 
 		return 0;

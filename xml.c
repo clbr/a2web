@@ -407,3 +407,7 @@ void addDownload(const char *url) {
 
 	xmlrpc_DECREF(res);
 }
+
+void cleandl() {
+
+}

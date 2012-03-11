@@ -48,12 +48,13 @@ void deinitxml();
 
 void printDownloads();
 void printStats();
-
 void printJS();
 
 void readConfig();
 
 int handle_query(const char *);
+
+void cleandl();
 
 struct stats {
 	unsigned long long down;
