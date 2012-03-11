@@ -50,6 +50,12 @@ int handle_query(const char *qs) {
 
 		addDownload(qs + 4);
 
+	} else if (!strncmp(qs, "pause=", 6)) { // Pause this gid
+
+		plainpage();
+
+		pausedl(qs + 6);
+
 	} else if (!strcmp(qs, "cleanup")) { // Purge stopped downloads
 
 		plainpage();

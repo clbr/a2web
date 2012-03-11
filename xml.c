@@ -422,3 +422,23 @@ void cleandl() {
 
 	xmlrpc_DECREF(res);
 }
+
+void pausedl(const char *gid) {
+
+	xmlrpc_value *xml_gid, *res;
+	xmlrpc_value *a = xmlrpc_array_new(x);
+
+	xml_gid = xmlrpc_string_new(x, gid);
+	xmlrpc_array_append_item(x, a, xml_gid);
+
+	res = xmlrpc_client_call_params(x, server, "aria2.pause", a);
+	checkxml();
+
+	xmlrpc_DECREF(xml_gid);
+	xmlrpc_DECREF(a);
+
+	if (x->fault_occurred)
+		return;
+
+	xmlrpc_DECREF(res);
+}

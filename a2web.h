@@ -42,6 +42,8 @@ void getDownloads();
 void printOptions();
 void printAdditions();
 void addDownload(const char *);
+void cleandl();
+void pausedl(const char *);
 
 void initxml();
 void deinitxml();
@@ -53,8 +55,6 @@ void printJS();
 void readConfig();
 
 int handle_query(const char *);
-
-void cleandl();
 
 struct stats {
 	unsigned long long down;
