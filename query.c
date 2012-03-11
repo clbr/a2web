@@ -56,6 +56,18 @@ int handle_query(const char *qs) {
 
 		removedl(qs + 7);
 
+	} else if (!strncmp(qs, "prioup=", 7)) { // Move this gid up
+
+		plainpage();
+
+		priodl(qs + 7, -1);
+
+	} else if (!strncmp(qs, "priodown=", 9)) { // Move this gid down
+
+		plainpage();
+
+		priodl(qs + 9, 1);
+
 	} else if (!strncmp(qs, "pause=", 6)) { // Pause this gid
 
 		plainpage();

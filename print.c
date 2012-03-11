@@ -187,10 +187,10 @@ void printOptions() {
 	printf("\t<button onclick='removedl()' title='Remove from list'>"
 		"<img src='%s/remove.png' alt=Remove width=32 height=32>"
 		"</button>\n", themedir);
-	printf("\t<button onclick='prioupdl()' title='Priority up'>"
+	printf("\t<button onclick='prioupdl()' title='Priority up on the waiting list'>"
 		"<img src='%s/up.png' alt=MorePrio width=32 height=32>"
 		"</button>\n", themedir);
-	printf("\t<button onclick='priodowndl()' title='Priority down'>"
+	printf("\t<button onclick='priodowndl()' title='Priority down on the waiting list'>"
 		"<img src='%s/down.png' alt=LessPrio width=32 height=32>"
 		"</button>\n", themedir);
 	printf("\t<button onclick='cleandl()' "

@@ -469,3 +469,30 @@ void removedl(const char *gid) {
 	xmlrpc_DECREF(res);
 	xmlrpc_DECREF(res2);
 }
+
+void priodl(const char *gid, const int change) {
+
+	xmlrpc_value *xml_gid, *res, *xml_change, *xml_how;
+	xmlrpc_value *a = xmlrpc_array_new(x);
+
+	xml_gid = xmlrpc_string_new(x, gid);
+	xml_how = xmlrpc_string_new(x, "POS_CUR");
+	xml_change = xmlrpc_int_new(x, change);
+
+	xmlrpc_array_append_item(x, a, xml_gid);
+	xmlrpc_array_append_item(x, a, xml_change);
+	xmlrpc_array_append_item(x, a, xml_how);
+
+	res = xmlrpc_client_call_params(x, server, "aria2.changePosition", a);
+	checkxml();
+
+	xmlrpc_DECREF(xml_gid);
+	xmlrpc_DECREF(xml_how);
+	xmlrpc_DECREF(xml_change);
+	xmlrpc_DECREF(a);
+
+	if (x->fault_occurred)
+		return;
+
+	xmlrpc_DECREF(res);
+}
