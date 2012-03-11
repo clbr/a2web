@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 static char eta[bufsize]; // We use this static space for the eta
 
+
 void printStats() {
 
 	printf(
@@ -36,6 +37,7 @@ void printStats() {
 		stats.down, stats.up, stats.total,
 		stats.active, stats.waiting, stats.stopped);
 }
+
 
 static void calcEta(unsigned long long speed, unsigned long long size) {
 
@@ -56,6 +58,7 @@ static void calcEta(unsigned long long speed, unsigned long long size) {
 
 	eta[bufsize-1] = '\0';
 }
+
 
 void printDownloads() {
 
@@ -172,6 +175,7 @@ void printAdditions() {
 
 		"</div>\n\n");
 }
+
 
 void printOptions() {
 
