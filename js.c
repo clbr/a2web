@@ -29,11 +29,11 @@ void printJS() {
 
 		"function upd_downloads() {\n"
 		"	var downloads = document.getElementById('downloads');\n"
-		"	if (!downloads) return;"
+		"	if (!downloads) return;\n"
 
 		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%s?downloads', true);\n"
+		"	x.open('GET', '%1$s?downloads', true);\n"
 		"	x.onreadystatechange = function() {\n"
 		"		if (x.readyState == 4) {\n"
 		"			downloads.innerHTML = x.responseText;\n"
@@ -46,11 +46,11 @@ void printJS() {
 
 		"function upd_stats() {\n"
 		"	var stats = document.getElementById('stats');\n"
-		"	if (!stats) return;"
+		"	if (!stats) return;\n"
 
 		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%s?stats', true);\n"
+		"	x.open('GET', '%1$s?stats', true);\n"
 		"	x.onreadystatechange = function() {\n"
 		"		if (x.readyState == 4) {\n"
 		"			stats.innerHTML = x.responseText;\n"
@@ -65,7 +65,7 @@ void printJS() {
 
 		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%s?add=' + url, true);\n"
+		"	x.open('GET', '%1$s?add=' + url, true);\n"
 		"	x.send(null);\n"
 		"	urlbox.value = '';\n"
 		"}\n"
@@ -172,5 +172,5 @@ void printJS() {
 		"}\n"
 
 		"\n</script>\n",
-		mypath, mypath, mypath);
+		mypath);
 }
