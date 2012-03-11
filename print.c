@@ -181,6 +181,11 @@ void printOptions() {
 
 	printf("<div id=options>\n");
 
+	printf("\t<button onclick='pause()'>Pause</button>\n");
+	printf("\t<button onclick='pause()'>Stop</button>\n");
+	printf("\t<button onclick='pause()'>Remove from list</button>\n");
+	printf("\t<button onclick='pause()'>Priority up</button>\n");
+	printf("\t<button onclick='pause()'>Priority down</button>\n");
 
-	printf("</div>\n");
+	printf("</div>\n\n");
 }
