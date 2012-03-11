@@ -410,4 +410,15 @@ void addDownload(const char *url) {
 
 void cleandl() {
 
+	xmlrpc_value *a = xmlrpc_array_new(x), *res;
+
+	res = xmlrpc_client_call_params(x, server, "aria2.purgeDownloadResult", a);
+	checkxml();
+
+	xmlrpc_DECREF(a);
+
+	if (x->fault_occurred)
+		return;
+
+	xmlrpc_DECREF(res);
 }
