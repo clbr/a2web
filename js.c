@@ -135,6 +135,42 @@ void printJS() {
 		"	return true;\n"
 		"}\n"
 
+		"function pausedl() {\n"
+		"	if (!checkPicked())\n"
+		"		return;\n"
+
+		"}\n"
+
+		"function stopdl() {\n"
+		"	if (!checkPicked())\n"
+		"		return;\n"
+
+		"}\n"
+
+		"function removedl() {\n"
+		"	if (!checkPicked())\n"
+		"		return;\n"
+
+		"}\n"
+
+		"function prioupdl() {\n"
+		"	if (!checkPicked())\n"
+		"		return;\n"
+
+		"}\n"
+
+		"function priodowndl() {\n"
+		"	if (!checkPicked())\n"
+		"		return;\n"
+
+		"}\n"
+
+		"function cleandl() {\n"
+		"	if (!checkPicked())\n"
+		"		return;\n"
+
+		"}\n"
+
 		"\n</script>\n",
 		mypath, mypath, mypath);
 }
