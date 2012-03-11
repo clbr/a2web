@@ -108,6 +108,13 @@ void printDownloads() {
 		else
 			len = 0;
 
+		if (strcmp(cur->status, "complete"))
+			calcEta(cur->down, cur->length - cur->completed);
+		else {
+			eta[0] = '-';
+			eta[1] = '\0';
+		}
+
 		// Pretty units for the download size
 		char progr_unit[] = "kB";
 		if (cur->length > 1024) {
@@ -133,13 +140,6 @@ void printDownloads() {
 			progr_unit);
 
 		progress[2*bufsize - 1] = '\0';
-
-		if (strcmp(cur->status, "complete"))
-			calcEta(cur->down, cur->length - cur->completed);
-		else {
-			eta[0] = '-';
-			eta[1] = '\0';
-		}
 
 		printf("\t<td>%s</td>"
 			"<td>%s</td>"
