@@ -140,6 +140,10 @@ void printJS() {
 		"		return;\n"
 
 		"	var gid = window.picked.substr(4);\n"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?pause=' + gid, true);\n"
+		"	x.send(null);\n"
 
 		"}\n"
 
@@ -148,6 +152,10 @@ void printJS() {
 		"		return;\n"
 
 		"	var gid = window.picked.substr(4);\n"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?stop=' + gid, true);\n"
+		"	x.send(null);\n"
 
 		"}\n"
 
@@ -156,6 +164,10 @@ void printJS() {
 		"		return;\n"
 
 		"	var gid = window.picked.substr(4);\n"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?remove=' + gid, true);\n"
+		"	x.send(null);\n"
 
 		"}\n"
 
@@ -164,6 +176,10 @@ void printJS() {
 		"		return;\n"
 
 		"	var gid = window.picked.substr(4);\n"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?prioup=' + gid, true);\n"
+		"	x.send(null);\n"
 
 		"}\n"
 
@@ -172,6 +188,10 @@ void printJS() {
 		"		return;\n"
 
 		"	var gid = window.picked.substr(4);\n"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
+		"	x.send(null);\n"
 
 		"}\n"
 
@@ -180,6 +200,10 @@ void printJS() {
 		"		return;\n"
 
 		"	var gid = window.picked.substr(4);\n"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?cleanup', true);\n"
+		"	x.send(null);\n"
 
 		"}\n"
 
