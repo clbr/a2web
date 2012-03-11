@@ -54,13 +54,13 @@ int handle_query(const char *qs) {
 
 		plainpage();
 
-		pausedl(qs + 6, "");
+		pausedl(qs + 6, 0);
 
 	} else if (!strncmp(qs, "unpause=", 8)) { // Pause this gid
 
 		plainpage();
 
-		pausedl(qs + 8, "un");
+		pausedl(qs + 8, 1);
 
 	} else if (!strcmp(qs, "cleanup")) { // Purge stopped downloads
 
