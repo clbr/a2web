@@ -25,7 +25,7 @@ int handle_query(const char *qs) {
 
 	if (!strcmp(qs, "downloads")) { // Send just the downloads via ajax
 
-		puts("Content-type: text/html\n");
+		htmlpage();
 
 		getStats();
 
@@ -37,7 +37,7 @@ int handle_query(const char *qs) {
 
 	} else if (!strcmp(qs, "stats")) { // Send just the stats via ajax
 
-		puts("Content-type: text/html\n");
+		htmlpage();
 
 		getStats();
 
@@ -46,8 +46,9 @@ int handle_query(const char *qs) {
 
 	} else if (!strncmp(qs, "add=", 4)) { // Add this url to download
 
+		plainpage();
+
 		addDownload(qs + 4);
-		puts("Content-type: text/plain\n");
 
 	} else {
 

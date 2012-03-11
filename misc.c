@@ -21,6 +21,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 void error(const int num) {
 
+	// This bypasses busybox httpd, so do CRLF
+
 	printf("Status: %d\r\n", num);
 	printf("Content-type: text/html\r\n\r\n");
 
@@ -43,4 +45,12 @@ void *xrealloc(void *ptr, size_t size) {
 		exit(2);
 
 	return out;
+}
+
+void plainpage() {
+	puts("Content-type: text/plain\n");
+}
+
+void htmlpage() {
+	puts("Content-type: text/html\n");
 }

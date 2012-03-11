@@ -33,6 +33,8 @@ void error(const int num);
 int checkxml();
 void *xcalloc(size_t nmemb, size_t size);
 void *xrealloc(void *ptr, size_t size);
+void plainpage();
+void htmlpage();
 
 void getVersion();
 void getStats();
