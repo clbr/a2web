@@ -59,8 +59,6 @@ static void handle() {
 				getDownloads();
 			}
 
-			goto outdownloads;
-
 		} else if (!strcmp(qs, "stats")) { // Send just the stats via ajax
 
 			puts("Content-type: text/html\n");
@@ -70,15 +68,13 @@ static void handle() {
 			if (!offline)
 				printStats();
 
-			goto out;
-
 		} else if (!strncmp(qs, "add=", 4)) { // Add this url to download
 
 			addDownload(qs + 4);
 			puts("Content-type: text/plain\n");
-
-			goto out;
 		}
+
+		goto out;
 	}
 
 	puts("Content-type: text/html\n");
@@ -128,15 +124,14 @@ static void handle() {
 
 	unsigned i;
 
-	outdownloads:
-	for (i = 0; i < stats.total; i++) {
+	out:
+
+	if (downloads) for (i = 0; i < stats.total; i++) {
 		free((char *) downloads[i].gid);
 		free((char *) downloads[i].parent);
 		free((char *) downloads[i].status);
 		free((char *) downloads[i].uris);
 	}
-
-	out:
 
 	free((char *) version);
 	version = NULL;
