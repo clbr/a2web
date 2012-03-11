@@ -87,3 +87,8 @@ body, html {
 	display: inline-block;
 	float: right;
 }
+
+#additions {
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
