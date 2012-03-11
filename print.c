@@ -172,3 +172,11 @@ void printAdditions() {
 
 		"</div>\n\n");
 }
+
+void printOptions() {
+
+	printf("<div id=options>\n");
+
+
+	printf("</div>\n");
+}
