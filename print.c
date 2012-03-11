@@ -31,10 +31,10 @@ void printStats() {
 		"\tTotal download speed: <span class=number>%llu</span> kB/s<p>\n"
 		"\tTotal upload speed: <span class=number>%llu</span> kB/s<p>\n"
 
-		"\tTotal %u downloads, active/waiting/stopped: "
+		"\tTotal %u download%s, active/waiting/stopped: "
 		"<span class=number>%u/%u/%u</span>\n",
 
-		stats.down, stats.up, stats.total,
+		stats.down, stats.up, stats.total, stats.total > 1 ? "s" : "",
 		stats.active, stats.waiting, stats.stopped);
 }
 
