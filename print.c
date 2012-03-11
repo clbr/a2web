@@ -181,11 +181,25 @@ void printOptions() {
 
 	printf("<div id=options>\n");
 
-	printf("\t<button onclick='pause()'>Pause</button>\n");
-	printf("\t<button onclick='pause()'>Stop</button>\n");
-	printf("\t<button onclick='pause()'>Remove from list</button>\n");
-	printf("\t<button onclick='pause()'>Priority up</button>\n");
-	printf("\t<button onclick='pause()'>Priority down</button>\n");
+	printf("\t<button onclick='pausedl()' title=Pause>"
+		"<img src='%s/pause.png' alt=Pause width=32 height=32>"
+		"</button>\n", themedir);
+	printf("\t<button onclick='stopdl()' title=Stop>"
+		"<img src='%s/stop.png' alt=Stop width=32 height=32>"
+		"</button>\n", themedir);
+	printf("\t<button onclick='removedl()' title='Remove from list'>"
+		"<img src='%s/remove.png' alt=Remove width=32 height=32>"
+		"</button>\n", themedir);
+	printf("\t<button onclick='prioupdl()' title='Priority up'>"
+		"<img src='%s/up.png' alt=MorePrio width=32 height=32>"
+		"</button>\n", themedir);
+	printf("\t<button onclick='priodowndl()' title='Priority down'>"
+		"<img src='%s/down.png' alt=LessPrio width=32 height=32>"
+		"</button>\n", themedir);
+	printf("\t<button onclick='cleandl()' "
+		"title='Clean up completed/error/removed downloads'>"
+		"<img src='%s/reload.png' alt=Cleanup width=32 height=32>"
+		"</button>\n", themedir);
 
 	printf("</div>\n\n");
 }
