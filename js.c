@@ -155,18 +155,6 @@ void printJS() {
 
 		"}\n"
 
-		"function stopdl() {\n"
-		"	if (!checkPicked())\n"
-		"		return;\n"
-
-		"	var gid = window.picked.substr(4);\n"
-		"	var x = new XMLHttpRequest();\n"
-
-		"	x.open('GET', '%1$s?stop=' + gid, true);\n"
-		"	x.send(null);\n"
-
-		"}\n"
-
 		"function removedl() {\n"
 		"	if (!checkPicked())\n"
 		"		return;\n"

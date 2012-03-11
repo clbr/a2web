@@ -184,9 +184,6 @@ void printOptions() {
 	printf("\t<button onclick='pausedl()' title=Pause>"
 		"<img src='%s/pause.png' alt=Pause width=32 height=32>"
 		"</button>\n", themedir);
-	printf("\t<button onclick='stopdl()' title=Stop>"
-		"<img src='%s/stop.png' alt=Stop width=32 height=32>"
-		"</button>\n", themedir);
 	printf("\t<button onclick='removedl()' title='Remove from list'>"
 		"<img src='%s/remove.png' alt=Remove width=32 height=32>"
 		"</button>\n", themedir);
