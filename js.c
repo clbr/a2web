@@ -125,6 +125,16 @@ void printJS() {
 		"	}\n"
 		"}\n"
 
+		"function checkPicked() {\n"
+
+		"	if (!window.picked || window.picked.indexOf('gid') == -1) {\n"
+		"		alert('No download selected?');\n"
+		"		return false;\n"
+		"	}\n"
+
+		"	return true;\n"
+		"}\n"
+
 		"\n</script>\n",
 		mypath, mypath, mypath);
 }
