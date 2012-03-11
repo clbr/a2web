@@ -24,7 +24,7 @@ void error(const int num) {
 	printf("Status: %d\r\n", num);
 	printf("Content-type: text/html\r\n\r\n");
 
-	printf("<h1>Error %d</h1>", num);
+	printf("<h1>Error %d</h1>\n", num);
 }
 
 void *xcalloc(size_t nmemb, size_t size) {
