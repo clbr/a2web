@@ -47,9 +47,8 @@ static void handle() {
 	}
 
 	if (qs) {
-		handle_query(qs);
-
-		goto out;
+		if (handle_query(qs))
+			goto out;
 	}
 
 	puts("Content-type: text/html\n");

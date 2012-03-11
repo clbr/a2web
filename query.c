@@ -19,7 +19,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "a2web.h"
 
-void handle_query(const char *qs) {
+// Returns 1 if the query was handled
+
+int handle_query(const char *qs) {
 
 	if (!strcmp(qs, "downloads")) { // Send just the downloads via ajax
 
@@ -46,5 +48,11 @@ void handle_query(const char *qs) {
 
 		addDownload(qs + 4);
 		puts("Content-type: text/plain\n");
+
+	} else {
+
+		return 0;
 	}
+
+	return 1;
 }
