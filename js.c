@@ -139,11 +139,15 @@ void printJS() {
 		"	if (!checkPicked())\n"
 		"		return;\n"
 
+		"	var gid = window.picked.substr(4);\n"
+
 		"}\n"
 
 		"function stopdl() {\n"
 		"	if (!checkPicked())\n"
 		"		return;\n"
+
+		"	var gid = window.picked.substr(4);\n"
 
 		"}\n"
 
@@ -151,11 +155,15 @@ void printJS() {
 		"	if (!checkPicked())\n"
 		"		return;\n"
 
+		"	var gid = window.picked.substr(4);\n"
+
 		"}\n"
 
 		"function prioupdl() {\n"
 		"	if (!checkPicked())\n"
 		"		return;\n"
+
+		"	var gid = window.picked.substr(4);\n"
 
 		"}\n"
 
@@ -163,11 +171,15 @@ void printJS() {
 		"	if (!checkPicked())\n"
 		"		return;\n"
 
+		"	var gid = window.picked.substr(4);\n"
+
 		"}\n"
 
 		"function cleandl() {\n"
 		"	if (!checkPicked())\n"
 		"		return;\n"
+
+		"	var gid = window.picked.substr(4);\n"
 
 		"}\n"
 
