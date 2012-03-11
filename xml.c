@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <xmlrpc.h>
 #include <xmlrpc_client.h>
 
+#define bufsize 80
+
 static xmlrpc_env xenv;
 static xmlrpc_env *x = &xenv;
 
@@ -423,7 +425,7 @@ void cleandl() {
 	xmlrpc_DECREF(res);
 }
 
-void pausedl(const char *gid) {
+void pausedl(const char *gid, const char *prefix) {
 
 	xmlrpc_value *xml_gid, *res;
 	xmlrpc_value *a = xmlrpc_array_new(x);
@@ -431,7 +433,11 @@ void pausedl(const char *gid) {
 	xml_gid = xmlrpc_string_new(x, gid);
 	xmlrpc_array_append_item(x, a, xml_gid);
 
-	res = xmlrpc_client_call_params(x, server, "aria2.pause", a);
+	char tmp[bufsize];
+	snprintf(tmp, bufsize, "aria2.%spause", prefix);
+	tmp[bufsize-1] = '\0';
+
+	res = xmlrpc_client_call_params(x, server, tmp, a);
 	checkxml();
 
 	xmlrpc_DECREF(xml_gid);

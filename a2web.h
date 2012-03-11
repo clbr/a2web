@@ -43,7 +43,7 @@ void printOptions();
 void printAdditions();
 void addDownload(const char *);
 void cleandl();
-void pausedl(const char *);
+void pausedl(const char *, const char *);
 
 void initxml();
 void deinitxml();
