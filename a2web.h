@@ -51,6 +51,8 @@ void printJS();
 
 void readConfig();
 
+void handle_query(const char *);
+
 struct stats {
 	unsigned long long down;
 	unsigned long long up;

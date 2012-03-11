@@ -47,32 +47,7 @@ static void handle() {
 	}
 
 	if (qs) {
-		if (!strcmp(qs, "downloads")) { // Send just the downloads via ajax
-
-			puts("Content-type: text/html\n");
-
-			getStats();
-
-			if (stats.total > 0 && !offline) {
-				downloads = xcalloc(stats.total, sizeof(struct download));
-
-				getDownloads();
-			}
-
-		} else if (!strcmp(qs, "stats")) { // Send just the stats via ajax
-
-			puts("Content-type: text/html\n");
-
-			getStats();
-
-			if (!offline)
-				printStats();
-
-		} else if (!strncmp(qs, "add=", 4)) { // Add this url to download
-
-			addDownload(qs + 4);
-			puts("Content-type: text/plain\n");
-		}
+		handle_query(qs);
 
 		goto out;
 	}
