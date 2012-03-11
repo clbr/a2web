@@ -95,8 +95,10 @@ void printJS() {
 		"	for (var i = 0; i < len; i++) {\n"
 		"		tr[i].onclick = pickDownload;\n"
 
-		"		if (window.picked == tr[i].id)\n"
+		"		if (window.picked == tr[i].id) {\n"
 		"			tr[i].className = 'picked';"
+		"			window.pickedstatus = tr[i].children[0].innerHTML;\n"
+		"		}\n"
 		"	}\n"
 		"}\n"
 
@@ -119,9 +121,11 @@ void printJS() {
 		"	if (window.picked == this.id) {\n"
 		"		this.className = null;\n"
 		"		window.picked = null;\n"
+		"		window.pickedstatus = null;\n"
 		"	} else {\n"
 		"		this.className = 'picked';\n"
 		"		window.picked = this.id;\n"
+		"		window.pickedstatus = this.children[0].innerHTML;\n"
 		"	}\n"
 		"}\n"
 
@@ -142,7 +146,11 @@ void printJS() {
 		"	var gid = window.picked.substr(4);\n"
 		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?pause=' + gid, true);\n"
+		"	if (window.pickedstatus == 'paused')\n"
+		"		x.open('GET', '%1$s?unpause=' + gid, true);\n"
+		"	else\n"
+		"		x.open('GET', '%1$s?pause=' + gid, true);\n"
+
 		"	x.send(null);\n"
 
 		"}\n"
