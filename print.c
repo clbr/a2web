@@ -83,7 +83,7 @@ void printDownloads() {
 		if (cur->uploaded)
 			snprintf(upped, bufsize, "%llu", cur->uploaded);
 
-		if (cur->seeders)
+		if (cur->seeders || cur->connections)
 			snprintf(seeded, bufsize, "%u/%u", cur->seeders,
 				 cur->connections);
 
