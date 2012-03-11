@@ -196,10 +196,7 @@ void printJS() {
 		"}\n"
 
 		"function cleandl() {\n"
-		"	if (!checkPicked())\n"
-		"		return;\n"
 
-		"	var gid = window.picked.substr(4);\n"
 		"	var x = new XMLHttpRequest();\n"
 
 		"	x.open('GET', '%1$s?cleanup', true);\n"
