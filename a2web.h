@@ -29,18 +29,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define NAME "a2web.cgi"
 #define VERSION "0.0"
 
+// misc.c
 void error(const int num);
-int checkxml();
 void *xcalloc(size_t nmemb, size_t size);
 void *xrealloc(void *ptr, size_t size);
 void plainpage();
 void htmlpage();
 
+// xml.c
+int checkxml();
 void getVersion();
 void getStats();
 void getDownloads();
-void printOptions();
-void printAdditions();
+
 void addDownload(const char *);
 void cleanDownload();
 void pauseDownload(const char *, const int);
@@ -50,12 +51,17 @@ void prioDownload(const char *, const int);
 void initxml();
 void deinitxml();
 
+// print.c
 void printDownloads();
 void printStats();
 void printJS();
+void printOptions();
+void printAdditions();
 
+// config.c
 void readConfig();
 
+// query.c
 int handle_query(const char *);
 
 struct stats {
