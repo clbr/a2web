@@ -29,6 +29,8 @@ char offline = 0;
 struct stats stats;
 struct download *downloads = NULL;
 
+
+// Handle one call from the client
 static void handle() {
 
 	offline = 0;

@@ -29,6 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 extern char *server, *user, *pw, *themedir;
 
+// Check the detected argument and parameter
 static void settings(const char *arg, const char *param) {
 
 	if (!strcmp(arg, "server")) {
@@ -53,6 +54,7 @@ static void settings(const char *arg, const char *param) {
 
 }
 
+// Separate the current line to an arg and a param
 static void readLine(char *in, const regex_t *reg) {
 
 	if (regexec(reg, in, 0, NULL, 0)) {
@@ -84,6 +86,7 @@ static void readLine(char *in, const regex_t *reg) {
 	free(param);
 }
 
+// Read the config file, and separate into lines
 void readConfig() {
 
 	const char name[] = "a2web.conf";

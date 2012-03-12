@@ -38,7 +38,7 @@ void printStats() {
 		stats.active, stats.waiting, stats.stopped);
 }
 
-
+// Calculate the ETA for this speed and size, kb/s
 static void calcEta(unsigned long long speed, unsigned long long size) {
 
 	if (!speed) {

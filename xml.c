@@ -408,6 +408,7 @@ void addDownload(const char *url) {
 	xmlrpc_DECREF(res);
 }
 
+// Remove stopped/error/completed downloads from the list
 void cleanDownload() {
 
 	xmlrpc_value *a = xmlrpc_array_new(x), *res;
@@ -470,6 +471,7 @@ void removeDownload(const char *gid) {
 	xmlrpc_DECREF(res2);
 }
 
+// Change the priority of this waiting download
 void prioDownload(const char *gid, const int change) {
 
 	xmlrpc_value *xml_gid, *res, *xml_change, *xml_how;
