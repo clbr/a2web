@@ -54,37 +54,37 @@ int handle_query(const char *qs) {
 
 		plainpage();
 
-		removedl(qs + 7);
+		removeDownload(qs + 7);
 
 	} else if (!strncmp(qs, "prioup=", 7)) { // Move this gid up
 
 		plainpage();
 
-		priodl(qs + 7, -1);
+		prioDownload(qs + 7, -1);
 
 	} else if (!strncmp(qs, "priodown=", 9)) { // Move this gid down
 
 		plainpage();
 
-		priodl(qs + 9, 1);
+		prioDownload(qs + 9, 1);
 
 	} else if (!strncmp(qs, "pause=", 6)) { // Pause this gid
 
 		plainpage();
 
-		pausedl(qs + 6, 0);
+		pauseDownload(qs + 6, 0);
 
 	} else if (!strncmp(qs, "unpause=", 8)) { // Pause this gid
 
 		plainpage();
 
-		pausedl(qs + 8, 1);
+		pauseDownload(qs + 8, 1);
 
 	} else if (!strcmp(qs, "cleanup")) { // Purge stopped downloads
 
 		plainpage();
 
-		cleandl();
+		cleanDownload();
 
 	} else {
 

@@ -42,10 +42,10 @@ void getDownloads();
 void printOptions();
 void printAdditions();
 void addDownload(const char *);
-void cleandl();
-void pausedl(const char *, const int);
-void removedl(const char *);
-void priodl(const char *, const int);
+void cleanDownload();
+void pauseDownload(const char *, const int);
+void removeDownload(const char *);
+void prioDownload(const char *, const int);
 
 void initxml();
 void deinitxml();

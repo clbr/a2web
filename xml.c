@@ -408,7 +408,7 @@ void addDownload(const char *url) {
 	xmlrpc_DECREF(res);
 }
 
-void cleandl() {
+void cleanDownload() {
 
 	xmlrpc_value *a = xmlrpc_array_new(x), *res;
 
@@ -423,7 +423,7 @@ void cleandl() {
 	xmlrpc_DECREF(res);
 }
 
-void pausedl(const char *gid, const int unpause) {
+void pauseDownload(const char *gid, const int unpause) {
 
 	xmlrpc_value *xml_gid, *res;
 	xmlrpc_value *a = xmlrpc_array_new(x);
@@ -446,7 +446,7 @@ void pausedl(const char *gid, const int unpause) {
 	xmlrpc_DECREF(res);
 }
 
-void removedl(const char *gid) {
+void removeDownload(const char *gid) {
 
 	xmlrpc_value *xml_gid, *res, *res2;
 	xmlrpc_value *a = xmlrpc_array_new(x);
@@ -470,7 +470,7 @@ void removedl(const char *gid) {
 	xmlrpc_DECREF(res2);
 }
 
-void priodl(const char *gid, const int change) {
+void prioDownload(const char *gid, const int change) {
 
 	xmlrpc_value *xml_gid, *res, *xml_change, *xml_how;
 	xmlrpc_value *a = xmlrpc_array_new(x);
