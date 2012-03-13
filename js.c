@@ -205,7 +205,7 @@ void printJS() {
 
 		"function showsettings() {\n"
 
-		"	document.write('<div id=settings><\\/div>');"
+		"	var settings = document.getElementById('settings');"
 		"}\n"
 
 		"-->\n"
