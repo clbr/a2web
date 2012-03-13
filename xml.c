@@ -551,8 +551,13 @@ void getSettings() {
 	xmlrpc_struct_find_value(x, res, "disable-ipv6", &tmp);
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
-		printf("<tr><td>Disable ipv6:</td><td><input type=text size=30 value='%s'></td></tr>",
-			str);
+
+		int checked = 0;
+		if (!strcmp(str, "true")) checked = 1;
+
+		printf("<tr><td><label for=tickv6>Disable ipv6:</label></td>"
+			"<td><input type=checkbox %s id=tickv6></td></tr>",
+			checked ? "checked" : "");
 		free((char *) str);
 		xmlrpc_DECREF(tmp);
 	}
