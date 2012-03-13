@@ -542,8 +542,10 @@ void getSettings() {
 	xmlrpc_struct_find_value(x, res, "dir", &tmp);
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
-		printf("<tr><td>Download directory:</td><td><input type=text size=30 value='%s'></td></tr>",
+		printf("<tr><td>Download directory:</td>"
+			"<td><input type=text size=30 value='%s' id=dir></td></tr>",
 			str);
+
 		free((char *) str);
 		xmlrpc_DECREF(tmp);
 	}
@@ -558,6 +560,7 @@ void getSettings() {
 		printf("<tr><td><label for=tickv6>Disable ipv6:</label></td>"
 			"<td><input type=checkbox %s id=tickv6></td></tr>",
 			checked ? "checked" : "");
+
 		free((char *) str);
 		xmlrpc_DECREF(tmp);
 	}
@@ -587,8 +590,10 @@ void getSettings() {
 	xmlrpc_struct_find_value(x, res, "listen-port", &tmp);
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
-		printf("<tr><td>Bittorrent ports:</td><td><input type=text size=30 value='%s'></td></tr>",
+		printf("<tr><td>Bittorrent ports:</td>"
+			"<td><input type=text size=30 value='%s'></td></tr>",
 			str);
+
 		free((char *) str);
 		xmlrpc_DECREF(tmp);
 	}
@@ -596,8 +601,10 @@ void getSettings() {
 	xmlrpc_struct_find_value(x, res, "max-download-limit", &tmp);
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
-		printf("<tr><td>Per-download limit:</td><td><input type=text size=30 value='%s'></td></tr>",
+		printf("<tr><td>Per-download limit:</td>"
+			"<td><input type=text size=30 value='%s'></td></tr>",
 			str);
+
 		free((char *) str);
 		xmlrpc_DECREF(tmp);
 	}
@@ -605,8 +612,10 @@ void getSettings() {
 	xmlrpc_struct_find_value(x, res, "max-overall-download-limit", &tmp);
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
-		printf("<tr><td>Overall download limit:</td><td><input type=text size=30 value='%s'></td></tr>",
+		printf("<tr><td>Overall download limit:</td>"
+			"<td><input type=text size=30 value='%s'></td></tr>",
 			str);
+
 		free((char *) str);
 		xmlrpc_DECREF(tmp);
 	}
@@ -614,8 +623,10 @@ void getSettings() {
 	xmlrpc_struct_find_value(x, res, "max-upload-limit", &tmp);
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
-		printf("<tr><td>Per-upload limit:</td><td><input type=text size=30 value='%s'></td></tr>",
+		printf("<tr><td>Per-upload limit:</td>"
+			"<td><input type=text size=30 value='%s'></td></tr>",
 			str);
+
 		free((char *) str);
 		xmlrpc_DECREF(tmp);
 	}
@@ -623,8 +634,10 @@ void getSettings() {
 	xmlrpc_struct_find_value(x, res, "max-overall-upload-limit", &tmp);
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
-		printf("<tr><td>Overall upload limit:</td><td><input type=text size=30 value='%s'></td></tr>",
+		printf("<tr><td>Overall upload limit:</td>"
+			"<td><input type=text size=30 value='%s'></td></tr>",
 			str);
+
 		free((char *) str);
 		xmlrpc_DECREF(tmp);
 	}
@@ -632,8 +645,10 @@ void getSettings() {
 	xmlrpc_struct_find_value(x, res, "seed-ratio", &tmp);
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
-		printf("<tr><td>Seed ratio:</td><td><input type=text size=30 value='%s'></td></tr>",
+		printf("<tr><td>Seed ratio:</td>"
+			"<td><input type=text size=30 value='%s'></td></tr>",
 			str);
+
 		free((char *) str);
 		xmlrpc_DECREF(tmp);
 	}
@@ -641,8 +656,10 @@ void getSettings() {
 	xmlrpc_struct_find_value(x, res, "seed-time", &tmp);
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
-		printf("<tr><td>Seed time:</td><td><input type=text size=30 value='%s'></td></tr>",
+		printf("<tr><td>Seed time:</td>"
+			"<td><input type=text size=30 value='%s'></td></tr>",
 			str);
+
 		free((char *) str);
 		xmlrpc_DECREF(tmp);
 	}
