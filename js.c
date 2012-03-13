@@ -87,6 +87,7 @@ void printJS() {
 		"function setDownloadChoices() {\n"
 		"	var dl = document.getElementById('downloads');\n"
 		"	var tbody = dl.getElementsByTagName('tbody')[0];\n"
+		"	if (!tbody) return;\n"
 
 		"	var tr = tbody.getElementsByTagName('tr');\n"
 		"	if (!tr) return;\n"
@@ -105,6 +106,7 @@ void printJS() {
 		"function clearDownloadChoices() {\n"
 		"	var dl = document.getElementById('downloads');\n"
 		"	var tbody = dl.getElementsByTagName('tbody')[0];\n"
+		"	if (!tbody) return;\n"
 
 		"	var tr = tbody.getElementsByTagName('tr');\n"
 		"	if (!tr) return;\n"
