@@ -368,6 +368,11 @@ void initxml() {
 
 	srv = xmlrpc_server_info_new(x, server);
 	checkxml();
+
+	if (user && pw) {
+		xmlrpc_server_info_set_user(x, srv, user, pw);
+		xmlrpc_server_info_allow_auth_digest(x, srv);
+	}
 }
 
 void deinitxml() {
