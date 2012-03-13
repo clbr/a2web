@@ -105,14 +105,18 @@ body, html {
 
 .settingsShown {
 	position: fixed;
-	left: 10%;
-	right: 10%;
+	max-width: 80%;
 	top: 5em;
+	left: 20%;
 	border: 4px ridge;
 	min-height: 200px;
 	max-height: 80%;
 	background: url(settingsbg.png);
 	overflow: auto;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1em;
+	padding-bottom: 0px;
 }
 
 #settingstable {
@@ -122,5 +126,5 @@ body, html {
 
 #settingstable td {
 	padding: 0.5em;
-	text-align: right;
+	text-align: left;
 }
