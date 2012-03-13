@@ -533,7 +533,7 @@ void getSettings() {
 		return;
 	}
 
-	printf("<h2>All options except overall speed limits only affect new downloads.</h2>\n");
+	printf("<h2>Preferences</h2>\n<hr width='50%'><br>");
 
 	printf("<table border=0 id=settingstable>\n");
 
@@ -632,6 +632,10 @@ void getSettings() {
 	// End the options
 
 	printf("</table>\n");
+
+	puts("<br><br><br>");
+	printf("<h2>All options except overall speed limits only affect new downloads.</h2>\n");
+
 
 #if 0
 	unsigned len = xmlrpc_struct_size(x, res);
