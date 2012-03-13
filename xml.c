@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 static xmlrpc_env xenv;
 static xmlrpc_env *x = &xenv;
+static xmlrpc_server_info *srv;
 
 void getVersion() {
 
@@ -365,9 +366,13 @@ void initxml() {
 	xmlrpc_client_init2(x, XMLRPC_CLIENT_NO_FLAGS, NAME, VERSION, NULL, 0);
 	checkxml();
 
+	srv = xmlrpc_server_info_new(x, server);
+	checkxml();
 }
 
 void deinitxml() {
+
+	xmlrpc_server_info_free(srv);
 
 	xmlrpc_env_clean(x);
 	xmlrpc_client_cleanup();
