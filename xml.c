@@ -543,7 +543,7 @@ void getSettings() {
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
 		printf("<tr><td>Download directory:</td>"
-			"<td><input type=text size=30 value='%s' id=dir></td></tr>",
+			"<td><input type=text size=30 value='%s' id=dir onblur='updatedir()'></td></tr>",
 			str);
 
 		free((char *) str);
@@ -558,7 +558,7 @@ void getSettings() {
 		if (!strcmp(str, "true")) checked = 1;
 
 		printf("<tr><td><label for=tickv6>Disable ipv6:</label></td>"
-			"<td><input type=checkbox %s id=tickv6></td></tr>",
+			"<td><input type=checkbox %s id=tickv6 onchange='updatedir()'></td></tr>",
 			checked ? "checked" : "");
 
 		free((char *) str);
@@ -574,7 +574,7 @@ void getSettings() {
 		else if (!strcmp(str, "mem")) fol = 2;
 
 		printf("<tr><td>Follow torrents:</td>"
-			"<td><select>"
+			"<td><select id=flwtorrent onchange='updateflwent()'>"
 			"<option value=false %s>Only download the .torrent</option>"
 			"<option value=true %s>Download the files the .torrent points to</option>"
 			"<option value=mem %s>Download what is pointed to, and don't save the .torrent</option>"
@@ -591,7 +591,7 @@ void getSettings() {
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
 		printf("<tr><td>Bittorrent ports:</td>"
-			"<td><input type=text size=30 value='%s'></td></tr>",
+			"<td><input type=text size=30 value='%s' onblur='updateentports()' id=entports></td></tr>",
 			str);
 
 		free((char *) str);
@@ -602,7 +602,7 @@ void getSettings() {
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
 		printf("<tr><td>Per-download limit:</td>"
-			"<td><input type=text size=30 value='%s'></td></tr>",
+			"<td><input type=text size=30 value='%s' onblur='updatedllimit()' id=dllimit></td></tr>",
 			str);
 
 		free((char *) str);
@@ -613,7 +613,7 @@ void getSettings() {
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
 		printf("<tr><td>Overall download limit:</td>"
-			"<td><input type=text size=30 value='%s'></td></tr>",
+			"<td><input type=text size=30 value='%s' onblur='updatealldllimit()' id=alldl></td></tr>",
 			str);
 
 		free((char *) str);
@@ -624,7 +624,7 @@ void getSettings() {
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
 		printf("<tr><td>Per-upload limit:</td>"
-			"<td><input type=text size=30 value='%s'></td></tr>",
+			"<td><input type=text size=30 value='%s' onblur='updateuplimit()' id=uplimit></td></tr>",
 			str);
 
 		free((char *) str);
@@ -635,7 +635,7 @@ void getSettings() {
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
 		printf("<tr><td>Overall upload limit:</td>"
-			"<td><input type=text size=30 value='%s'></td></tr>",
+			"<td><input type=text size=30 value='%s' onblur='updatealluplimit()' id=allup></td></tr>",
 			str);
 
 		free((char *) str);
@@ -646,7 +646,7 @@ void getSettings() {
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
 		printf("<tr><td>Seed ratio:</td>"
-			"<td><input type=text size=30 value='%s'></td></tr>",
+			"<td><input type=text size=30 value='%s' onblur='updateseedrt()' id=seedrt></td></tr>",
 			str);
 
 		free((char *) str);
@@ -657,7 +657,7 @@ void getSettings() {
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
 		printf("<tr><td>Seed time:</td>"
-			"<td><input type=text size=30 value='%s'></td></tr>",
+			"<td><input type=text size=30 value='%s' onblur='updateseedtm()' id=seedtm></td></tr>",
 			str);
 
 		free((char *) str);
