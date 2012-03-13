@@ -518,6 +518,7 @@ void getSettings() {
 
 	xmlrpc_value *res, *tmp;
 	xmlrpc_value *a = xmlrpc_array_new(x);
+	const char *str;
 
 	res = xmlrpc_client_call_server_params(x, srv, "aria2.getGlobalOption",
 					a);
@@ -532,7 +533,20 @@ void getSettings() {
 		return;
 	}
 
-//	xmlrpc_struct_find_value(x, res, "downloadSpeed", &tmp);
+	printf("<h2>All options except overall speed limits only affect new downloads.</h2>\n");
+
+	printf("<table border=0 id=settingstable>\n");
+
+	xmlrpc_struct_find_value(x, res, "dir", &tmp);
+	if (tmp) {
+		xmlrpc_read_string(x, tmp, &str);
+		printf("<tr><td>Download directory:</td><td><input type=text size=30 value='%s'></td></tr>",
+			str);
+		free((char *) str);
+		xmlrpc_DECREF(tmp);
+	}
+
+	printf("</table>\n");
 
 #if 0
 	unsigned len = xmlrpc_struct_size(x, res);
