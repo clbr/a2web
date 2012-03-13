@@ -512,6 +512,10 @@ void prioDownload(const char *gid, const int change) {
 
 void getSettings() {
 
+	printf("<button onclick='hidesettings()' style='float: right;'>\n"
+		"<img src=\"%s/cancel.png\" width=32 height=32>\n</button>\n",
+		themedir);
+
 	xmlrpc_value *res, *tmp;
 	xmlrpc_value *a = xmlrpc_array_new(x);
 
