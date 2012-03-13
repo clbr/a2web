@@ -372,6 +372,7 @@ void initxml() {
 	if (user && pw) {
 		xmlrpc_server_info_set_user(x, srv, user, pw);
 		xmlrpc_server_info_allow_auth_digest(x, srv);
+		xmlrpc_server_info_allow_auth_basic(x, srv);
 	}
 }
 
