@@ -115,6 +115,8 @@ void readConfig() {
 
 		if (*ptr == '#')
 			continue;
+		if (strlen(ptr) < 2)
+			continue;
 
 		for (i = 0; ptr[i]; i++)
 			if (ptr[i] == '\n') ptr[i] = '\0';
