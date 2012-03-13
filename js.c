@@ -98,7 +98,7 @@ void printJS() {
 		"		tr[i].onclick = pickDownload;\n"
 
 		"		if (window.picked == tr[i].id) {\n"
-		"			tr[i].className = 'picked';"
+		"			tr[i].className = 'picked';\n"
 		"			window.pickedstatus = tr[i].children[0].innerHTML;\n"
 		"		}\n"
 		"	}\n"
