@@ -206,6 +206,14 @@ void printJS() {
 		"function showsettings() {\n"
 
 		"	var settings = document.getElementById('settings');"
+		"	settings.className = 'settingsShown';"
+		"}\n"
+
+		"function hidesettings() {\n"
+
+		"	var settings = document.getElementById('settings');"
+		"	settings.innerHTML = '';\n"
+		"	settings.className = 'null';\n"
 		"}\n"
 
 		"-->\n"
