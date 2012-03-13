@@ -31,7 +31,7 @@ void getVersion() {
 	xmlrpc_value *res, *tmp = NULL;
 	xmlrpc_value *a = xmlrpc_array_new(x); // empty array, because xmlrpc-c sucks
 
-	res = xmlrpc_client_call_params(x, server, "aria2.getVersion",
+	res = xmlrpc_client_call_server_params(x, srv, "aria2.getVersion",
 					a);
 
 	xmlrpc_DECREF(a);
@@ -98,7 +98,7 @@ void getStats() {
 	xmlrpc_value *res, *tmp;
 	xmlrpc_value *a = xmlrpc_array_new(x);
 
-	res = xmlrpc_client_call_params(x, server, "aria2.getGlobalStat",
+	res = xmlrpc_client_call_server_params(x, srv, "aria2.getGlobalStat",
 					a);
 	xmlrpc_DECREF(a);
 
@@ -267,7 +267,7 @@ void getDownloads() {
 
 	// Active
 
-	res = xmlrpc_client_call_params(x, server, "aria2.tellActive", a);
+	res = xmlrpc_client_call_server_params(x, srv, "aria2.tellActive", a);
 
 	if (xenv.fault_occurred) {
 
@@ -303,7 +303,7 @@ void getDownloads() {
 	xmlrpc_array_append_item(x, a, offset);
 	xmlrpc_array_append_item(x, a, num);
 
-	res = xmlrpc_client_call_params(x, server, "aria2.tellWaiting", a);
+	res = xmlrpc_client_call_server_params(x, srv, "aria2.tellWaiting", a);
 	checkxml();
 
 	if (res) {
@@ -333,7 +333,7 @@ void getDownloads() {
 	xmlrpc_array_append_item(x, a, offset);
 	xmlrpc_array_append_item(x, a, num);
 
-	res = xmlrpc_client_call_params(x, server, "aria2.tellStopped", a);
+	res = xmlrpc_client_call_server_params(x, srv, "aria2.tellStopped", a);
 	checkxml();
 
 	if (res) {
@@ -405,7 +405,7 @@ void addDownload(const char *url) {
 	xmlrpc_array_append_item(x, a, xml_url);
 	xmlrpc_array_append_item(x, senda, a);
 
-	res = xmlrpc_client_call_params(x, server, "aria2.addUri", senda);
+	res = xmlrpc_client_call_server_params(x, srv, "aria2.addUri", senda);
 	checkxml();
 
 	xmlrpc_DECREF(xml_url);
@@ -423,7 +423,7 @@ void cleanDownload() {
 
 	xmlrpc_value *a = xmlrpc_array_new(x), *res;
 
-	res = xmlrpc_client_call_params(x, server, "aria2.purgeDownloadResult", a);
+	res = xmlrpc_client_call_server_params(x, srv, "aria2.purgeDownloadResult", a);
 	checkxml();
 
 	xmlrpc_DECREF(a);
@@ -443,9 +443,9 @@ void pauseDownload(const char *gid, const int unpause) {
 	xmlrpc_array_append_item(x, a, xml_gid);
 
 	if (unpause)
-		res = xmlrpc_client_call_params(x, server, "aria2.unpause", a);
+		res = xmlrpc_client_call_server_params(x, srv, "aria2.unpause", a);
 	else
-		res = xmlrpc_client_call_params(x, server, "aria2.pause", a);
+		res = xmlrpc_client_call_server_params(x, srv, "aria2.pause", a);
 	checkxml();
 
 	xmlrpc_DECREF(xml_gid);
@@ -465,10 +465,10 @@ void removeDownload(const char *gid) {
 	xml_gid = xmlrpc_string_new(x, gid);
 	xmlrpc_array_append_item(x, a, xml_gid);
 
-	res = xmlrpc_client_call_params(x, server, "aria2.remove", a);
+	res = xmlrpc_client_call_server_params(x, srv, "aria2.remove", a);
 	checkxml();
 
-	res2 = xmlrpc_client_call_params(x, server, "aria2.removeDownloadResult", a);
+	res2 = xmlrpc_client_call_server_params(x, srv, "aria2.removeDownloadResult", a);
 	checkxml();
 
 	xmlrpc_DECREF(xml_gid);
@@ -495,7 +495,7 @@ void prioDownload(const char *gid, const int change) {
 	xmlrpc_array_append_item(x, a, xml_change);
 	xmlrpc_array_append_item(x, a, xml_how);
 
-	res = xmlrpc_client_call_params(x, server, "aria2.changePosition", a);
+	res = xmlrpc_client_call_server_params(x, srv, "aria2.changePosition", a);
 	checkxml();
 
 	xmlrpc_DECREF(xml_gid);
