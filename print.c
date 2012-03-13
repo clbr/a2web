@@ -197,6 +197,10 @@ void printOptions() {
 		"title='Clean up completed/error/removed downloads'>"
 		"<img src='%s/reload.png' alt=Cleanup width=32 height=32>"
 		"</button>\n", themedir);
+	printf("\t<button onclick='showsettings()' "
+		"title='Preferences'>"
+		"<img src='%s/settings.png' alt=Preferences width=32 height=32>"
+		"</button>\n", themedir);
 
 	printf("</div>\n\n");
 }
