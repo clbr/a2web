@@ -65,7 +65,7 @@ static void handle() {
 
 	printf("<div id=logo>"
 		"<img src=\"%s/logo_small.png\" alt=logo width=250 height=218><br>"
-		"Running %s v%s."
+		"%s v%s"
 		"</div>\n\n",
 		themedir, NAME, VERSION);
 
