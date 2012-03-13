@@ -12,6 +12,7 @@ NAME = a2web.cgi
 
 # Dir for testing
 COPYDIR ?= /tmp
+THEMEDIR ?= $(COPYDIR)
 
 
 all: $(NAME)
@@ -24,6 +25,6 @@ clean:
 	rm -f $(NAME) *.o
 
 copy: all
-	mkdir -p $(COPYDIR)/cgi-bin $(COPYDIR)/a2web
+	mkdir -p $(COPYDIR)/cgi-bin $(THEMEDIR)/a2web
 	cp $(NAME) $(COPYDIR)/cgi-bin
-	cp -a themes/* $(COPYDIR)/a2web
+	cp -a themes/* $(THEMEDIR)/a2web
