@@ -171,9 +171,11 @@ void printAdditions() {
 		"\tAdd new download:<br>\n"
 		"\t<input type=text id=add1 size=80 "
 			"onkeypress='return doenter(event)'> \n"
-		"\t<input type=button value=Start onclick=\"startdl()\">\n"
+		"\t<button onclick=\"startdl()\">"
+		"<img src=\"%s/go.png\" alt=Go width=32 height=32 style='vertical-align: middle;'>"
+		"</button>\n"
 
-		"</div>\n\n");
+		"</div>\n\n", themedir);
 }
 
 
