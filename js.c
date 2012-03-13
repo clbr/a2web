@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 void printJS() {
 
 	printf("<script type=\"text/javascript\">\n"
+		"<!--\n"
 
 		"setInterval('upd_downloads()', 1800);\n"
 		"setInterval('upd_stats()', 5000);\n"
@@ -202,6 +203,12 @@ void printJS() {
 
 		"}\n"
 
+		"function showsettings() {\n"
+
+		"	document.write('<div id=settings><\\/div>');"
+		"}\n"
+
+		"-->\n"
 		"\n</script>\n",
 		mypath);
 }
