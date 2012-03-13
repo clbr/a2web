@@ -509,3 +509,28 @@ void prioDownload(const char *gid, const int change) {
 
 	xmlrpc_DECREF(res);
 }
+
+void getSettings() {
+
+	xmlrpc_value *res, *tmp;
+	xmlrpc_value *a = xmlrpc_array_new(x);
+
+	res = xmlrpc_client_call_server_params(x, srv, "aria2.getGlobalOption",
+					a);
+	xmlrpc_DECREF(a);
+
+	if (xenv.fault_occurred) {
+
+		printf("<div id=error>Aria2 doesn't seem to be running: %s</div>\n",
+			xenv.fault_string);
+
+		offline = 1;
+		return;
+	}
+
+//	xmlrpc_struct_find_value(x, res, "downloadSpeed", &tmp);
+	int len = xmlrpc_struct_size(x, res);
+	printf("It has %d members\n", len);
+
+	xmlrpc_DECREF(res);
+}

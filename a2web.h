@@ -41,6 +41,7 @@ int checkxml();
 void getVersion();
 void getStats();
 void getDownloads();
+void getSettings();
 
 void addDownload(const char *);
 void cleanDownload();
