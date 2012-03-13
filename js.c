@@ -207,6 +207,16 @@ void printJS() {
 
 		"	var settings = document.getElementById('settings');"
 		"	settings.className = 'settingsShown';"
+
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?settings', true);\n"
+		"	x.onreadystatechange = function() {\n"
+		"		if (x.readyState == 4) {\n"
+		"			settings.innerHTML = x.responseText;\n"
+		"		}\n"
+		"	}\n"
+		"	x.send(null);\n"
 		"}\n"
 
 		"function hidesettings() {\n"
