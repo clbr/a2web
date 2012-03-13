@@ -57,6 +57,7 @@ void printStats();
 void printJS();
 void printOptions();
 void printAdditions();
+void printSettings();
 
 // config.c
 void readConfig();

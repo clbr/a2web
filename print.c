@@ -204,3 +204,7 @@ void printOptions() {
 
 	printf("</div>\n\n");
 }
+
+void printSettings() {
+	puts("<div id=settings></div>");
+}

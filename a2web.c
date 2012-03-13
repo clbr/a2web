@@ -92,6 +92,8 @@ static void handle() {
 
 		printAdditions();
 
+		printSettings();
+
 		printJS();
 	}
 
