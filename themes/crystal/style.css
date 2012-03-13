@@ -110,5 +110,7 @@ body, html {
 	top: 5em;
 	border: 4px ridge;
 	min-height: 200px;
+	max-height: 80%;
 	background: url(settingsbg.png);
+	overflow: auto;
 }
