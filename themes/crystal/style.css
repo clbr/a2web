@@ -102,3 +102,13 @@ body, html {
 	margin-top: 5em;
 	border: 2px ridge red;
 }
+
+.settingsShown {
+	position: fixed;
+	left: 10%;
+	right: 10%;
+	top: 5em;
+	border: 4px ridge;
+	min-height: 200px;
+	background: url(settingsbg.png);
+}
