@@ -113,7 +113,6 @@ body, html {
 	max-height: 80%;
 	background: url(settingsbg.png);
 	overflow: auto;
-	text-align: center;
 }
 
 #settingstable {
@@ -123,4 +122,5 @@ body, html {
 
 #settingstable td {
 	padding: 0.5em;
+	text-align: right;
 }
