@@ -565,8 +565,21 @@ void getSettings() {
 	xmlrpc_struct_find_value(x, res, "follow-torrent", &tmp);
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
-		printf("<tr><td>Follow torrents:</td><td><input type=text size=30 value='%s'></td></tr>",
-			str);
+
+		int fol = 0; // 0 false, 1 true, 2 mem
+		if (!strcmp(str, "true")) fol = 1;
+		else if (!strcmp(str, "mem")) fol = 2;
+
+		printf("<tr><td>Follow torrents:</td>"
+			"<td><select>"
+			"<option value=false %s>Only download the .torrent</option>"
+			"<option value=true %s>Download the files the .torrent points to</option>"
+			"<option value=mem %s>Download what is pointed to, and don't save the .torrent</option>"
+			"</select></td></tr>",
+			!fol ? "selected" : "",
+			fol == 1 ? "selected" : "",
+			fol == 2 ? "selected" : "");
+
 		free((char *) str);
 		xmlrpc_DECREF(tmp);
 	}
