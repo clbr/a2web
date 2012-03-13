@@ -533,8 +533,40 @@ void getSettings() {
 	}
 
 //	xmlrpc_struct_find_value(x, res, "downloadSpeed", &tmp);
-	int len = xmlrpc_struct_size(x, res);
+
+#if 0
+	unsigned len = xmlrpc_struct_size(x, res);
 	printf("It has %d members\n", len);
 
+	/*
+		dir
+		disable-ipv6
+		follow-torrent
+		listen-port
+		max-download-limit
+		max-overall-download-limit
+		max-upload-limit
+		max-overall-upload-limit
+		seed-ratio
+		seed-time?
+	*/
+
+	unsigned i;
+	for (i = 0; i < len; i++) {
+		xmlrpc_value *key, *val;
+
+		xmlrpc_struct_read_member(x, res, i, &key, &val);
+		checkxml();
+
+		const char *ckey, *cval;
+
+		xmlrpc_read_string(x, key, &ckey);
+		checkxml();
+		xmlrpc_read_string(x, val, &cval);
+		checkxml();
+
+		printf("%s = %s<br>\n", ckey, cval);
+	}
+#endif
 	xmlrpc_DECREF(res);
 }
