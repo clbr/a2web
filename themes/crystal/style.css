@@ -95,3 +95,10 @@ body, html {
 	padding-top: 1em;
 	padding-bottom: 1em;
 }
+
+#error {
+	display: inline-block;
+	padding: 1em;
+	margin-top: 5em;
+	border: 2px ridge red;
+}
