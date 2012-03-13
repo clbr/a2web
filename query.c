@@ -86,6 +86,12 @@ int handle_query(const char *qs) {
 
 		cleanDownload();
 
+	} else if (!strcmp(qs, "settings")) {
+
+		htmlpage();
+
+		getSettings();
+
 	} else {
 
 		return 0;
