@@ -226,6 +226,36 @@ void printJS() {
 		"	settings.className = 'null';\n"
 		"}\n"
 
+		"function updatedir() {\n"
+		"}\n"
+
+		"function updateipv6() {\n"
+		"}\n"
+
+		"function updateflwent() {\n"
+		"}\n"
+
+		"function updateentports() {\n"
+		"}\n"
+
+		"function updatedllimit() {\n"
+		"}\n"
+
+		"function updatealldllimit() {\n"
+		"}\n"
+
+		"function updateuplimit() {\n"
+		"}\n"
+
+		"function updatealluplimit() {\n"
+		"}\n"
+
+		"function updateseedrt() {\n"
+		"}\n"
+
+		"function updateseedtm() {\n"
+		"}\n"
+
 		"-->\n"
 		"\n</script>\n",
 		mypath);
