@@ -1,0 +1,36 @@
+Installing
+==========
+
+a2web depends on libxmlrpc-c and libfcgi. We recommend aria2 >= 1.14.0.
+
+With these installed, compile with the usual "make".
+
+
+
+FastCGI is backwards compatible with CGI, so you can run a2web under
+most http servers. We have tested busybox httpd, lighttpd and apache.
+
+If you want to set up passworded access to a2web, that belongs to your
+web server configuration.
+
+If you need better access times, you can configure FastCGI; if not,
+regular CGI uses less RAM.
+
+xmlrpc-c should be able to use any of the client backends, but only curl
+has been tested.
+
+
+
+Since a2web is a CGI app, there is no "make install" target. Copy
+a2web.cgi to your cgi-bin directory, and one or more themes to your
+www space.
+
+
+
+Configuration
+=============
+
+a2web ships with a sample config file. a2web.conf must be in the same
+directory as a2web.cgi is.  There you can configure the RPC user and
+password if set up in aria2, where the theme is found, and where the
+aria2 instance is set up.
