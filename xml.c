@@ -656,14 +656,14 @@ void getSettings() {
 	xmlrpc_struct_find_value(x, res, "seed-time", &tmp);
 	if (tmp) {
 		xmlrpc_read_string(x, tmp, &str);
-		printf("<tr><td>Seed time:</td>"
+		printf("<tr><td>Seed time (min):</td>"
 			"<td><input type=text size=30 value='%s' onblur='updateseedtm()' id=seedtm></td></tr>",
 			str);
 
 		free((char *) str);
 		xmlrpc_DECREF(tmp);
 	} else {
-		printf("<tr><td>Seed time:</td>"
+		printf("<tr><td>Seed time (min):</td>"
 			"<td><input type=text size=30 value='unset' onblur='updateseedtm()' id=seedtm>"
 			"</td></tr>");
 	}
