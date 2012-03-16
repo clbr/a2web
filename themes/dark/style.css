@@ -21,6 +21,10 @@ body, html {
 	color: white;
 }
 
+button {
+	background-color: transparent;
+}
+
 /* The progress bar */
 .meter-outer, .meter-value {
 	background: url(progress.png) repeat-x;
