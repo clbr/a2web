@@ -155,18 +155,24 @@ void printDownloads() {
 
 		progress[2*bufsize - 1] = '\0';
 
+		char longstr[] = "...";
+		if (cur->uris && strlen(cur->uris) < 40)
+			longstr[0] = '\0';
+
 		printf("\t<td>%s</td>"
 			"<td>%s</td>"
 			"<td>%s</td>"
 			"<td>%s</td>"
 			"<td>%llu/%llu</td>"
 			"<td>%s</td>"
-			"<td>%s</td>",
+			"<td title='%s'>%.40s%s</td>",
 
 			cur->status, eta, progress,
 			upped,
 			cur->down, cur->up,
-			seeded, cur->uris ? cur->uris : "");
+			seeded, cur->uris ? cur->uris : "",
+			cur->uris ? cur->uris : "",
+			longstr);
 
 		printf("</tr>\n");
 	}
