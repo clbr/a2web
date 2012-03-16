@@ -9,7 +9,7 @@ td {
 }
 
 thead tr {
-	background-color: #00db00;
+	background: #00db00 center url(thbg.png);
 }
 
 body, html {
@@ -46,6 +46,11 @@ body, html {
 	background-color: #d4ff66;
 }
 
+#downloads td, #downloads th {
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
 /*#downloads tbody tr:nth-child(odd) {
 	background-color: #66ffed;
 }*/
@@ -61,6 +66,8 @@ body, html {
 #downloads table {
 	margin-left: auto;
 	margin-right: auto;
+	max-width: 98%;
+	border-collapse: collapse;
 }
 
 #downloads {
