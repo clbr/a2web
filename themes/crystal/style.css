@@ -51,12 +51,17 @@ body, html {
 	padding-right: 1em;
 }
 
+#downloads thead {
+	border-bottom: 2px solid;
+	margin-bottom: 2px;
+}
+
 /*#downloads tbody tr:nth-child(odd) {
 	background-color: #66ffed;
 }*/
 
 #downloads tbody tr:hover {
-	background-color: #ccc;
+	background-color: skyblue;
 }
 
 #downloads tr.picked {
