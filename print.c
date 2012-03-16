@@ -62,7 +62,7 @@ static void calcEta(unsigned long long speed, unsigned long long size) {
 
 void printDownloads() {
 
-	printf("<table border=1>\n"
+	printf("<table border=0>\n"
 		"\t<thead><tr>"
 		"<th>Status</th>"
 		"<th>ETA</th>"
