@@ -71,6 +71,8 @@ void printJS() {
 		"function startdl() {\n"
 		"	var urlbox = document.getElementById('add1');\n"
 		"	var url = urlbox.value;\n"
+		"	if (url.length < 1)\n"
+		"		return;\n"
 
 		"	fireajax('%1$s?add=' + url);\n"
 		"	urlbox.value = '';\n"
