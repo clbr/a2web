@@ -229,56 +229,56 @@ void printJS() {
 
 		"	var dir = document.getElementById('dir').value;\n"
 
-		"	fireajax('%1$s?priodown=' + gid);\n"
+		"	fireajax('%1$s?set=dir=' + dir);\n"
 		"}\n"
 
 		"function updateipv6() {\n"
 
 		"	var tick = document.getElementById('tickv6').checked;\n"
 
-		"	fireajax('%1$s?priodown=' + gid);\n"
+		"	fireajax('%1$s?set=' + tick);\n"
 		"}\n"
 
 		"function updateflwent() {\n"
 
 		"	var ent = document.getElementById('flwtorrent').value;\n"
 
-		"	fireajax('%1$s?priodown=' + gid);\n"
+		"	fireajax('%1$s?set=' + ent);\n"
 		"}\n"
 
 		"function updateentports() {\n"
 
 		"	var ports = document.getElementById('entports').value;\n"
 
-		"	fireajax('%1$s?priodown=' + gid);\n"
+		"	fireajax('%1$s?set=' + ports);\n"
 		"}\n"
 
 		"function updatedllimit() {\n"
 
 		"	var dl = document.getElementById('dllimit').value;\n"
 
-		"	fireajax('%1$s?priodown=' + gid);\n"
+		"	fireajax('%1$s?set=' + dl);\n"
 		"}\n"
 
 		"function updatealldllimit() {\n"
 
 		"	var dl = document.getElementById('alldl').value;\n"
 
-		"	fireajax('%1$s?priodown=' + gid);\n"
+		"	fireajax('%1$s?set=' + dl);\n"
 		"}\n"
 
 		"function updateuplimit() {\n"
 
 		"	var up = document.getElementById('uplimit').value;\n"
 
-		"	fireajax('%1$s?priodown=' + gid);\n"
+		"	fireajax('%1$s?set=' + up);\n"
 		"}\n"
 
 		"function updatealluplimit() {\n"
 
 		"	var up = document.getElementById('allup').value;\n"
 
-		"	fireajax('%1$s?priodown=' + gid);\n"
+		"	fireajax('%1$s?set=' + up);\n"
 		"}\n"
 
 		"function updateseedrt() {\n"
@@ -291,14 +291,14 @@ void printJS() {
 		"	}\n"
 
 
-		"	fireajax('%1$s?priodown=' + gid);\n"
+		"	fireajax('%1$s?set=' + ratio);\n"
 		"}\n"
 
 		"function updateseedtm() {\n"
 
 		"	var tm = document.getElementById('seedtm').value;\n"
 
-		"	fireajax('%1$s?priodown=' + gid);\n"
+		"	fireajax('%1$s?set=' + tm);\n"
 		"}\n"
 // End settings functions
 
