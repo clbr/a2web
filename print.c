@@ -83,8 +83,19 @@ void printDownloads() {
 		char upped[bufsize] = "", seeded[bufsize] = "";
 		char progress[2*bufsize] = "";
 
+		// Pretty units for the upload size
+		char progr_unit[] = "kB";
+		if (cur->uploaded > 1024) {
+			cur->uploaded /= 1024;
+			progr_unit[0] = 'M';
+		}
+		if (cur->uploaded > 1024) {
+			cur->uploaded /= 1024;
+			progr_unit[0] = 'G';
+		}
+
 		if (cur->uploaded)
-			snprintf(upped, bufsize, "%llu", cur->uploaded);
+			snprintf(upped, bufsize, "%llu %s", cur->uploaded, progr_unit);
 
 		if (cur->seeders || cur->connections)
 			snprintf(seeded, bufsize, "%u/%u", cur->seeders,
@@ -119,7 +130,7 @@ void printDownloads() {
 		}
 
 		// Pretty units for the download size
-		char progr_unit[] = "kB";
+		progr_unit[0] = 'k';
 		if (cur->length > 1024) {
 			cur->length /= 1024;
 			cur->completed /= 1024;
