@@ -232,13 +232,6 @@ void printJS() {
 		"	fireajax('%1$s?set=dir=' + dir);\n"
 		"}\n"
 
-		"function updateipv6() {\n"
-
-		"	var tick = document.getElementById('tickv6').checked;\n"
-
-		"	fireajax('%1$s?set=disable-ipv6=' + tick);\n"
-		"}\n"
-
 		"function updateflwent() {\n"
 
 		"	var ent = document.getElementById('flwtorrent').value;\n"
