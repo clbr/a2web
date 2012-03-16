@@ -56,6 +56,7 @@ body, html {
 #downloads thead {
 	border-bottom: 2px solid;
 	margin-bottom: 2px;
+	border-color: #52e3ff;
 }
 
 /*#downloads tbody tr:nth-child(odd) {
