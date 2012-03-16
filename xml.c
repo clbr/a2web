@@ -720,7 +720,7 @@ void setOption(const char *in) {
 
 	// First check it's well-formed
 	regex_t reg;
-	int i = regcomp(&reg, "^[[:lower:]_-]*=[[:print:]]*$", REG_NOSUB);
+	int i = regcomp(&reg, "^[[:lower:][:digit:]_-]*=[[:print:]]*$", REG_NOSUB);
 
 	if (i)
 		printf("Failed to compile regex, %d\n", i);
