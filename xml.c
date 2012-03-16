@@ -662,6 +662,10 @@ void getSettings() {
 
 		free((char *) str);
 		xmlrpc_DECREF(tmp);
+	} else {
+		printf("<tr><td>Seed time:</td>"
+			"<td><input type=text size=30 value='unset' onblur='updateseedtm()' id=seedtm>"
+			"</td></tr>");
 	}
 
 	// End the options
