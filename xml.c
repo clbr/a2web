@@ -712,3 +712,8 @@ void getSettings() {
 #endif
 	xmlrpc_DECREF(res);
 }
+
+
+void setOption(const char *in) {
+
+}

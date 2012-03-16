@@ -48,6 +48,7 @@ void cleanDownload();
 void pauseDownload(const char *, const int);
 void removeDownload(const char *);
 void prioDownload(const char *, const int);
+void setOption(const char *);
 
 void initxml();
 void deinitxml();
