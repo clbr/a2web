@@ -114,7 +114,7 @@ void printJS() {
 
 		"	var len = tr.length;\n"
 		"	for (var i = 0; i < len; i++) {\n"
-		"		tr[i].className = null;"
+		"		tr[i].className = null;\n"
 		"	}\n"
 		"}\n"
 
@@ -205,8 +205,8 @@ void printJS() {
 
 		"function showsettings() {\n"
 
-		"	var settings = document.getElementById('settings');"
-		"	settings.className = 'settingsShown';"
+		"	var settings = document.getElementById('settings');\n"
+		"	settings.className = 'settingsShown';\n"
 
 		"	var x = new XMLHttpRequest();\n"
 
@@ -221,14 +221,14 @@ void printJS() {
 
 		"function hidesettings() {\n"
 
-		"	var settings = document.getElementById('settings');"
+		"	var settings = document.getElementById('settings');\n"
 		"	settings.innerHTML = '';\n"
 		"	settings.className = 'null';\n"
 		"}\n"
 
 		"function updatedir() {\n"
 
-		"	var dir = document.getElementById('dir').value;"
+		"	var dir = document.getElementById('dir').value;\n"
 		"	var x = new XMLHttpRequest();\n"
 
 		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
@@ -237,7 +237,7 @@ void printJS() {
 
 		"function updateipv6() {\n"
 
-		"	var tick = document.getElementById('tickv6').checked;"
+		"	var tick = document.getElementById('tickv6').checked;\n"
 		"	var x = new XMLHttpRequest();\n"
 
 		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
@@ -246,7 +246,7 @@ void printJS() {
 
 		"function updateflwent() {\n"
 
-		"	var ent = document.getElementById('flwtorrent').value;"
+		"	var ent = document.getElementById('flwtorrent').value;\n"
 		"	var x = new XMLHttpRequest();\n"
 
 		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
@@ -255,7 +255,7 @@ void printJS() {
 
 		"function updateentports() {\n"
 
-		"	var ports = document.getElementById('entports').value;"
+		"	var ports = document.getElementById('entports').value;\n"
 		"	var x = new XMLHttpRequest();\n"
 
 		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
@@ -264,7 +264,7 @@ void printJS() {
 
 		"function updatedllimit() {\n"
 
-		"	var dl = document.getElementById('dllimit').value;"
+		"	var dl = document.getElementById('dllimit').value;\n"
 		"	var x = new XMLHttpRequest();\n"
 
 		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
@@ -273,7 +273,7 @@ void printJS() {
 
 		"function updatealldllimit() {\n"
 
-		"	var dl = document.getElementById('alldl').value;"
+		"	var dl = document.getElementById('alldl').value;\n"
 		"	var x = new XMLHttpRequest();\n"
 
 		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
@@ -282,7 +282,7 @@ void printJS() {
 
 		"function updateuplimit() {\n"
 
-		"	var up = document.getElementById('uplimit').value;"
+		"	var up = document.getElementById('uplimit').value;\n"
 		"	var x = new XMLHttpRequest();\n"
 
 		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
@@ -291,7 +291,7 @@ void printJS() {
 
 		"function updatealluplimit() {\n"
 
-		"	var up = document.getElementById('allup').value;"
+		"	var up = document.getElementById('allup').value;\n"
 		"	var x = new XMLHttpRequest();\n"
 
 		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
@@ -300,7 +300,7 @@ void printJS() {
 
 		"function updateseedrt() {\n"
 
-		"	var ratio = document.getElementById('seedrt').value;"
+		"	var ratio = document.getElementById('seedrt').value;\n"
 		"	var r = /^[\\d.]*$/;\n"
 		"	if (r.test(ratio) == false) {\n"
 		"		alert('Invalid seed ratio');\n"
@@ -315,7 +315,7 @@ void printJS() {
 
 		"function updateseedtm() {\n"
 
-		"	var tm = document.getElementById('seedtm').value;"
+		"	var tm = document.getElementById('seedtm').value;\n"
 		"	var x = new XMLHttpRequest();\n"
 
 		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
