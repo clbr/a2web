@@ -558,7 +558,7 @@ void getSettings() {
 		if (!strcmp(str, "true")) checked = 1;
 
 		printf("<tr><td><label for=tickv6>Disable ipv6:</label></td>"
-			"<td><input type=checkbox %s id=tickv6 onchange='updatedir()'></td></tr>",
+			"<td><input type=checkbox %s id=tickv6 onchange='updateipv6()'></td></tr>",
 			checked ? "checked" : "");
 
 		free((char *) str);
