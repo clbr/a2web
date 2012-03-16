@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <fcgi_stdio.h>
 
 #define NAME "a2web.cgi"
-#define VERSION "0.0"
+#define VERSION "0.8"
 
 // misc.c
 void error(const int num);
