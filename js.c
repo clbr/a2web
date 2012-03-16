@@ -60,14 +60,19 @@ void printJS() {
 		"	x.send(null);\n"
 		"}\n"
 
+// Fire and forget
+		"function fireajax(where) {\n"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', where, true);\n"
+		"	x.send(null);\n"
+		"}\n"
+
 		"function startdl() {\n"
 		"	var urlbox = document.getElementById('add1');\n"
 		"	var url = urlbox.value;\n"
 
-		"	var x = new XMLHttpRequest();\n"
-
-		"	x.open('GET', '%1$s?add=' + url, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?add=' + url);\n"
 		"	urlbox.value = '';\n"
 		"}\n"
 
@@ -165,10 +170,8 @@ void printJS() {
 		"		return;\n"
 
 		"	var gid = window.picked.substr(4);\n"
-		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?remove=' + gid, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?remove=' + gid);\n"
 
 		"}\n"
 
@@ -177,10 +180,8 @@ void printJS() {
 		"		return;\n"
 
 		"	var gid = window.picked.substr(4);\n"
-		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?prioup=' + gid, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?prioup=' + gid);\n"
 
 		"}\n"
 
@@ -189,19 +190,14 @@ void printJS() {
 		"		return;\n"
 
 		"	var gid = window.picked.substr(4);\n"
-		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?priodown=' + gid);\n"
 
 		"}\n"
 
 		"function cleandl() {\n"
 
-		"	var x = new XMLHttpRequest();\n"
-
-		"	x.open('GET', '%1$s?cleanup', true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?cleanup');\n"
 
 		"}\n"
 
@@ -232,73 +228,57 @@ void printJS() {
 		"function updatedir() {\n"
 
 		"	var dir = document.getElementById('dir').value;\n"
-		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?priodown=' + gid);\n"
 		"}\n"
 
 		"function updateipv6() {\n"
 
 		"	var tick = document.getElementById('tickv6').checked;\n"
-		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?priodown=' + gid);\n"
 		"}\n"
 
 		"function updateflwent() {\n"
 
 		"	var ent = document.getElementById('flwtorrent').value;\n"
-		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?priodown=' + gid);\n"
 		"}\n"
 
 		"function updateentports() {\n"
 
 		"	var ports = document.getElementById('entports').value;\n"
-		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?priodown=' + gid);\n"
 		"}\n"
 
 		"function updatedllimit() {\n"
 
 		"	var dl = document.getElementById('dllimit').value;\n"
-		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?priodown=' + gid);\n"
 		"}\n"
 
 		"function updatealldllimit() {\n"
 
 		"	var dl = document.getElementById('alldl').value;\n"
-		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?priodown=' + gid);\n"
 		"}\n"
 
 		"function updateuplimit() {\n"
 
 		"	var up = document.getElementById('uplimit').value;\n"
-		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?priodown=' + gid);\n"
 		"}\n"
 
 		"function updatealluplimit() {\n"
 
 		"	var up = document.getElementById('allup').value;\n"
-		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?priodown=' + gid);\n"
 		"}\n"
 
 		"function updateseedrt() {\n"
@@ -310,19 +290,15 @@ void printJS() {
 		"		return;\n"
 		"	}\n"
 
-		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?priodown=' + gid);\n"
 		"}\n"
 
 		"function updateseedtm() {\n"
 
 		"	var tm = document.getElementById('seedtm').value;\n"
-		"	var x = new XMLHttpRequest();\n"
 
-		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
-		"	x.send(null);\n"
+		"	fireajax('%1$s?priodown=' + gid);\n"
 		"}\n"
 // End settings functions
 
