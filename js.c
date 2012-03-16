@@ -227,33 +227,53 @@ void printJS() {
 		"}\n"
 
 		"function updatedir() {\n"
+
+		"	var dir = document.getElementById('dir').value;"
 		"}\n"
 
 		"function updateipv6() {\n"
+
+		"	var tick = document.getElementById('tickv6').checked;"
 		"}\n"
 
 		"function updateflwent() {\n"
+
+		"	var ent = document.getElementById('flwtorrent').value;"
 		"}\n"
 
 		"function updateentports() {\n"
+
+		"	var ports = document.getElementById('entports').value;"
 		"}\n"
 
 		"function updatedllimit() {\n"
+
+		"	var dl = document.getElementById('dllimit').value;"
 		"}\n"
 
 		"function updatealldllimit() {\n"
+
+		"	var dl = document.getElementById('alldl').value;"
 		"}\n"
 
 		"function updateuplimit() {\n"
+
+		"	var up = document.getElementById('uplimit').value;"
 		"}\n"
 
 		"function updatealluplimit() {\n"
+
+		"	var up = document.getElementById('allup').value;"
 		"}\n"
 
 		"function updateseedrt() {\n"
+
+		"	var ratio = document.getElementById('seedrt').value;"
 		"}\n"
 
 		"function updateseedtm() {\n"
+
+		"	var tm = document.getElementById('seedtm').value;"
 		"}\n"
 
 		"-->\n"
