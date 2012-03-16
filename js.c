@@ -229,51 +229,97 @@ void printJS() {
 		"function updatedir() {\n"
 
 		"	var dir = document.getElementById('dir').value;"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
+		"	x.send(null);\n"
 		"}\n"
 
 		"function updateipv6() {\n"
 
 		"	var tick = document.getElementById('tickv6').checked;"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
+		"	x.send(null);\n"
 		"}\n"
 
 		"function updateflwent() {\n"
 
 		"	var ent = document.getElementById('flwtorrent').value;"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
+		"	x.send(null);\n"
 		"}\n"
 
 		"function updateentports() {\n"
 
 		"	var ports = document.getElementById('entports').value;"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
+		"	x.send(null);\n"
 		"}\n"
 
 		"function updatedllimit() {\n"
 
 		"	var dl = document.getElementById('dllimit').value;"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
+		"	x.send(null);\n"
 		"}\n"
 
 		"function updatealldllimit() {\n"
 
 		"	var dl = document.getElementById('alldl').value;"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
+		"	x.send(null);\n"
 		"}\n"
 
 		"function updateuplimit() {\n"
 
 		"	var up = document.getElementById('uplimit').value;"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
+		"	x.send(null);\n"
 		"}\n"
 
 		"function updatealluplimit() {\n"
 
 		"	var up = document.getElementById('allup').value;"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
+		"	x.send(null);\n"
 		"}\n"
 
 		"function updateseedrt() {\n"
 
 		"	var ratio = document.getElementById('seedrt').value;"
+		"	var r = /^[\\d.]*$/;\n"
+		"	if (r.test(ratio) == false) {\n"
+		"		alert('Invalid seed ratio');\n"
+		"		return;\n"
+		"	}\n"
+
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
+		"	x.send(null);\n"
 		"}\n"
 
 		"function updateseedtm() {\n"
 
 		"	var tm = document.getElementById('seedtm').value;"
+		"	var x = new XMLHttpRequest();\n"
+
+		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
+		"	x.send(null);\n"
 		"}\n"
 
 		"-->\n"
