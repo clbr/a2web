@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <xmlrpc.h>
 #include <xmlrpc_client.h>
 
+#include <regex.h>
+
 static xmlrpc_env xenv;
 static xmlrpc_env *x = &xenv;
 static xmlrpc_server_info *srv;
@@ -716,4 +718,31 @@ void getSettings() {
 
 void setOption(const char *in) {
 
+	// First check it's well-formed
+	regex_t reg;
+	int i = regcomp(&reg, "^[[:lower:]_-]*=[[:print:]]*$", REG_NOSUB);
+
+	if (i)
+		printf("Failed to compile regex, %d\n", i);
+
+	if (regexec(&reg, in, 0, NULL, 0)) {
+
+		printf("Ill-formed input: %s\n", in);
+		regfree(&reg);
+		return;
+	}
+	regfree(&reg);
+
+	// It's ok, handle it
+
+	char *opt, *val;
+	opt = strdup(in);
+
+	char *tmp = strchr(opt, '=');
+	*tmp = '\0';
+	val = tmp + 1;
+
+	printf("Got opt %s and arg %s\n", opt, val);
+
+	free(opt);
 }
