@@ -742,7 +742,30 @@ void setOption(const char *in) {
 	*tmp = '\0';
 	val = tmp + 1;
 
-	printf("Got opt %s and arg %s\n", opt, val);
+	// Separated. XML time
+	xmlrpc_value *xml_opt, *res, *xml_val;
+	xmlrpc_value *a = xmlrpc_array_new(x);
+	xmlrpc_value *s = xmlrpc_struct_new(x);
+
+	xml_opt = xmlrpc_string_new(x, opt);
+	xml_val = xmlrpc_string_new(x, val);
+
+	xmlrpc_struct_set_value_v(x, s, xml_opt, xml_val);
+
+	xmlrpc_array_append_item(x, a, s);
+
+	res = xmlrpc_client_call_server_params(x, srv, "aria2.changeGlobalOption", a);
+	checkxml();
+
+	xmlrpc_DECREF(xml_val);
+	xmlrpc_DECREF(xml_opt);
+	xmlrpc_DECREF(a);
+	xmlrpc_DECREF(s);
+
+	if (x->fault_occurred)
+		return;
+
+	xmlrpc_DECREF(res);
 
 	free(opt);
 }
