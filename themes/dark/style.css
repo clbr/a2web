@@ -49,7 +49,7 @@ button {
 
 /* Downloads table */
 #downloads tbody tr:nth-child(even) {
-	background-color: #d4ff66;
+	background-color: #283800;
 }
 
 #downloads td, #downloads th {
@@ -60,7 +60,7 @@ button {
 #downloads thead {
 	border-bottom: 2px solid;
 	margin-bottom: 2px;
-	border-color: #52e3ff;
+	border-color: white;
 }
 
 /*#downloads tbody tr:nth-child(odd) {
@@ -68,11 +68,11 @@ button {
 }*/
 
 #downloads tbody tr:hover {
-	background-color: skyblue;
+	background-color: #974b00;
 }
 
 #downloads tr.picked {
-	background-color: skyblue !important;
+	background-color: #974b00 !important;
 }
 
 #downloads table {
