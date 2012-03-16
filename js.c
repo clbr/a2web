@@ -71,6 +71,7 @@ void printJS() {
 		"	urlbox.value = '';\n"
 		"}\n"
 
+// Was the enter key pressed in the "start download" field?
 		"function doenter(e) {\n"
 		"	var key;\n"
 
@@ -85,6 +86,7 @@ void printJS() {
 		"	return true;\n"
 		"}\n"
 
+// Keep the "picked download" status through updates
 		"function setDownloadChoices() {\n"
 		"	var dl = document.getElementById('downloads');\n"
 		"	var tbody = dl.getElementsByTagName('tbody')[0];\n"
@@ -226,6 +228,7 @@ void printJS() {
 		"	settings.className = 'null';\n"
 		"}\n"
 
+// The settings functions:
 		"function updatedir() {\n"
 
 		"	var dir = document.getElementById('dir').value;\n"
@@ -321,6 +324,7 @@ void printJS() {
 		"	x.open('GET', '%1$s?priodown=' + gid, true);\n"
 		"	x.send(null);\n"
 		"}\n"
+// End settings functions
 
 		"-->\n"
 		"\n</script>\n",
