@@ -535,7 +535,7 @@ void getSettings() {
 		return;
 	}
 
-	printf("<h2>Preferences</h2>\n<hr width='50%'><br>");
+	printf("<h2>Preferences</h2>\n<hr width='50%%'><br>");
 
 	printf("<table border=0 id=settingstable>\n");
 
