@@ -5,8 +5,8 @@ LIBS = -lxmlrpc_client -lfcgi
 FILES = $(wildcard *.c)
 OBJS = $(FILES:.c=.o)
 
-CFLAGS += -Wall -Wextra
-LDFLAGS += -Wl,-O1
+CFLAGS += -Wall -Wextra -ffunction-sections -fdata-sections
+LDFLAGS += -Wl,-O1 -Wl,-gc-sections
 
 NAME = a2web.cgi
 
