@@ -18,7 +18,7 @@ THEMEDIR ?= $(COPYDIR)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	gcc -o $(NAME) $(LDFLAGS) $(CFLAGS) $(LIBS) $(OBJS)
+	$(CC) -o $(NAME) $(LDFLAGS) $(CFLAGS) $(LIBS) $(OBJS)
 
 
 clean:
