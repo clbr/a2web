@@ -20,6 +20,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) -o $(NAME) $(LDFLAGS) $(CFLAGS) $(LIBS) $(OBJS)
 
+$(OBJS): $(wildcard *.h)
 
 clean:
 	rm -f $(NAME) *.o
