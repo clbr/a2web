@@ -1,0 +1,520 @@
+From 93b23622d03093d5b058cb4f3f3bd2ae74243834 Mon Sep 17 00:00:00 2001
+From: Lauri Kasanen <curaga@operamail.com>
+Date: Sat, 31 Mar 2012 13:42:07 +0300
+Subject: [PATCH] Replace the printf logic with a call to GNU vasprintf. -464 lines
+
+libfcgi 2.4.0 printf is lacking the positional parameters feature, required by SuS.
+This prevents a2web from working with it in FastCGI mode. Doesn't affect CGI mode.
+
+Replace the custom printf with the GNU version, for both less bugs and more speed.
+
+Signed-off-by: Lauri Kasanen <curaga@operamail.com>
+---
+ fcgiapp.c |  481 +++----------------------------------------------------------
+ 1 files changed, 17 insertions(+), 464 deletions(-)
+
+diff --git a/fcgiapp.c b/fcgiapp.c
+index 178cfe4..0b813ec 100644
+--- a/libfcgi/fcgiapp.c
++++ b/libfcgi/fcgiapp.c
+@@ -14,6 +14,8 @@
+ static const char rcsid[] = "$Id: fcgiapp.c,v 1.34 2001/12/12 22:54:10 robs Exp $";
+ #endif /* not lint */
+ 
++#define _GNU_SOURCE
++
+ #include <assert.h>
+ #include <errno.h>
+ #include <fcntl.h>      /* for fcntl */
+@@ -397,473 +399,24 @@ int FCGX_FPrintF(FCGX_Stream *stream, const char *format, ...)
+  *----------------------------------------------------------------------
+  */
+ 
+-#define PRINTF_BUFFLEN 100
+-    /*
+-     * More than sufficient space for all unmodified conversions
+-     * except %s and %f.
+-     */
+-#define FMT_BUFFLEN 25
+-    /*
+-     * Max size of a format specifier is 1 + 5 + 7 + 7 + 2 + 1 + slop
+-     */
+-static void CopyAndAdvance(char **destPtr, char **srcPtr, int n);
+-
+ int FCGX_VFPrintF(FCGX_Stream *stream, const char *format, va_list arg)
+ {
+-    char *f, *fStop, *percentPtr, *p, *fmtBuffPtr, *buffPtr;
+-    int op, performedOp, sizeModifier, buffCount = 0, buffLen, specifierLength;
+-    int fastPath, n, auxBuffLen = 0, buffReqd, minWidth, precision, exp;
+-    char *auxBuffPtr = NULL;
+-    int streamCount = 0;
+-    char fmtBuff[FMT_BUFFLEN];
+-    char buff[PRINTF_BUFFLEN];
+-
+-    int intArg;
+-    short shortArg;
+-    long longArg;
+-    unsigned unsignedArg;
+-    unsigned long uLongArg;
+-    unsigned short uShortArg;
+-    char *charPtrArg = NULL;
+-    void *voidPtrArg;
+-    int *intPtrArg;
+-    long *longPtrArg;
+-    short *shortPtrArg;
+-    double doubleArg = 0.0;
+-    LONG_DOUBLE lDoubleArg = 0.0L;
+-
+-    fmtBuff[0] = '%';
+-    f = (char *) format;
+-    fStop = f + strlen(f);
+-    while (f != fStop) {
+-        percentPtr = (char *)memchr(f, '%', fStop - f);
+-        if(percentPtr == NULL) percentPtr = fStop;
+-        if(percentPtr != f) {
+-            if(FCGX_PutStr(f, percentPtr - f, stream) < 0)
+-                goto ErrorReturn;
+-            streamCount += percentPtr - f;
+-            f = percentPtr;
+-            if(f == fStop) break;
+-	}
+-        fastPath = TRUE;
+-        /*
+-         * The following loop always executes either once or twice.
+-         */
+-        for (;;) {
+-            if(fastPath) {
+-                /*
+-                 * Fast path: Scan optimistically, hoping that no flags,
+-                 * minimum field width, or precision are specified.
+-                 * Use the preallocated buffer, which is large enough
+-                 * for all fast path cases.  If the conversion specifier
+-                 * is really more complex, run the loop a second time
+-                 * using the slow path.
+-                 * Note that fast path execution of %s bypasses the buffer
+-                 * and %f is not attempted on the fast path due to
+-                 * its large buffering requirements.
+-                 */
+-                op = *(percentPtr + 1);
+-                switch(op) {
+-	            case 'l':
+-	            case 'L':
+-                    case 'h':
+-                        sizeModifier = op;
+-                        op = *(percentPtr + 2);
+-                        fmtBuff[1] = (char) sizeModifier;
+-                        fmtBuff[2] = (char) op;
+-                        fmtBuff[3] = '\0';
+-                        specifierLength = 3;
+-                        break;
+-	            default:
+-                        sizeModifier = ' ';
+-                        fmtBuff[1] = (char) op;
+-                        fmtBuff[2] = '\0';
+-                        specifierLength = 2;
+-                        break;
+-	        }
+-                buffPtr = buff;
+-                buffLen = PRINTF_BUFFLEN;
+-	    } else {
+-                /*
+-                 * Slow path: Scan the conversion specifier and construct
+-                 * a new format string, compute an upper bound on the
+-                 * amount of buffering that sprintf will require,
+-                 * and allocate a larger buffer if necessary.
+-                 */
+-                p = percentPtr + 1;
+-                fmtBuffPtr = &fmtBuff[1];
+-                /*
+-                 * Scan flags
+-                 */
+-                n = strspn(p, "-0+ #");
+-                if(n > 5)
+-                    goto ErrorReturn;
+-                CopyAndAdvance(&fmtBuffPtr, &p, n);
+-                /*
+-                 * Scan minimum field width
+-                 */
+-                n = strspn(p, "0123456789");
+-                if(n == 0) {
+-                    if(*p == '*') {
+-                        minWidth = va_arg(arg, int);
+-                        if(abs(minWidth) > 999999)
+-                            goto ErrorReturn;
+-			/*
+-			 * The following use of strlen rather than the
+-			 * value returned from sprintf is because SUNOS4
+-			 * returns a char * instead of an int count.
+-			 */
+-			sprintf(fmtBuffPtr, "%d", minWidth);
+-                        fmtBuffPtr += strlen(fmtBuffPtr);
+-                        p++;
+-	            } else {
+-                        minWidth = 0;
+-	            }
+-	        } else if(n <= 6) {
+-                    minWidth = strtol(p, NULL, 10);
+-                    CopyAndAdvance(&fmtBuffPtr, &p, n);
+-                } else {
+-                    goto ErrorReturn;
+-                }
+-                /*
+-                 * Scan precision
+-                 */
+-	        if(*p == '.') {
+-                    CopyAndAdvance(&fmtBuffPtr, &p, 1);
+-                    n = strspn(p, "0123456789");
+-                    if(n == 0) {
+-                        if(*p == '*') {
+-                            precision = va_arg(arg, int);
+-                            if(precision < 0) precision = 0;
+-                            if(precision > 999999)
+-                                goto ErrorReturn;
+-			/*
+-			 * The following use of strlen rather than the
+-			 * value returned from sprintf is because SUNOS4
+-			 * returns a char * instead of an int count.
+-			 */
+-			    sprintf(fmtBuffPtr, "%d", precision);
+-			    fmtBuffPtr += strlen(fmtBuffPtr);
+-                            p++;
+-	                } else {
+-                            precision = 0;
+-	                }
+-	            } else if(n <= 6) {
+-                        precision = strtol(p, NULL, 10);
+-                        CopyAndAdvance(&fmtBuffPtr, &p, n);
+-                    } else {
+-                        goto ErrorReturn;
+-                    }
+-                } else {
+-                    precision = -1;
+-                }
+-                /*
+-                 * Scan size modifier and conversion operation
+-                 */
+-                switch(*p) {
+-	            case 'l':
+-                    case 'L':
+-                    case 'h':
+-                        sizeModifier = *p;
+-                        CopyAndAdvance(&fmtBuffPtr, &p, 1);
+-                        break;
+-	            default:
+-                        sizeModifier = ' ';
+-                        break;
+-                }
+-                op = *p;
+-                CopyAndAdvance(&fmtBuffPtr, &p, 1);
+-                ASSERT(fmtBuffPtr - fmtBuff < FMT_BUFFLEN);
+-                *fmtBuffPtr = '\0';
+-                specifierLength = p - percentPtr;
+-                /*
+-                 * Bound the required buffer size.  For s and f
+-                 * conversions this requires examining the argument.
+-                 */
+-                switch(op) {
+-	            case 'd':
+-                    case 'i':
+-                    case 'u':
+-                    case 'o':
+-                    case 'x':
+-                    case 'X':
+-                    case 'c':
+-                    case 'p':
+-                        buffReqd = max(precision, 46);
+-                        break;
+-	            case 's':
+-                        charPtrArg = va_arg(arg, char *);
+-			if (!charPtrArg) charPtrArg = "(null)";
+-                        if(precision == -1) {
+-			    buffReqd = strlen(charPtrArg);
+-		        } else {
+-			    p = (char *)memchr(charPtrArg, '\0', precision);
+-                            buffReqd =
+-			      (p == NULL) ? precision : p - charPtrArg;
+-			}
+-                        break;
+-	            case 'f':
+-                        switch(sizeModifier) {
+-                            case ' ':
+-                                doubleArg = va_arg(arg, double);
+-				                frexp(doubleArg, &exp);
+-                                break;
+-                            case 'L':
+-                                lDoubleArg = va_arg(arg, LONG_DOUBLE);
+-                                /* XXX Need to check for the presence of 
+-                                 * frexpl() and use it if available */
+-				                frexp((double) lDoubleArg, &exp);
+-                                break;
+-                            default:
+-                                goto ErrorReturn;
+-                        }
+-                        if(precision == -1) precision = 6;
+-                        buffReqd = precision + 3 + ((exp > 0) ? exp/3 : 0);
+-                        break;
+-	            case 'e':
+-	            case 'E':
+-	            case 'g':
+-	            case 'G':
+-                        if(precision == -1) precision = 6;
+-                        buffReqd = precision + 8;
+-                        break;
+-	            case 'n':
+-	            case '%':
+-	            default:
+-                        goto ErrorReturn;
+-                        break;
+-                }
+-                buffReqd = max(buffReqd + 10, minWidth);
+-                /*
+-                 * Allocate the buffer
+-                 */
+-	        if(buffReqd <= PRINTF_BUFFLEN) {
+-                    buffPtr = buff;
+-		    buffLen = PRINTF_BUFFLEN;
+-	        } else {
+-                    if(auxBuffPtr == NULL || buffReqd > auxBuffLen) {
+-		        if(auxBuffPtr != NULL) free(auxBuffPtr);
+-                        auxBuffPtr = (char *)Malloc(buffReqd);
+-                        auxBuffLen = buffReqd;
+-                        if(auxBuffPtr == NULL)
+-                            goto ErrorReturn;
+-		    }
+-                    buffPtr = auxBuffPtr;
+-		    buffLen = auxBuffLen;
+-		}
+-	    }
+-            /*
+-             * This giant switch statement requires the following variables
+-             * to be set up: op, sizeModifier, arg, buffPtr, fmtBuff.
+-             * When fastPath == FALSE and op == 's' or 'f', the argument
+-             * has been read into charPtrArg, doubleArg, or lDoubleArg.
+-             * The statement produces the boolean performedOp, TRUE iff
+-             * the op/sizeModifier were executed and argument consumed;
+-             * if performedOp, the characters written into buffPtr[]
+-             * and the character count buffCount (== EOF meaning error).
+-             *
+-             * The switch cases are arranged in the same order as in the
+-             * description of fprintf in section 15.11 of Harbison and Steele.
+-             */
+-            performedOp = TRUE;
+-            switch(op) {
+-	        case 'd':
+-	        case 'i':
+-                    switch(sizeModifier) {
+-                        case ' ':
+-                            intArg = va_arg(arg, int);
+-			    sprintf(buffPtr, fmtBuff, intArg);
+-                            buffCount = strlen(buffPtr);
+-                            break;
+-	                case 'l':
+-                            longArg = va_arg(arg, long);
+-                            sprintf(buffPtr, fmtBuff, longArg);
+-                            buffCount = strlen(buffPtr);
+-                            break;
+-	                case 'h':
+-                            shortArg = (short) va_arg(arg, int);
+-                            sprintf(buffPtr, fmtBuff, shortArg);
+-                            buffCount = strlen(buffPtr);
+-                            break;
+-	                default:
+-                            goto ErrorReturn;
+-	            }
+-                    break;
+-	        case 'u':
+-                case 'o':
+-                case 'x':
+-                case 'X':
+-                    switch(sizeModifier) {
+-                        case ' ':
+-                            unsignedArg = va_arg(arg, unsigned);
+-			    sprintf(buffPtr, fmtBuff, unsignedArg);
+-                            buffCount = strlen(buffPtr);
+-                            break;
+-	                case 'l':
+-                            uLongArg = va_arg(arg, unsigned long);
+-			    sprintf(buffPtr, fmtBuff, uLongArg);
+-                            buffCount = strlen(buffPtr);
+-                            break;
+-                        case 'h':
+-                            uShortArg = (unsigned short) va_arg(arg, int);
+-                            sprintf(buffPtr, fmtBuff, uShortArg);
+-                            buffCount = strlen(buffPtr);
+-                            break;
+-                        default:
+-                            goto ErrorReturn;
+-                    }
+-                    break;
+-                case 'c':
+-                    switch(sizeModifier) {
+-                        case ' ':
+-                            intArg = va_arg(arg, int);
+-			    sprintf(buffPtr, fmtBuff, intArg);
+-                            buffCount = strlen(buffPtr);
+-                            break;
+-	                case 'l':
+-                            /*
+-                             * XXX: Allowed by ISO C Amendment 1, but
+-                             * many platforms don't yet support wint_t
+-                             */
+-                            goto ErrorReturn;
+-                    default:
+-                            goto ErrorReturn;
+-                    }
+-                    break;
+-	        case 's':
+-                    switch(sizeModifier) {
+-                        case ' ':
+-		            if(fastPath) {
+-			        buffPtr = va_arg(arg, char *);
+-                                buffCount = strlen(buffPtr);
+-                                buffLen = buffCount + 1;
+-			    } else {
+-				sprintf(buffPtr, fmtBuff, charPtrArg);
+-	                        buffCount = strlen(buffPtr);
+-			    }
+-			    break;
+-	                case 'l':
+-                            /*
+-                             * XXX: Don't know how to convert a sequence
+-                             * of wide characters into a byte stream, or
+-                             * even how to predict the buffering required.
+-                             */
+-                            goto ErrorReturn;
+-                        default:
+-                            goto ErrorReturn;
+-                    }
+-                    break;
+-                case 'p':
+-                    if(sizeModifier != ' ')
+-                        goto ErrorReturn;
+-                    voidPtrArg = va_arg(arg, void *);
+-		    sprintf(buffPtr, fmtBuff, voidPtrArg);
+-                    buffCount = strlen(buffPtr);
+-                    break;
+-                case 'n':
+-                    switch(sizeModifier) {
+-                        case ' ':
+-                            intPtrArg = va_arg(arg, int *);
+-                            *intPtrArg = streamCount;
+-                            break;
+-                        case 'l':
+-                            longPtrArg = va_arg(arg, long *);
+-                            *longPtrArg = streamCount;
+-                            break;
+-                        case 'h':
+-                            shortPtrArg = (short *) va_arg(arg, short *);
+-                            *shortPtrArg = (short) streamCount;
+-                            break;
+-	                default:
+-                            goto ErrorReturn;
+-	            }
+-                    buffCount = 0;
+-                    break;
+-                case 'f':
+-		    if(fastPath) {
+-		        performedOp = FALSE;
+-                        break;
+-		    }
+-                    switch(sizeModifier) {
+-                        case ' ':
+-			    sprintf(buffPtr, fmtBuff, doubleArg);
+-                            buffCount = strlen(buffPtr);
+-                            break;
+-                        case 'L':
+-			    sprintf(buffPtr, fmtBuff, lDoubleArg);
+-                            buffCount = strlen(buffPtr);
+-                            break;
+-                        default:
+-                            goto ErrorReturn;
+-                    }
+-                    break;
+-                case 'e':
+-                case 'E':
+-                case 'g':
+-                case 'G':
+-                    switch(sizeModifier) {
+-                        case ' ':
+-                            doubleArg = va_arg(arg, double);
+-			    sprintf(buffPtr, fmtBuff, doubleArg);
+-                            buffCount = strlen(buffPtr);
+-                            break;
+-                        case 'L':
+-                            lDoubleArg = va_arg(arg, LONG_DOUBLE);
+-			    sprintf(buffPtr, fmtBuff, lDoubleArg);
+-                            buffCount = strlen(buffPtr);
+-                            break;
+-                        default:
+-                            goto ErrorReturn;
+-                    }
+-                    break;
+-                case '%':
+-                    if(sizeModifier != ' ')
+-                        goto ErrorReturn;
+-                    buff[0] = '%';
+-                    buffCount = 1;
+-                    break;
+-                case '\0':
+-                    goto ErrorReturn;
+-                default:
+-                    performedOp = FALSE;
+-                    break;
+-            } /* switch(op) */
+-            if(performedOp) break;
+-            if(!fastPath)
+-                goto ErrorReturn;
+-            fastPath = FALSE;
+-        } /* for (;;) */
+-        ASSERT(buffCount < buffLen);
+-        if(buffCount > 0) {
+-            if(FCGX_PutStr(buffPtr, buffCount, stream) < 0)
+-                goto ErrorReturn;
+-            streamCount += buffCount;
+-        } else if(buffCount < 0) {
+-            goto ErrorReturn;
+-	}
+-        f += specifierLength;
+-    } /* while(f != fStop) */
+-    goto NormalReturn;
+-  ErrorReturn:
+-    streamCount = -1;
+-  NormalReturn:
+-    if(auxBuffPtr != NULL) free(auxBuffPtr);
+-    return streamCount;
+-}
++    char *buff;
+ 
+-/*
+- * Copy n characters from *srcPtr to *destPtr, then increment
+- * both *srcPtr and *destPtr by n.
+- */
+-static void CopyAndAdvance(char **destPtr, char **srcPtr, int n)
+-{
+-    char *dest = *destPtr;
+-    char *src = *srcPtr;
+-    int i;
+-    for (i = 0; i < n; i++)
+-        *dest++ = *src++;
+-    *destPtr = dest;
+-    *srcPtr = src;
++    int streamCount = -1;
++    int buffCount = vasprintf(&buff, format, arg);
++
++    if(buffCount > 0) {
++        streamCount = buffCount;
++
++        if(FCGX_PutStr(buff, buffCount, stream) < 0)
++            streamCount = -1;
++    } else {
++        buff = NULL;
++    }
++
++    free(buff);
++    return streamCount;
+ }
+ 
+ /*
+-- 
+1.7.2.1
+
