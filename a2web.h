@@ -94,7 +94,6 @@ struct download {
 	unsigned connections;
 };
 
-extern const char *cwd;
 extern const char *version;
 extern char *server, *user, *pw, *themedir, *mypath;
 extern char offline;
