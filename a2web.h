@@ -37,7 +37,6 @@ void plainpage();
 void htmlpage();
 
 // xml.c
-int checkxml();
 void getVersion();
 void getStats();
 void getDownloads();

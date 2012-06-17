@@ -28,6 +28,17 @@ static xmlrpc_env xenv;
 static xmlrpc_env *x = &xenv;
 static xmlrpc_server_info *srv;
 
+static int checkxml() {
+
+	if (x->fault_occurred) {
+		printf("%s\n", x->fault_string);
+
+		return 1;
+	}
+
+	return 0;
+}
+
 void getVersion() {
 
 	xmlrpc_value *res, *tmp = NULL;
@@ -385,17 +396,6 @@ void deinitxml() {
 	xmlrpc_env_clean(x);
 	xmlrpc_client_cleanup();
 
-}
-
-int checkxml() {
-
-	if (x->fault_occurred) {
-		printf("%s\n", x->fault_string);
-
-		return 1;
-	}
-
-	return 0;
 }
 
 void addDownload(const char *url) {
