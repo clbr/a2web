@@ -1,0 +1,293 @@
+#!/bin/sh
+# a2webd (version 0.2) startup script for a2web.cgi
+# Copyright (C) by Alex Bilinsky (@ß№®M!$) AbNoRMiS
+# Licensed under GNU General Public License ver.3.0
+#
+# Usage: a2webd [start|status|reload|restart|stop]
+#
+# Feedback: <alex dot bilinsky at gmail dot com>
+
+# base name
+THIS=${0##*/}
+# check root privileges
+[ `id -u` -ne 0 ] && echo "$THIS must run with root privileges" && exit 1
+# get user
+user() {
+    for item in `cat /etc/passwd`; do
+	uid=`echo "$item" | cut -f3 -d:` && [ $uid -ge 1000 ] && [ $uid -lt 10000 ] && [ -d `echo "$item" | cut -f6 -d:` ] && last | egrep -ow "^${item%%:*}" | tail -1 && break
+    done
+}
+# check user/group existance
+# usage: exists {user|group} [name]
+exists() {
+    case $1 in
+	user) sysdb=passwd ;;
+	group) sysdb=group ;;
+	*) return 1 ;;
+    esac
+    cat /etc/$sysdb | busybox egrep -q "^$2"; return $?
+}
+# make group
+# usage: mkgroup {name} [gid]
+mkgroup() {
+    mkcmd=`which addgroup` || mkcmd=`which groupadd`
+    [ "$2" ] && $mkcmd -g $2 $1 || $mkcmd $1
+}
+# make user
+# usage: mkuser {name} {group} {home} [uid]
+mkuser() {
+    mkcmd="$(which adduser) -h $3 -G $2 -DH" || mkcmd="$(which useradd) -g $2 -d $3"
+    [ "$4" ] && mkcmd="$mkcmd -u $4"
+    $mkcmd $1
+}
+# get option from config file
+# usage: get_option {option} {config_file}
+get_option() { sed "/^$1/!d;s/^.*=//;s/^ //" $2; }
+# set option to config file
+# usage: get_option {option} {delimiter} {value} {config_file}
+set_option() { [ "$(get_option "$1" "$4")" ] && sed -i "/^$1/c\\$1$2$3" $4 || echo "$1$2$3" >> $4; }
+# parse uri string
+# usage: parse_uri {component} {uri}
+parse_uri() {
+    server_port=${2#*//}
+    server_port=${server_port%%/*}
+    password_user=`expr  "$server_port" : "\(.*\)@"`
+    server_port=${server_port#*@}
+    case $1 in
+	password) expr  "$password_user" : "\(.*\):" ;;
+	user) echo "${password_user#*:}" ;;
+	server) echo "${server_port%:*}" ;;
+	port) expr  "$server_port" : ".*:\([0-9]*\)" ;;
+	path) echo "${2#$user_password*$server_port}" ;;
+    esac
+}
+# validate path or uri string
+# usage: validate {path|uri} {string} [target]
+validate() {
+    # validate path string
+    # usage: validate_path {string} [target]
+    validate_path() {
+	value=`expr "$1" : "\(\([/].*\)*$2\)$"`
+	[ "$value" ] && return 0 || return 1
+    }
+    case $1 in
+	path) validate_path "$2" "$3"; return $? ;;
+	uri) [ "$(parse_uri server "$2")" ] && validate_path "$(parse_uri path "$2")" "$3"; return $? ;;
+    esac
+}
+# print log end exit
+# usage: print_log {return_code}
+print_log() { cat $A2WEB_LOG && exit $1; }
+# start a2webd
+start() {
+    # get error if a2webd already running
+    if [ -d $RUN ]; then
+	ERROR="a2web already running"
+    else
+	A2WEB=`find /usr -name a2web.cgi`
+	# get error if not found installed a2web
+	if [ -x $A2WEB ]; then
+	    # get error if another aria2 instance running
+	    if [ "$(pgrep aria2c)" ]; then
+		ERROR="aria2 is already running"
+	    else
+		# set paths to config files
+		USER=`user`
+		PREFIX=${A2WEB%%/share*}
+		A2WEBD_CONF=$PREFIX/etc/a2webd.conf
+		HTTPD_CONF=$PREFIX/etc/busybox/httpd.conf
+		ARIA2_CONF=/home/$USER/aria2/aria2.conf
+		# create a2webd.conf if not exist
+		if [ ! -f $A2WEBD_CONF ]; then
+		    echo -e "# a2web.conf\n\n# path = /path/to/a2web.cgi\npath = $A2WEB\n" > $A2WEBD_CONF
+		    echo -e "# uri = [http://][[password:]user@]server[:port]/path-to/a2web.cgi\nuri = http://localhost:8080/cgi-bin/a2web.cgi" >> $A2WEBD_CONF
+		fi
+		# read options from a2webd.conf
+		A2WEB_PATH=`get_option path $A2WEBD_CONF`
+		A2WEB_CONF=${A2WEB_PATH%.*}.conf
+		A2WEB_URI=`get_option uri $A2WEBD_CONF`
+		HTTP_PASSWD=`parse_uri password $A2WEB_URI`
+		HTTP_USER=`parse_uri user $A2WEB_URI`
+		HTTP_SERVER=`parse_uri server $A2WEB_URI`
+		HTTP_PORT=`parse_uri port $A2WEB_URI`
+		HTTP_PATH=`parse_uri path $A2WEB_URI`
+		# read options from aria2.conf if exist
+		if [ -f $ARIA2_CONF ]; then
+		    A2PORT=`get_option rpc-listen-port $ARIA2_CONF`
+		    A2USER=`get_option rpc-user $ARIA2_CONF`
+		    A2PASSWD=`get_option rpc-passwd $ARIA2_CONF`
+		fi
+		# set default ports if unset
+		[ "$HTTP_PORT" ] || HTTP_PORT=80
+		[ "$A2PORT" ] || A2PORT=6800
+		# check a2web.conf existence
+		if [ -f $A2WEB_CONF ]; then
+		    # set options in a2web.conf if not specified
+		    [ "$A2PORT" ] && [ -z "$(get_option server $A2WEB_CONF)" ] && set_option server " = " "http://localhost:$A2PORT/rpc" $A2WEB_CONF
+		    [ "$A2USER" ] && [ -z "$(get_option user $A2WEB_CONF)" ] && set_option user " = " "$A2USER" $A2WEB_CONF
+		    [ "$A2PASSWD" ] && [ -z "$(get_option password $A2WEB_CONF)" ] && set_option password " = " "$A2PASSWD" $A2WEB_CONF
+		else
+		    # create a2web.conf with options from aria2.conf if not exist
+		    cat ${A2WEB%%/cgi-bin*}/a2web.conf.sample | sed "5,6s/^# //;6s/a2web/\/&/;$ s/$/\nuser = $A2USER\npassword = $A2PASSWD/" > $A2WEB_CONF
+		    # set rpc port from aria2.conf or default if rpc-listen-port not specified
+		    set_option server " = " "http://localhost:$A2PORT/rpc" $A2WEB_CONF
+		fi
+		# read options from a2web.conf
+		A2URI=`get_option server $A2WEB_CONF`
+		A2PORT=`parse_uri port "$A2URI"`
+		A2USER=`get_option user $A2WEB_CONF`
+		A2PASSWD=`get_option password $A2WEB_CONF`
+		# get error if wrong options in config files
+		if ! validate path "$A2WEB_PATH" a2web.cgi; then
+		    ERROR="incorrect path in $A2WEBD_CONF"
+		elif ! validate uri "$A2WEB_URI" a2web.cgi; then
+		    ERROR="incorrect uri in $A2WEBD_CONF"
+		else
+		    # set rpc auth options if specified in aria2.conf
+		    if [ "$A2USER" ]; then
+			A2OPTS=" --rpc-user=$A2USER"
+			[ "$A2PASSWD" ] && A2OPTS="$A2OPTS --rpc-passwd=$A2PASSWD"
+		    fi
+		    # set path to aria2.log
+		    A2LOG=$LOG/aria2.$DATE.log
+		    # start aria2
+		    su $USER -c "aria2c --enable-rpc --rpc-listen-port=$A2PORT$A2OPTS --log-level=notice --log=-" 2>&1 1>>$A2LOG &
+		    # write aria2.pid
+		    sleep 2 && A2PID=$RUN/aria2.pid && mkdir -p $RUN && pgrep -n aria2c > $A2PID
+		    # get error if aria2 not running
+		    if [ -s $A2PID ]; then
+			# set http port options
+			HTPORT=" -p $HTTP_PORT" && HTTP_PORT=":$HTTP_PORT"
+			# set http auth options if specified in a2webd.conf
+			if [ "$HTTP_USER" ]; then
+			    A2AUTH=" --http-user=$HTTP_USER"
+			    [ "$HTTP_PASSWD" ] && A2AUTH="$A2AUTH --http-passwd=$HTTP_PASSWD"
+			fi
+			# check that a2web.cgi running
+			aria2c --dry-run$A2AUTH http://localhost$HTTP_PORT$HTTP_PATH &>/dev/null
+			if [ $? -ne 0 ]; then
+			    # find busybox httpd if running a2web.cgi not found
+			    for item in `find ${PATH//:/ } /usr -name httpd -type l`; do
+				[ -x $item ] && readlink $item | grep -q busybox && HTBIN=$item && break
+			    done
+			    # get error if busybox http not found
+			    if [ "$HTBIN" ]; then
+				# create nobody/nogroup if not exist
+				if ! exists user nobody; then
+				    exists group nogroup || mkgroup nogroup 65534
+				    mkuser nobody nogroup /nonexistent 65534
+				fi
+				# set user auth for http access if specified in a2webd.conf
+				if [ "$HTTP_USER" ]; then
+				    # create httpd.conf if not exist
+				    [ -f $HTTPD_CONF ] || mkdir -p ${HTTPD_CONF%/*} && echo "# httpd.conf" > $HTTPD_CONF
+				    # set user auth row in httpd.conf
+				    grep -q $HTTP_PATH $HTTPD_CONF && sed -i "/a2web\.cgi/c\\$HTTP_PATH:$HTTP_USER:$($HTBIN -m "$HTTP_PASSWD")" $HTTPD_CONF || echo "$HTTP_PATH:$HTTP_USER:$($HTBIN -m "$HTTP_PASSWD")" >> $HTTPD_CONF
+				    # set config file option
+				    HTCONF=" -c $HTTPD_CONF"
+				fi
+				# set path to httpd.log
+				HTLOG=$LOG/httpd.$DATE.log
+				# set dir for typescript
+				HERE=$PWD && cd /tmp
+				# start busybox httpd
+				HTCMD="$HTBIN -f -v$HTCONF$HTPORT -h ${A2WEB_PATH%$HTTP_PATH} -u nobody:$(id -gn nobody)"
+				script -aqc "$HTCMD" 2>&1 1>>$HTLOG &
+				cd $HERE
+				# write httpd.pid
+				sleep 2 && HTPID=$RUN/httpd.pid && pgrep -fn "$HTCMD" > $HTPID
+				# get error if httpd not running
+				if [ ! -s $HTPID ]; then
+				    ERROR="busybox httpd could not start, see $HTLOG"
+				    # stop aria2 if httpd could not start
+				    kill `cat $A2PID` && rm -rf $RUN
+				fi
+			    else
+				ERROR="could not find running a2web.cgi and installed busybox httpd"
+			    fi
+			fi
+		    else
+			ERROR="aria2 could not start, see $A2LOG" && rm -rf $RUN
+		    fi
+		fi
+	    fi
+	else
+	    ERROR="wrong path $A2WEB"
+	fi
+    fi
+    # output message
+    if [ "$ERROR" ]; then
+	echo "a2web starting failed ($ERROR)" && return 1
+    else
+	A2WEB_URI=${A2WEB_URI#http://}
+	echo -e "http://${A2WEB_URI##*@}\na2web was started successfully" && return 0
+    fi
+}
+# status
+status() {
+    if [ -d $RUN ]; then
+	echo "a2web is running" && return 0
+    else
+	echo "a2web is not running" && return 1
+    fi
+}
+# reload
+reload() {
+    # get error if a2webd is not running
+    if [ -d $RUN ]; then
+	# reload running processes
+	for item in $RUN/*; do
+	    pid=`cat $item` && kill -STOP $pid &>/dev/null && sleep 2 && kill -CONT $pid &>/dev/null && continue
+	    ERROR="could not stop process with pid $pid"
+	done
+	# output message
+	if [ "$ERROR" ]; then
+	    echo "a2web reloading failed ($ERROR)" && return 1
+	else
+	    echo "a2web was reloaded successfully" && return 0
+	fi
+    else
+	echo "a2web is not running" && return 1
+    fi
+}
+# stop
+stop() {
+    # get error if a2webd is not running
+    if [ -d $RUN ]; then
+	# kill running processes
+	for item in $RUN/*; do
+	    kill `cat $item` &>/dev/null && rm -f $item || ERROR="could not stop process with pid $(cat $item)"
+	done
+	# output message
+	if [ "$ERROR" ]; then
+	    echo "a2web stopping failed ($ERROR)" && return 1
+	else
+	    rm -rf $RUN && echo "a2web was stopped successfully" && return 0
+	fi
+    else
+	echo "a2web is not running" && return 1
+    fi
+}
+# restart
+restart() {
+    stop && sleep 2 && start && echo "a2web was restarted successfully" && return 0
+    echo "a2web restarting failed" && return 1
+}
+# set a2webd variables
+RUN=/var/run/$THIS
+LOG=/var/log/$THIS
+DATE=`date +%Y%m%d%H%M%S`
+A2WEB_LOG=$LOG/$DATE.log
+# create log dir
+mkdir -p $LOG
+{
+    case $1 in
+	start) start ;;
+	status) status ;;
+	reload) reload ;;
+	restart) restart ;;
+	stop) stop ;;
+	*) echo "Usage: $THIS [start|status|reload|restart|stop]" ;;
+    esac
+} 2>&1 1>>$A2WEB_LOG
+print_log $?
